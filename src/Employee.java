@@ -10,5 +10,15 @@ abstract class Employee extends Person {
         this.salary = salary;
     }
 
+    public LocalDate getEmpDate() {
+        return empDate;
+    }
+
+    public float getSalary() {
+        return salary;
+    }
+
+
+
     public abstract float getIncome();
 }
