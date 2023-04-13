@@ -1,6 +1,6 @@
 import java.io.Serializable;
 
-class Person implements Serializable {
+class Person extends ObjectPlusPlus implements Serializable {
     private String firstName;
     private String latsName;
     private  String phoneNumber;
