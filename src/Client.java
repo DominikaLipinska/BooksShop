@@ -4,9 +4,10 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Client extends Person{
+public class Client {
     private List<Order> historyOrders = new ArrayList<>();
     private List<Lists> lists = new ArrayList<>(); //Asocja Client -> Lists (1-*)
+    private Person person;
 
     private static List<Client> extent = new ArrayList<>(); //Ekstensja
 
