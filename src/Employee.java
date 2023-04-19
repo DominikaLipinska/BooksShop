@@ -1,11 +1,10 @@
 import java.time.LocalDate;
 
-abstract class Employee extends Person {
+abstract class Employee extends ObjectPlusPlus {
     private LocalDate empDate;
     private float salary;
 
-    public Employee(String firstName, String latsName, String phoneNumber, String email, Adres adres, LocalDate empDate, float salary) {
-        super(firstName, latsName, phoneNumber, email, adres);
+    public Employee(LocalDate empDate, float salary) {
         this.empDate = empDate;
         this.salary = salary;
     }
