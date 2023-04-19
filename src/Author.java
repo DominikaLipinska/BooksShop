@@ -5,20 +5,18 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Author extends Person implements Serializable  {
+public class Author extends ObjectPlusPlus implements Serializable  {
     private List<Award> awards = new ArrayList<>();//Asocja Author -> Awards (*-*)
     private List<Book> books = new ArrayList<>();//Asocja Author -> Book (1-*)
+    private String pubHouse;
 
     private static List<Author> extent = new ArrayList<>();//Ekstensja
 
-    public Author(String firstName, String latsName) {
-        super(firstName, latsName);
+    public Author(String pubHouse) {
+        this.pubHouse = pubHouse;
         addAuthor(this);
     }
-    public Author(String firstName, String latsName, String phoneNumber, String email, Adres adres) {
-        super(firstName, latsName, phoneNumber, email, adres);
-        addAuthor(this);
-    }
+
 
     //Atrybut wyliczalny
     public int getAwardsNum(){
@@ -68,11 +66,11 @@ public class Author extends Person implements Serializable  {
             }
             System.out.println(info);
         }else {
-            System.out.println(getFirstName()+" "+getLatsName()+" has no awards yet");
+            /*System.out.println(getFirstName()+" "+getLatsName()+" has no awards yet");*/
         }
     }
 
-    //
+    //Asocjacje Author -> Book
     public void addBook(Book book){
         if(!books.isEmpty()){
             if(!books.contains(book)){
@@ -89,6 +87,10 @@ public class Author extends Person implements Serializable  {
         }
     }
 
+    //getery
+    public String getPubHouse() {
+        return pubHouse;
+    }
 
     //Ekstensja trwałość
     public static void writeExtent(ObjectOutputStream stream) throws IOException {
