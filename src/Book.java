@@ -136,11 +136,11 @@ public class Book implements Serializable {
 
     @Override
     public String toString() {
-        String info = "Book: \""+title+"\" " +
+        String info = "Book: \""+title+"\"";  /*+
                 author.getFirstName()+" " +
                 author.getLatsName() +" " + year +
                 " price: " + price +
-                " rabte: " + rabate +"\n" + getChapters();
+                " rabte: " + rabate +"\n" + getChapters();*/
 
 
         return info;
