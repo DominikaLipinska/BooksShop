@@ -1,20 +1,21 @@
 import java.time.LocalDate;
 
 public class Salesman extends Employee{
-    private int overtimeHour;
+    private Integer overtimeHours;
     private static float overtimeRate = 40;
 
-    public Salesman(String firstName, String latsName, String phoneNumber, String email, Adres adres, LocalDate empDate, float salary) {
-        super(firstName, latsName, phoneNumber, email, adres, empDate, salary);
+    public Salesman(LocalDate empDate, float salary, Integer overtimeHours) {
+        super(empDate, salary);
+        this.overtimeHours = overtimeHours;
     }
 
-    public Salesman(String firstName, String latsName, String phoneNumber, String email, Adres adres, LocalDate empDate, float salary, int overtimeHour) {
-        this(firstName, latsName, phoneNumber, email, adres, empDate, salary);
-        this.overtimeHour = overtimeHour;
+    //Gettery
+    public Integer getOvertimeHours() {
+        return overtimeHours;
     }
 
     @Override
     public float getIncome() {
-        return getSalary() + overtimeHour*overtimeRate;
+        return getSalary() + overtimeHours*overtimeRate;
     }
 }
