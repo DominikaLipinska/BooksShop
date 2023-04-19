@@ -10,6 +10,7 @@ public class Client extends ObjectPlusPlus {
     private boolean loyaltyCard;
 
     private static List<Client> extent = new ArrayList<>(); //Ekstensja
+    private static String roleNameGeneralization = "generalization";
 
     public Client(boolean loyaltyCard) {
         this.loyaltyCard = loyaltyCard;
@@ -32,6 +33,16 @@ public class Client extends ObjectPlusPlus {
 
         for (Client client : extent) {
             System.out.println(client);
+        }
+    }
+
+    //Gettery
+    public Person getPerson() throws Exception{
+        try {
+            ObjectPlusPlus[] obj = this.getLinks(roleNameGeneralization);
+            return  (Person)obj[0];
+        }catch (Exception e){
+            throw new Exception("The object ist not person");
         }
     }
 
@@ -60,7 +71,6 @@ public class Client extends ObjectPlusPlus {
     }
 
     //Ekstensja Trwałość
-
     public static void writeExtent(ObjectOutputStream stream) throws IOException {
         stream.writeObject(extent);
     }
@@ -70,7 +80,13 @@ public class Client extends ObjectPlusPlus {
 
     @Override
     public String toString() {
-        String info = /*super.toString() + */"Your saved lists: \n";
+        String info ="";
+        try {
+            info+=getPerson();
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+        info+="Your saved lists: \n";
         if(lists.isEmpty()){
             info+="You don't have saved lists yet\n";
         }else {
@@ -88,4 +104,6 @@ public class Client extends ObjectPlusPlus {
         }
         return info;
     }
+
+
 }
