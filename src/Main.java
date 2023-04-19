@@ -8,32 +8,39 @@ public class Main {
     public static void main(String[] args) {
         final String extentFile = "extent.ser";
 
-        Person author1 = new Person("NameA1","SurnameA1","PubHouse1");
-        Person author2 = new Person("NameA2", "SurnameA2","PubHouse2");
+        Adres adres1 = new Adres("City2","Street1",12);
 
-        System.out.println(author1);
+        Person author1 = new Person("NameA1","SurnameA1","167-346-145","namea1surnamea1@gmail.com",adres1,
+                "PubHouse1");
+        Person author2 = new Person("NameA2", "SurnameA2","641-427-885","namea2surnamea2@gmail.com",adres1,
+                "PubHouse2");
+
+        author1.addClient(true);
+        author1.addInstructor(new ArrayList<>(Arrays.asList("Quali2", "Quali3")));
 
         Award award1 = new Award("Award1", 2023);
         Award award2 = new Award("Award2",2015);
         Award award3 = new Award("Award3",2020);
 
-        /*author2.addAward(award1);
-        author1.addAward(award1);
-        author1.addAward(award2);
-        author2.addAward(award3);*/
+        try {
+            author2.getAuthor().addAward(award1);
+            author1.getAuthor().addAward(award1);
+            author1.getAuthor().addAward(award2);
+            author2.getAuthor().addAward(award3);
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+
 
         /*Book book1 = new Book("51245","T1",author1,2020,12);
         Book book2 = new Book("12345","T2",author2,2023,30,0.2);*/
 
-        Adres adres1 = new Adres("City2","Street1",12);
 
         Person client1 = new Person("NameC1","SurnameC1","123-456-148",
                 "namec1surnamec1@gmail.com",new Adres("City1","Street1",10),true);
 
         Person client2 = new Person("NameC2","SurnameC2","153-678-748",
                 "namec2surnamec2@gmail.com",new Adres("City1","Street1",20),false);
-
-        System.out.println(client1);
 
         /*Lists list1 = client1.addList("List1");
         Lists list2 = new Lists("List2",client1);
@@ -68,27 +75,23 @@ public class Main {
         Person salesman2 = new Person("NameS2","SurnameS2","393-164-147","names2surnames2@gmail.com",adres1,
                 LocalDate.of(2012,6,14),3906.85f,6);
 
-        System.out.println(manager);
-        System.out.println(salesman1);
-        System.out.println(salesman2);
-
 
         Workshop workshop1 = new Workshop("WorshopName1", LocalDateTime.now(),120);
         Workshop workshop2 = new Workshop("WorkshopName2",LocalDateTime.now(),200);
 
         Person instructor1 = new Person("NameI1", "SurnameI1","645-497-145","namei1surnamei1@gmail.com",adres1,
-                new ArrayList<String>(Arrays.asList("Quali1", "Quali2", "Quali3")));
+                new ArrayList<>(Arrays.asList("Quali1", "Quali2", "Quali3")));
         Person instructor2 = new Person("NameI2", "SurnameI2","784-986-152","namei2surnamei2@gmail.com",adres1,
-                new ArrayList<String>(Arrays.asList("Quali4")));
+                new ArrayList<>(Arrays.asList("Quali4")));
 
-        System.out.println(instructor1);
-        System.out.println(instructor2);
+        instructor1.addClient(false);
 
-        //WorkshopInstructor workshopInstructor1 = new WorkshopInstructor(1000,workshop1,instructor1);
-        //WorkshopInstructor workshopInstructor2a = new WorkshopInstructor(600,workshop2,instructor1);
-        //WorkshopInstructor workshopInstructor2b = new WorkshopInstructor(600,workshop2,instructor2);
+        /*WorkshopInstructor workshopInstructor1 = new WorkshopInstructor(1000,workshop1,instructor1);
+        WorkshopInstructor workshopInstructor2a = new WorkshopInstructor(600,workshop2,instructor1);
+        WorkshopInstructor workshopInstructor2b = new WorkshopInstructor(600,workshop2,instructor2);*/
 
-        /*//Asocjacja z atrybutem
+        //Asocjacja z atrybutem
+        /*
         Instructor.showExtent();
         Workshop.showExtent();
 
@@ -110,7 +113,8 @@ public class Main {
         list3.addBookQualif(book2);
         list3.addBookQualif(book2);*/
 
-        /*//Asocjacja kwalifikowana
+        //Asocjacja kwalifikowana
+        /*
         Lists.showExtent();
         Book.showExtent();
 
@@ -126,7 +130,8 @@ public class Main {
         Lists.showExtent();
         Book.showExtent();*/
 
-        /*//Kompozycja
+        //Kompozycja
+        /*
         try {
             Chapter chapter1 = book1.createChapter("Chapter1");
             Chapter chapter2 = book1.createChapter("Chapter2");
@@ -170,16 +175,23 @@ public class Main {
             Book.writeExtent(out);
             Author.writeExtent(out);
             Workshop.writeExtent(out);
+            Salesman.writeExtent(out);
             out.close();
 
             var in = new ObjectInputStream(new FileInputStream(extentFile));
             Book.readExtent(in);
             Author.readExtent(in);
             Workshop.readExtent(in);
+            Salesman.readExtent(in);
             in.close();
         }catch (IOException | ClassNotFoundException e){
             e.printStackTrace();
         }
+
+        Author.showExtent();
+        Client.showExtent();
+        Salesman.showExtent();
+        Manager.showExtent();
 
     }
 }
