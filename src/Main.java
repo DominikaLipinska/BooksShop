@@ -32,8 +32,18 @@ public class Main {
         }
 
 
-        /*Book book1 = new Book("51245","T1",author1,2020,12);
-        Book book2 = new Book("12345","T2",author2,2023,30,0.2);*/
+        try {
+            Book book1 = new Book("51245","T1",author1.getAuthor(),2020,12);
+            Book book2 = new Book("12345","T2",author2.getAuthor(),2023,30,0.2);
+
+            BookWithFilms bookWF1 = new BookWithFilms("12536","TitleWF1",author2.getAuthor(),2016,100,"DVD");
+            KidsBook kidsBook1 = new KidsBook("12467","TitleKB1", author1.getAuthor(),2020,30,false );
+            Film film1 = Film.createFilm(bookWF1,"TitleF1",120);
+            Series series1 = Series.createSeries(book1,"TitleS1",4);
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+
 
 
         Person client1 = new Person("NameC1","SurnameC1","123-456-148",
@@ -195,9 +205,11 @@ public class Main {
         /*Author.showExtent();
         Client.showExtent();
         Salesman.showExtent();
-        Manager.showExtent();*/
-
+        Manager.showExtent();
         Event.showExtent();
+         */
+
+        Book.showExtent();
 
     }
 }

@@ -15,6 +15,8 @@ public class Book implements Serializable {
     private List<Lists> lists = new ArrayList<>(); //Asocjacja Book -> isbn | Lists (kwalifikowana)
     private List<Chapter> chapters = new ArrayList<>();//Asocjacja Book -> Chapter (kompozycja)
     private static Set<Chapter> allChapters = new HashSet<>();//Asocjacja Book -> Chapter (kompozycja)
+    private List<Screening> screenings = new ArrayList<>();
+    private static  Set<Screening> allScreenings = new HashSet<>();
 
     private static List<Book> extent = new ArrayList<>();//Ekstensja
 
@@ -30,6 +32,16 @@ public class Book implements Serializable {
     public Book(String isbn,String title,Author author, int year, float price, Double rabate) {
         this(isbn,title,author,year,price);
         this.rabate = rabate;
+    }
+
+    public void addScreening(Screening screening) throws Exception{
+        if(!screenings.contains(screening)){
+            if(allScreenings.contains(screening)){
+                throw  new Exception("The Screening is already connected with Book!");
+            }
+            screenings.add(screening);
+            allScreenings.add(screening);
+        }
     }
 
     //Ekstensja
@@ -106,6 +118,19 @@ public class Book implements Serializable {
         }
         return info;
     }
+
+    public String getScreening(){
+        String info = "Screening: \n";
+        if(screenings.isEmpty()){
+            info += title + " has not screening\n";
+        }else{
+            for (Screening screening : screenings ) {
+                info+=screening+"\n";
+            }
+        }
+        return info;
+    }
+
     public void showChapters(){
         System.out.println(getChapters());
     }
@@ -136,12 +161,15 @@ public class Book implements Serializable {
 
     @Override
     public String toString() {
-        String info = "Book: \""+title+"\"";  /*+
-                author.getFirstName()+" " +
-                author.getLatsName() +" " + year +
-                " price: " + price +
-                " rabte: " + rabate +"\n" + getChapters();*/
-
+        String info = this.getClass().getName()+": \""+title+"\" ";
+        try {
+            info += author.getPerson().getFirstName()+" " +
+                    author.getPerson().getLatsName() +" " + year +
+                    "\nprice: " + price +
+                    "\nrabte: " + rabate +"\n" + getChapters() + getScreening();
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
 
         return info;
     }
