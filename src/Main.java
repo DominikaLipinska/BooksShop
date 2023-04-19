@@ -211,8 +211,10 @@ public class Main {
             manager = (new Salesman(manager.getEmployee(),15)).getPerson();
             System.out.println("*****************************");
 
+
             Salesman.showExtent();
             Manager.showExtent();
+
 
         } catch (Exception exception) {
             exception.printStackTrace();
