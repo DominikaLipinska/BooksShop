@@ -11,6 +11,7 @@ public class Author extends ObjectPlusPlus implements Serializable  {
     private String pubHouse;
 
     private static List<Author> extent = new ArrayList<>();//Ekstensja
+    private static String roleNameGeneralization = "generalization";
 
     public Author(String pubHouse) {
         this.pubHouse = pubHouse;
@@ -88,6 +89,14 @@ public class Author extends ObjectPlusPlus implements Serializable  {
     }
 
     //getery
+    public Person getPerson() throws Exception{
+        try {
+            ObjectPlusPlus[] obj = this.getLinks(roleNameGeneralization);
+            return  (Person)obj[0];
+        }catch (Exception e){
+            throw new Exception("The object ist not person");
+        }
+    }
     public String getPubHouse() {
         return pubHouse;
     }
@@ -101,8 +110,13 @@ public class Author extends ObjectPlusPlus implements Serializable  {
     }
 
     @Override
-    public String toString() {
-        String info = super.toString();
+    public String toString(){
+        String info = "";
+        try {
+            info += getPerson();
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
         if(!books.isEmpty()){
             info+="Books:\n";
             for (Book book:books) {
@@ -118,4 +132,6 @@ public class Author extends ObjectPlusPlus implements Serializable  {
         }
         return info;
     }
+
+
 }
