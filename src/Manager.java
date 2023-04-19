@@ -8,9 +8,24 @@ import java.util.List;
 public class Manager extends Employee{
     public Float salSupplement;
 
+
     public Manager(LocalDate empDate, float salary,Float salSupplement) {
         super(empDate, salary);
         this.salSupplement = salSupplement;
+        addManager(this);
+    }
+
+    public Manager(Employee prevEmployee,Float salSupplement){
+        super(prevEmployee.getEmpDate(),prevEmployee.getSalary());
+        this.salSupplement = salSupplement;
+        if(prevEmployee.getClass()==Salesman.class){
+            ((Salesman)prevEmployee).removeSalesman();
+        }
+        try {
+            prevEmployee.getPerson().addLink(roleNameEmployee,roleNameGeneralization,this);
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
         addManager(this);
     }
 

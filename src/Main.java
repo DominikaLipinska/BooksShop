@@ -202,14 +202,26 @@ public class Main {
             e.printStackTrace();
         }
 
-        /*Author.showExtent();
-        Client.showExtent();
+        //Author.showExtent();
+        //Client.showExtent();
         Salesman.showExtent();
         Manager.showExtent();
-        Event.showExtent();
-         */
 
-        Book.showExtent();
+        try {
+            manager = (new Salesman(manager.getEmployee(),15)).getPerson();
+            System.out.println("*****************************");
+
+            Salesman.showExtent();
+            Manager.showExtent();
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+
+
+
+        /*Event.showExtent();
+         Book.showExtent();*/
 
     }
 }
