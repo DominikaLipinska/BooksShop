@@ -13,6 +13,7 @@ class Person extends ObjectPlusPlus implements Serializable {
     private static String roleNameClient = "specializationClient";
     private static String roleNameEmployee = "specializationEmployee";
     private static String roleNameAuthor = "specializationAuthor";
+    private static String roleNameInstructor = "specializationInstructor";
     private static String roleNameGeneralization = "generalization";
 
 
@@ -34,21 +35,21 @@ class Person extends ObjectPlusPlus implements Serializable {
         addClient(loyaltyCard);
     }
     //Author
-    public Person(String firstName, String latsName, String pubHouse) {
-        this(firstName,latsName);
+    public Person(String firstName, String latsName,String phoneNumber,String email, Adres adres, String pubHouse) {
+        this(firstName,latsName,phoneNumber,email,adres);
         addAuthor(pubHouse);
     }
-
-
+    //Manager
     public Person(String firstName, String latsName, String phoneNumber, String email, Adres adres, LocalDate empDate,float sallary,Float sapSuplement) {
         this(firstName,latsName,phoneNumber,email,adres);
         addEmployee(empDate,sallary,sapSuplement);
     }
+    //Salesman
     public Person(String firstName, String latsName, String phoneNumber, String email, Adres adres, LocalDate empDate,float sallary,int overtimeHour) {
         this(firstName,latsName,phoneNumber,email,adres);
         addEmployee(empDate,sallary,overtimeHour);
     }
-
+    //Instructor
     public Person(String firstName, String latsName, String phoneNumber, String email, Adres adres, List<String> qualifications) {
         this(firstName,latsName,phoneNumber,email,adres);
         addInstructor(qualifications);
@@ -73,7 +74,7 @@ class Person extends ObjectPlusPlus implements Serializable {
     }
     public void addInstructor(List<String> qualifications){
         Instructor i = new Instructor(qualifications);
-        this.addLink(roleNameEmployee,roleNameGeneralization,i);
+        this.addLink(roleNameInstructor,roleNameGeneralization,i);
     }
 
     public List<String> getRoles(){
@@ -85,43 +86,71 @@ class Person extends ObjectPlusPlus implements Serializable {
 
         return roles;
     }
+    public Author getAuthor() throws Exception{
+        try {
+            ObjectPlusPlus[] obj = this.getLinks(roleNameAuthor);
+            return (Author)obj[0];
+        }catch (Exception e){
+            throw new Exception("The object is not author");
+        }
+    }
+    public Client getClient() throws Exception{
+        try {
+            ObjectPlusPlus[] obj = this.getLinks(roleNameClient);
+            return (Client)obj[0];
+        }catch (Exception e){
+            throw new Exception("The object is not client");
+        }
+    }
+    public Employee getEmployee() throws Exception{
+        try {
+            ObjectPlusPlus[] obj = this.getLinks(roleNameEmployee);
+            return (Employee)obj[0];
+        }catch (Exception e){
+            throw new Exception("The object is not employee");
+        }
+    }
+    public Instructor getInctructor() throws Exception{
+        try {
+            ObjectPlusPlus[] obj = this.getLinks(roleNameInstructor);
+            return (Instructor)obj[0];
+        }catch (Exception e){
+            throw new Exception("The object is not instructor");
+        }
+    }
 
     public Boolean hasLoyaltyCard(){
         try {
-            ObjectPlusPlus[] obj = this.getLinks(roleNameClient);
-            return ((Client)obj[0]).isLoyaltyCard();
+            return getClient().isLoyaltyCard();
         }catch (Exception e){
             return null;
         }
     }
     public String hasPubHouse(){
         try {
-            ObjectPlusPlus[] obj = this.getLinks(roleNameAuthor);
-            return ((Author)obj[0]).getPubHouse();
+            return getAuthor().getPubHouse();
         }catch (Exception e){
             return null;
         }
     }
     public Float hasSupSuplement(){
         try {
-            ObjectPlusPlus[] obj = this.getLinks(roleNameEmployee);
-            return ((Manager)obj[0]).getSalSupplement();
+            return ((Manager)getEmployee()).getSalSupplement();
         }catch (Exception e){
             return null;
         }
     }
     public Integer hasOvertimeHours(){
         try {
-            ObjectPlusPlus[] obj = this.getLinks(roleNameEmployee);
-            return ((Salesman)obj[0]).getOvertimeHours();
+            return ((Salesman)getEmployee()).getOvertimeHours();
         }catch (Exception e){
             return null;
         }
     }
     public List<String> hasQualifications(){
         try {
-            ObjectPlusPlus[] obj = this.getLinks(roleNameEmployee);
-            return ((Instructor)obj[0]).getQualifications();
+
+            return getInctructor().getQualifications();
         }catch (Exception e){
             return null;
         }
