@@ -76,8 +76,13 @@ public class Main {
         Workshop workshop1 = new Workshop("WorshopName1", LocalDateTime.now(),120);
         Workshop workshop2 = new Workshop("WorkshopName2",LocalDateTime.now(),200);
 
-        //Instructor instructor1 = new Instructor("NameI1", "SurnameI1",new ArrayList<String>(Arrays.asList("Quali1", "Quali2", "Quali3")));
-        //Instructor instructor2 = new Instructor("NameI2", "SurnameI2",new ArrayList<String>(Arrays.asList("Quali4")));
+        Person instructor1 = new Person("NameI1", "SurnameI1","645-497-145","namei1surnamei1@gmail.com",adres1,
+                new ArrayList<String>(Arrays.asList("Quali1", "Quali2", "Quali3")));
+        Person instructor2 = new Person("NameI2", "SurnameI2","784-986-152","namei2surnamei2@gmail.com",adres1,
+                new ArrayList<String>(Arrays.asList("Quali4")));
+
+        System.out.println(instructor1);
+        System.out.println(instructor2);
 
         //WorkshopInstructor workshopInstructor1 = new WorkshopInstructor(1000,workshop1,instructor1);
         //WorkshopInstructor workshopInstructor2a = new WorkshopInstructor(600,workshop2,instructor1);
