@@ -4,20 +4,18 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Client extends Person{
+public class Client extends ObjectPlusPlus {
     private List<Order> historyOrders = new ArrayList<>();
     private List<Lists> lists = new ArrayList<>(); //Asocja Client -> Lists (1-*)
+    private boolean loyaltyCard;
 
     private static List<Client> extent = new ArrayList<>(); //Ekstensja
 
-    public Client(String firstName, String latsName) {
-        super(firstName, latsName);
+    public Client(boolean loyaltyCard) {
+        this.loyaltyCard = loyaltyCard;
         addClient(this);
     }
-    public Client(String firstName, String latsName, String phoneNumber, String email, Adres adres) {
-        super(firstName, latsName, phoneNumber, email, adres);
-        addClient(this);
-    }
+
 
     //Ekstensja
     private void addClient(Client client){
@@ -57,6 +55,10 @@ public class Client extends Person{
 
     }
 
+    public boolean isLoyaltyCard(){
+        return loyaltyCard;
+    }
+
     //Ekstensja Trwałość
 
     public static void writeExtent(ObjectOutputStream stream) throws IOException {
@@ -68,7 +70,7 @@ public class Client extends Person{
 
     @Override
     public String toString() {
-        String info = super.toString() + "Your saved lists: \n";
+        String info = /*super.toString() + */"Your saved lists: \n";
         if(lists.isEmpty()){
             info+="You don't have saved lists yet\n";
         }else {
