@@ -45,8 +45,8 @@ public class Workshop extends Event {
         if(!workIns.isEmpty()){
             info+= "Instructors:\n";
             for (WorkshopInstructor workIn:workIns) {
-                info+= workIn.getInstructor().getFirstName() +
-                        " "+workIn.getInstructor().getLatsName()+"\n";
+                /*info+= workIn.getInstructor().getFirstName() +
+                        " "+workIn.getInstructor().getLatsName()+"\n";*/
             }
         }
         return info;
