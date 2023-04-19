@@ -1,4 +1,5 @@
 import java.io.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -7,32 +8,39 @@ public class Main {
     public static void main(String[] args) {
         final String extentFile = "extent.ser";
 
-        Author author1 = new Author("NameA1","SurnameA1",null,"name1s1@gmail.com",null);
-        Author author2 = new Author("NameA2", "SurnameA2");
+        Person author1 = new Person("NameA1","SurnameA1","PubHouse1");
+        Person author2 = new Person("NameA2", "SurnameA2","PubHouse2");
+
+        System.out.println(author1);
 
         Award award1 = new Award("Award1", 2023);
         Award award2 = new Award("Award2",2015);
         Award award3 = new Award("Award3",2020);
-        author2.addAward(award1);
+
+        /*author2.addAward(award1);
         author1.addAward(award1);
         author1.addAward(award2);
-        author2.addAward(award3);
+        author2.addAward(award3);*/
 
-        Book book1 = new Book("51245","T1",author1,2020,12);
-        Book book2 = new Book("12345","T2",author2,2023,30,0.2);
+        /*Book book1 = new Book("51245","T1",author1,2020,12);
+        Book book2 = new Book("12345","T2",author2,2023,30,0.2);*/
 
-        Client client1 = new Client("NameC1","SurnameC1","123-456-148",
-                "namec1surnamec1@gmail.com",new Adres("City1","Street1",10));
+        Adres adres1 = new Adres("City2","Street1",12);
 
-        Client client2 = new Client("NameC2","SurnameC2","153-678-748",
-                "namec2surnamec2@gmail.com",new Adres("City1","Street1",20));
+        Person client1 = new Person("NameC1","SurnameC1","123-456-148",
+                "namec1surnamec1@gmail.com",new Adres("City1","Street1",10),true);
 
-        Lists list1 = client1.addList("List1");
+        Person client2 = new Person("NameC2","SurnameC2","153-678-748",
+                "namec2surnamec2@gmail.com",new Adres("City1","Street1",20),false);
+
+        System.out.println(client1);
+
+        /*Lists list1 = client1.addList("List1");
         Lists list2 = new Lists("List2",client1);
         Lists list3 = client1.addList("List3");
 
         client2.addList("List4");
-        client2.addList("List5");
+        client2.addList("List5");*/
 
         /*//Asocjacja "Zwykła"
         Client.showExtent();
@@ -53,15 +61,27 @@ public class Main {
         Client.showExtent();
         Lists.showExtent();*/
 
+        Person manager = new Person("NameM1","SurnameM1","245-548-145","namem1surnamem1@gmail.com",adres1,
+                LocalDate.of(2008,12,6),4956.25f,250f);
+        Person salesman1 = new Person("NameS1","SurnameS1","543-178-164","names1surnames1@gmail.com",adres1,
+                LocalDate.of(2012,6,14),3956.25f,10);
+        Person salesman2 = new Person("NameS2","SurnameS2","393-164-147","names2surnames2@gmail.com",adres1,
+                LocalDate.of(2012,6,14),3906.85f,6);
+
+        System.out.println(manager);
+        System.out.println(salesman1);
+        System.out.println(salesman2);
+
+
         Workshop workshop1 = new Workshop("WorshopName1", LocalDateTime.now(),120);
         Workshop workshop2 = new Workshop("WorkshopName2",LocalDateTime.now(),200);
 
-        Instructor instructor1 = new Instructor("NameI1", "SurnameI1",new ArrayList<String>(Arrays.asList("Quali1", "Quali2", "Quali3")));
-        Instructor instructor2 = new Instructor("NameI2", "SurnameI2",new ArrayList<String>(Arrays.asList("Quali4")));
+        //Instructor instructor1 = new Instructor("NameI1", "SurnameI1",new ArrayList<String>(Arrays.asList("Quali1", "Quali2", "Quali3")));
+        //Instructor instructor2 = new Instructor("NameI2", "SurnameI2",new ArrayList<String>(Arrays.asList("Quali4")));
 
-        WorkshopInstructor workshopInstructor1 = new WorkshopInstructor(1000,workshop1,instructor1);
-        WorkshopInstructor workshopInstructor2a = new WorkshopInstructor(600,workshop2,instructor1);
-        WorkshopInstructor workshopInstructor2b = new WorkshopInstructor(600,workshop2,instructor2);
+        //WorkshopInstructor workshopInstructor1 = new WorkshopInstructor(1000,workshop1,instructor1);
+        //WorkshopInstructor workshopInstructor2a = new WorkshopInstructor(600,workshop2,instructor1);
+        //WorkshopInstructor workshopInstructor2b = new WorkshopInstructor(600,workshop2,instructor2);
 
         /*//Asocjacja z atrybutem
         Instructor.showExtent();
@@ -79,11 +99,11 @@ public class Main {
         Instructor.showExtent();
         Workshop.showExtent();*/
 
-        list1.addBookQualif(book1);
+        /*list1.addBookQualif(book1);
         list1.addBookQualif(book2);
         list2.addBookQualif(book1);
         list3.addBookQualif(book2);
-        list3.addBookQualif(book2);
+        list3.addBookQualif(book2);*/
 
         /*//Asocjacja kwalifikowana
         Lists.showExtent();
