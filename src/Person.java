@@ -49,6 +49,12 @@ class Person extends ObjectPlusPlus implements Serializable {
         addEmployee(empDate,sallary,overtimeHour);
     }
 
+    public Person(String firstName, String latsName, String phoneNumber, String email, Adres adres, List<String> qualifications) {
+        this(firstName,latsName,phoneNumber,email,adres);
+        addInstructor(qualifications);
+    }
+
+
     public void addClient(boolean loyaltyCard) {
         Client c = new Client(loyaltyCard);
         this.addLink(roleNameClient,roleNameGeneralization,c);
@@ -65,18 +71,18 @@ class Person extends ObjectPlusPlus implements Serializable {
         Employee e = new Salesman(empDate,sallary,overtimeHours);
         this.addLink(roleNameEmployee,roleNameGeneralization,e);
     }
+    public void addInstructor(List<String> qualifications){
+        Instructor i = new Instructor(qualifications);
+        this.addLink(roleNameEmployee,roleNameGeneralization,i);
+    }
 
     public List<String> getRoles(){
         List<String> roles = new ArrayList<>();
-        if(hasLoyaltyCard()!= null){
-            roles.add("Client");
-        }
-        if (hasPubHouse()!=null){
-            roles.add("Author");
-        }
-        if (hasOvertimeHours()!= null || hasSupSuplement()!= null){
-            roles.add("Employee");
-        }
+        if(hasLoyaltyCard()!= null){ roles.add("Client"); }
+        if (hasPubHouse()!=null){ roles.add("Author"); }
+        if (hasOvertimeHours()!= null || hasSupSuplement()!= null){ roles.add("Employee"); }
+        if (hasQualifications()!=null){ roles.add("Instructor"); }
+
         return roles;
     }
 
@@ -112,6 +118,14 @@ class Person extends ObjectPlusPlus implements Serializable {
             return null;
         }
     }
+    public List<String> hasQualifications(){
+        try {
+            ObjectPlusPlus[] obj = this.getLinks(roleNameEmployee);
+            return ((Instructor)obj[0]).getQualifications();
+        }catch (Exception e){
+            return null;
+        }
+    }
 
     public String getFirstName() {
         return firstName;
@@ -137,6 +151,7 @@ class Person extends ObjectPlusPlus implements Serializable {
         if(hasPubHouse()!=null){ result += "publishing house: " + hasPubHouse() +"\n"; }
         if (hasSupSuplement()!=null){ result += "supSuplement: " + hasSupSuplement() + "\n"; }
         if (hasOvertimeHours()!=null){ result += "overtime hours: " + hasOvertimeHours() + "\n"; }
+        if (hasQualifications()!=null) { result += "qualificatins: " + hasQualifications() + "\n"; }
 
         return result;
     }
