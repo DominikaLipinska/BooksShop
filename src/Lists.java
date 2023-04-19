@@ -76,10 +76,10 @@ public class Lists implements Serializable {
 
     @Override
     public String toString() {
-        String info = name + " ("+client.getFirstName()+" "+client.getLatsName()+")\n";
+        String info = name + " ("+/*client.getFirstName()+" "+client.getLatsName()+*/")\n";
         if(!booksQualif.isEmpty()){
             for (Book book:booksQualif.values()) {
-                info += book.getTitle() +" "+book.getAurhor().getFirstName()+" "+book.getAurhor().getLatsName() + "\n";
+                /*info += book.getTitle() +" "+book.getAurhor().getFirstName()+" "+book.getAurhor().getLatsName() + "\n";*/
             }
         }
         return info;
