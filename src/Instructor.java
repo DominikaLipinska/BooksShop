@@ -10,6 +10,7 @@ public class Instructor extends ObjectPlusPlus implements Serializable {
     private List<WorkshopInstructor> workIns = new ArrayList<>();//Asocjacja Workshop -> Instructor (z atrybutem)
 
     private static List<Instructor> extent = new ArrayList<>();//Ekstensja
+    private static String roleNameGeneralization = "generalization";
 
     public Instructor(List<String> qualifications ) {
         this.qualifications = qualifications;
@@ -47,6 +48,14 @@ public class Instructor extends ObjectPlusPlus implements Serializable {
     public List<String> getQualifications() {
         return qualifications;
     }
+    public Person getPerson() throws Exception{
+        try {
+            ObjectPlusPlus[] obj = this.getLinks(roleNameGeneralization);
+            return  (Person)obj[0];
+        }catch (Exception e){
+            throw new Exception("The object ist not person");
+        }
+    }
 
     //Ekstencja trwałość
     public static void writeExtent(ObjectOutputStream stream) throws IOException {
@@ -58,7 +67,12 @@ public class Instructor extends ObjectPlusPlus implements Serializable {
 
     @Override
     public String toString() {
-        String info = super.toString();
+        String info = "";
+        try {
+            info+= getPerson();
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
         if(!qualifications.isEmpty()){
             info += "Qualifications:\n";
             for (String quali: qualifications) {
