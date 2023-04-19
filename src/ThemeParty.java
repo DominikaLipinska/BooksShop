@@ -13,6 +13,7 @@ public class ThemeParty extends Event{
     public ThemeParty(String name, LocalDateTime date, float price, String topic) {
         super(name, date, price);
         this.topic=topic;
+        addThemeParty(this);
     }
 
     private void addThemeParty(ThemeParty party){
@@ -36,7 +37,7 @@ public class ThemeParty extends Event{
 
     @Override
     public String toString() {
-        String info = super.toString() + "\n"+ "Topic: " + topic + "\n";
+        String info = super.toString() + "Topic: " + topic + "\n";
         return info;
     }
 }

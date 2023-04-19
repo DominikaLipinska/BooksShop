@@ -61,7 +61,7 @@ abstract public class Event implements Serializable {
     public String toString() {
         String info =this.getClass().getName() +": " + name+" " +
                 date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy kk:mm"))+"\n" +
-                " price: " + price + "\n";
+                "Price: " + price + "\n";
         return info;
     }
 }

@@ -86,6 +86,10 @@ public class Main {
 
         instructor1.addClient(false);
 
+        AuthorsMeeting meeting1 = new AuthorsMeeting("NameAM1",LocalDateTime.now().minusDays(3).minusMinutes(150),150,true);
+
+        ThemeParty party1 = new ThemeParty("NameTP1", LocalDateTime.now().minusHours(150).minusMinutes(48),30,"TopicP1");
+
         /*WorkshopInstructor workshopInstructor1 = new WorkshopInstructor(1000,workshop1,instructor1);
         WorkshopInstructor workshopInstructor2a = new WorkshopInstructor(600,workshop2,instructor1);
         WorkshopInstructor workshopInstructor2b = new WorkshopInstructor(600,workshop2,instructor2);*/
@@ -188,10 +192,12 @@ public class Main {
             e.printStackTrace();
         }
 
-        Author.showExtent();
+        /*Author.showExtent();
         Client.showExtent();
         Salesman.showExtent();
-        Manager.showExtent();
+        Manager.showExtent();*/
+
+        Event.showExtent();
 
     }
 }

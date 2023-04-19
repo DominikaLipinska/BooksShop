@@ -37,7 +37,7 @@ public class AuthorsMeeting extends Event {
 
     @Override
     public String toString() {
-        String info = super.toString() + "\n"+ "Has treats: " + treats + "\n";
+        String info = super.toString() + "Has treats: " + treats + "\n";
         return info;
     }
 }
