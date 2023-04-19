@@ -43,6 +43,10 @@ public class Instructor extends ObjectPlusPlus implements Serializable {
         return workIns;
     }
 
+    //Gettery
+    public List<String> getQualifications() {
+        return qualifications;
+    }
 
     //Ekstencja trwałość
     public static void writeExtent(ObjectOutputStream stream) throws IOException {
