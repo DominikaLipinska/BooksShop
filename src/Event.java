@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class Event implements Serializable {
+abstract public class Event implements Serializable {
     private String name;
     private LocalDateTime date;
     private float price;
@@ -53,10 +53,14 @@ public class Event implements Serializable {
         extent = (ArrayList<Event>) stream.readObject();
     }
 
+    public void getInformation() {
+        System.out.println("Information about "+this);
+    }
+
     @Override
     public String toString() {
         String info =this.getClass().getName() +": " + name+" " +
-                date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy kk:mm"))+" " +
+                date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy kk:mm"))+"\n" +
                 " price: " + price + "\n";
         return info;
     }

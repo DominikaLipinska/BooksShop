@@ -31,6 +31,8 @@ public class Workshop extends Event {
         }
     }
 
+
+
     //Asocjacja Workshop -> Instructor (z atrybutem)
     public void addWorkIn(WorkshopInstructor workshopInstructor) {
         workIns.add(workshopInstructor);
@@ -45,8 +47,12 @@ public class Workshop extends Event {
         if(!workIns.isEmpty()){
             info+= "Instructors:\n";
             for (WorkshopInstructor workIn:workIns) {
-                /*info+= workIn.getInstructor().getFirstName() +
-                        " "+workIn.getInstructor().getLatsName()+"\n";*/
+                try {
+                    info+= workIn.getInstructor().getPerson().getFirstName() +
+                            " "+workIn.getInstructor().getPerson().getLatsName()+"\n";
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
             }
         }
         return info;
