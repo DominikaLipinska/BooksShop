@@ -5,22 +5,17 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Instructor extends Person implements Serializable {
+public class Instructor extends ObjectPlusPlus implements Serializable {
     private List<String> qualifications;
     private List<WorkshopInstructor> workIns = new ArrayList<>();//Asocjacja Workshop -> Instructor (z atrybutem)
 
     private static List<Instructor> extent = new ArrayList<>();//Ekstensja
 
-    public Instructor(String firstName, String latsName, List<String> qualifications ) {
-        super(firstName, latsName);
+    public Instructor(List<String> qualifications ) {
         this.qualifications = qualifications;
         addInstructor(this);
     }
-    public Instructor(String firstName, String latsName, String phoneNumber, String email, Adres adres,List<String> qualifications) {
-        super(firstName, latsName, phoneNumber, email, adres);
-        this.qualifications = qualifications;
-        addInstructor(this);
-    }
+
 
     //Elstensja
     private void addInstructor(Instructor instructor){
