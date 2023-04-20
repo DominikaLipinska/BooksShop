@@ -25,7 +25,7 @@ public class KidsBook extends Book{
         extent.add(book);
     }
     public void addKidsBookWithFilms(KidsBookWithFilms kidsBookWithFilms) throws Exception{
-        if(this.kidsBookWithFilms!= null){
+        if(this.kidsBookWithFilms== null){
             this.kidsBookWithFilms = kidsBookWithFilms;
         }else {
             throw new Exception("KidsBook has already KidsBookFilms!");

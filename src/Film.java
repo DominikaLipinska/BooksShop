@@ -2,14 +2,14 @@ import java.io.Serializable;
 
 public class Film extends Screening  {
     private static Object Film;
-    private int duration;
+    private Integer duration;
 
-    private Film(Book book,String title,int duration) {
+    private Film(Book book,String title,Integer duration) {
         super(book,title);
         this.duration = duration;
     }
 
-    public static Film createFilm(Book book, String title,int duration) throws Exception{
+    public static Film createFilm(Book book, String title,Integer duration) throws Exception{
         if(book == null){
             throw new Exception("Book not exist!");
         }
@@ -23,7 +23,13 @@ public class Film extends Screening  {
     @Override
     public String toString() {
         String info = super.toString();
-        info+= "Duration: " + duration + "min" + "\n";
+        String dur = "";
+        if(duration==null){
+            dur = "Unknown";
+        }else {
+            dur = duration.toString();
+        }
+        info+= "Duration: " + dur + "min" + "\n";
         return info;
     }
 }
