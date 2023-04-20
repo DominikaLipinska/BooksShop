@@ -53,13 +53,11 @@ abstract public class Event implements Serializable {
         extent = (ArrayList<Event>) stream.readObject();
     }
 
-    public void getInformation() {
-        System.out.println("Information about "+this);
-    }
+    public abstract void getUniqueInformation();
 
     @Override
     public String toString() {
-        String info =this.getClass().getName() +": " + name+" " +
+        String info = this.getClass().getName() + ": " + name+" " +
                 date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy kk:mm"))+"\n" +
                 "Price: " + price + "\n";
         return info;

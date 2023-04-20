@@ -34,6 +34,13 @@ public class AuthorsMeeting extends Event {
         extent = (ArrayList<AuthorsMeeting>) stream.readObject();
     }
 
+    @Override
+    public void getUniqueInformation() {
+        System.out.println("Unique information about "+this.getName() + ": \n"
+                + "Has Treats: " + treats );
+
+    }
+
 
     @Override
     public String toString() {

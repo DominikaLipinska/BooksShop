@@ -112,4 +112,6 @@ public abstract class ObjectPlusPlus extends ObjectPlus implements Serializable 
 
         return objectLinks.get(qualifier);
     }
+
+
 }

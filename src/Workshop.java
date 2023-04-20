@@ -31,6 +31,11 @@ public class Workshop extends Event {
         }
     }
 
+    @Override
+    public void getUniqueInformation() {
+        System.out.println("Unique information about "+this.getName() + ": \n"
+                + "Min Members: " + minMembers );
+    }
 
 
     //Asocjacja Workshop -> Instructor (z atrybutem)

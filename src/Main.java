@@ -209,15 +209,10 @@ public class Main {
         //Client.showExtent();
         //Salesman.showExtent();
         //Manager.showExtent();
-        Book.showExtent();
+        //Book.showExtent();
 
         try {
-            manager = (new Salesman(manager.getEmployee(),15)).getPerson();
-            System.out.println("*****************************");
 
-
-            //Salesman.showExtent();
-            //Manager.showExtent();
 
 
         } catch (Exception exception) {
@@ -226,8 +221,9 @@ public class Main {
 
 
 
-        /*Event.showExtent();
-         Book.showExtent();*/
+        Event.showExtent();
+
+        //Book.showExtent();
 
     }
 }

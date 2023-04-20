@@ -16,21 +16,6 @@ public class Salesman extends Employee{
         addSalesman(this);
     }
 
-    public Salesman(Employee prevEmployee,Integer overtimeHours){
-        super(prevEmployee.getEmpDate(),prevEmployee.getSalary());
-        this.overtimeHours = overtimeHours;
-        if(prevEmployee.getClass()==Manager.class){
-            ((Manager)prevEmployee).removeManager();
-        }
-        try {
-            prevEmployee.getPerson().addLink(roleNameEmployee,roleNameGeneralization,this);
-        } catch (Exception exception) {
-            exception.printStackTrace();
-        }
-        addSalesman(this);
-
-    }
-
     private static List<Salesman> extent = new ArrayList<>(); //Ekstensja
 
     //Ekstensja

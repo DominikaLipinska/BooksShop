@@ -68,19 +68,9 @@ class Person extends ObjectPlusPlus implements Serializable {
         Employee e = new Manager(empDate,sallary,supSuplement);
         this.addLink(roleNameEmployee,roleNameGeneralization,e);
     }
-    public void addEmloyee(Employee prevEmployee,Float supSuplement){
-        Employee e = new Manager(prevEmployee, supSuplement);
-        this.addLink(roleNameEmployee,roleNameGeneralization,e);
-        ((Salesman)prevEmployee).removeSalesman();
-    }
     public void addEmployee(LocalDate empDate,float sallary, Integer overtimeHours){
         Employee e = new Salesman(empDate,sallary,overtimeHours);
         this.addLink(roleNameEmployee,roleNameGeneralization,e);
-    }
-    public void addEmloyee(Employee prevEmployee,Integer overtimeHours){
-        Employee e = new Salesman(prevEmployee, overtimeHours);
-        this.addLink(roleNameEmployee,roleNameGeneralization,e);
-        ((Manager)prevEmployee).removeManager();
     }
     public void addInstructor(List<String> qualifications){
         Instructor i = new Instructor(qualifications);

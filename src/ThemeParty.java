@@ -34,6 +34,12 @@ public class ThemeParty extends Event{
         extent = (ArrayList<ThemeParty>) stream.readObject();
     }
 
+    @Override
+    public void getUniqueInformation() {
+        System.out.println("Unique information about "+this.getName() + ": \n"
+                + "Topic: " + topic );
+    }
+
 
     @Override
     public String toString() {
