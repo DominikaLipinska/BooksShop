@@ -12,13 +12,11 @@ public class BookWithFilms extends Book{
     public BookWithFilms(String isbn, String title, Author author, int year, float price,String discType) {
         super(isbn, title, author, year, price);
         this.discType = discType;
-        addBook(this);
     }
 
     public BookWithFilms(String isbn, String title, Author author, int year, float price, Double rabate,String discType) {
         super(isbn, title, author, year, price, rabate);
         this.discType = discType;
-        addBook(this);
     }
 
     //Ekstensja

@@ -33,13 +33,16 @@ public class Main {
 
 
         try {
-            Book book1 = new Book("51245","T1",author1.getAuthor(),2020,12);
-            Book book2 = new Book("12345","T2",author2.getAuthor(),2023,30,0.2);
+            Book book1 = new Book("51245","T1",author1.getAuthor(),2020,12f);
+            Book book2 = new Book("12345","T2",author2.getAuthor(),2023,30f,0.2);
 
             BookWithFilms bookWF1 = new BookWithFilms("12536","TitleWF1",author2.getAuthor(),2016,100,"DVD");
-            KidsBook kidsBook1 = new KidsBook("12467","TitleKB1", author1.getAuthor(),2020,30,false );
+            KidsBook kidsBook1 = new KidsBook("12467","TitleKB1", author1.getAuthor(),2020,30f,false );
             Film film1 = Film.createFilm(bookWF1,"TitleF1",120);
             Series series1 = Series.createSeries(book1,"TitleS1",4);
+
+            KidsBookWithFilms kidsBookWF1 = new KidsBookWithFilms("30142","TitleKBWF1",author1.getAuthor(),2018,40f,"DVD",true);
+
         } catch (Exception exception) {
             exception.printStackTrace();
         }
@@ -204,16 +207,17 @@ public class Main {
 
         //Author.showExtent();
         //Client.showExtent();
-        Salesman.showExtent();
-        Manager.showExtent();
+        //Salesman.showExtent();
+        //Manager.showExtent();
+        Book.showExtent();
 
         try {
             manager = (new Salesman(manager.getEmployee(),15)).getPerson();
             System.out.println("*****************************");
 
 
-            Salesman.showExtent();
-            Manager.showExtent();
+            //Salesman.showExtent();
+            //Manager.showExtent();
 
 
         } catch (Exception exception) {

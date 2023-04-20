@@ -8,8 +8,8 @@ public class Book implements Serializable {
     private String isbn; //Asocjacja Book -> isbn | Lists (kwalifikowana)
     private String title;
     private Author author; //Asocja Author -> Book (1-*)
-    private int year;
-    private float price;
+    private Integer year;
+    private Float price;
     private Double rabate;
     private static double maxRabate = 0.3;
     private List<Lists> lists = new ArrayList<>(); //Asocjacja Book -> isbn | Lists (kwalifikowana)
@@ -20,7 +20,7 @@ public class Book implements Serializable {
 
     private static List<Book> extent = new ArrayList<>();//Ekstensja
 
-    public Book(String isbn,String title,Author author, int year, float price) {
+    public Book(String isbn,String title,Author author, Integer year, Float price) {
         this.isbn = isbn;
         this.title = title;
         this.author = author;
@@ -29,7 +29,7 @@ public class Book implements Serializable {
         addBook(this);
         author.addBook(this);
     }
-    public Book(String isbn,String title,Author author, int year, float price, Double rabate) {
+    public Book(String isbn,String title,Author author, Integer year, Float price, Double rabate) {
         this(isbn,title,author,year,price);
         this.rabate = rabate;
     }

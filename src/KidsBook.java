@@ -6,15 +6,16 @@ import java.util.List;
 
 public class KidsBook extends Book{
     private boolean toy;
+    private KidsBookWithFilms kidsBookWithFilms;
 
     private static List<KidsBook> extent = new ArrayList<>();
 
-    public KidsBook(String isbn, String title, Author author, int year, float price,boolean toy) {
+    public KidsBook(String isbn, String title, Author author, Integer year, Float price,boolean toy) {
         super(isbn, title, author, year, price);
         this.toy = toy;
     }
 
-    public KidsBook(String isbn, String title, Author author, int year, float price, Double rabate,boolean toy) {
+    public KidsBook(String isbn, String title, Author author, Integer year, Float price, Double rabate,boolean toy) {
         super(isbn, title, author, year, price, rabate);
         this.toy = toy;
     }
@@ -23,6 +24,16 @@ public class KidsBook extends Book{
     private void addBook(KidsBook book){
         extent.add(book);
     }
+    public void addKidsBookWithFilms(KidsBookWithFilms kidsBookWithFilms) throws Exception{
+        if(this.kidsBookWithFilms!= null){
+            this.kidsBookWithFilms = kidsBookWithFilms;
+        }else {
+            throw new Exception("KidsBook has already KidsBookFilms!");
+        }
+        this.removeBook();
+    }
+
+
     /*public void removeBook(){
         if(chapters.isEmpty()){
             allChapters.removeAll(chapters);
@@ -43,6 +54,8 @@ public class KidsBook extends Book{
         }
     }
 
+    //Gettery
+    public boolean isToy() { return toy; }
 
     //Ekstensja trwałość
     public static void writeExtent(ObjectOutputStream stream) throws IOException {
