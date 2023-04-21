@@ -4,7 +4,7 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Client extends ObjectPlusPlus {
+public class Client extends Roles {
     private List<Order> historyOrders = new ArrayList<>();
     private List<Lists> lists = new ArrayList<>(); //Asocja Client -> Lists (1-*)
     private boolean loyaltyCard;
@@ -12,7 +12,8 @@ public class Client extends ObjectPlusPlus {
     private static List<Client> extent = new ArrayList<>(); //Ekstensja
     private static String roleNameGeneralization = "generalization";
 
-    public Client(boolean loyaltyCard) {
+    public Client(boolean loyaltyCard,Person person) {
+        super(person);
         this.loyaltyCard = loyaltyCard;
         addClient(this);
     }
@@ -37,14 +38,6 @@ public class Client extends ObjectPlusPlus {
     }
 
     //Gettery
-    public Person getPerson() throws Exception{
-        try {
-            ObjectPlusPlus[] obj = this.getLinks(roleNameGeneralization);
-            return  (Person)obj[0];
-        }catch (Exception e){
-            throw new Exception("The object ist not person");
-        }
-    }
 
     //"zwykła"
     public Lists addList(String name){

@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.time.LocalDate;
 
-abstract class Employee extends ObjectPlusPlus {
+abstract class Employee extends Roles implements Serializable {
     private LocalDate empDate;
     private float salary;
 
@@ -8,7 +9,8 @@ abstract class Employee extends ObjectPlusPlus {
     static String roleNameEmployee = "specializationEmployee";
 
 
-    public Employee(LocalDate empDate, float salary) {
+    public Employee(LocalDate empDate, float salary,Person person) {
+        super(person);
         this.empDate = empDate;
         this.salary = salary;
     }
@@ -20,15 +22,13 @@ abstract class Employee extends ObjectPlusPlus {
     public float getSalary() {
         return salary;
     }
-    public Person getPerson() throws Exception{
-        try {
-            ObjectPlusPlus[] obj = this.getLinks(roleNameGeneralization);
-            return  (Person)obj[0];
-        }catch (Exception e){
-            throw new Exception("The object ist not person");
-        }
-    }
+    public void addPerson(){}
 
+
+    @Override
+    public String getRole() {
+        return Employee.class.getName();
+    }
 
     @Override
     public String toString() {

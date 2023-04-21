@@ -9,23 +9,9 @@ public class Manager extends Employee{
     public Float salSupplement;
 
 
-    public Manager(LocalDate empDate, float salary,Float salSupplement) {
-        super(empDate, salary);
+    public Manager(LocalDate empDate, float salary,Float salSupplement,Person person) {
+        super(empDate, salary,person);
         this.salSupplement = salSupplement;
-        addManager(this);
-    }
-
-    public Manager(Employee prevEmployee,Float salSupplement){
-        super(prevEmployee.getEmpDate(),prevEmployee.getSalary());
-        this.salSupplement = salSupplement;
-        if(prevEmployee.getClass()==Salesman.class){
-            ((Salesman)prevEmployee).removeSalesman();
-        }
-        try {
-            prevEmployee.getPerson().addLink(roleNameEmployee,roleNameGeneralization,this);
-        } catch (Exception exception) {
-            exception.printStackTrace();
-        }
         addManager(this);
     }
 
@@ -65,11 +51,18 @@ public class Manager extends Employee{
         return getSalary()+salSupplement;
     }
 
+
+
     @Override
     public String toString() {
         String info = super.toString();
         info += "salSuplement: " + salSupplement +"\n";
 
         return info;
+    }
+
+    @Override
+    public String getRole() {
+        return super.getRole() + "("+ this.getClass().getName()+")";
     }
 }

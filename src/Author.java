@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Author extends ObjectPlusPlus implements Serializable  {
+public class Author extends Roles implements Serializable  {
     private List<Award> awards = new ArrayList<>();//Asocja Author -> Awards (*-*)
     private List<Book> books = new ArrayList<>();//Asocja Author -> Book (1-*)
     private String pubHouse;
@@ -13,11 +13,11 @@ public class Author extends ObjectPlusPlus implements Serializable  {
     private static List<Author> extent = new ArrayList<>();//Ekstensja
     private static String roleNameGeneralization = "generalization";
 
-    public Author(String pubHouse) {
+    public Author(String pubHouse,Person person) {
+        super(person);
         this.pubHouse = pubHouse;
         addAuthor(this);
     }
-
 
     //Atrybut wyliczalny
     public int getAwardsNum(){
@@ -89,14 +89,7 @@ public class Author extends ObjectPlusPlus implements Serializable  {
     }
 
     //getery
-    public Person getPerson() throws Exception{
-        try {
-            ObjectPlusPlus[] obj = this.getLinks(roleNameGeneralization);
-            return  (Person)obj[0];
-        }catch (Exception e){
-            throw new Exception("The object ist not person");
-        }
-    }
+
     public String getPubHouse() {
         return pubHouse;
     }
@@ -134,4 +127,8 @@ public class Author extends ObjectPlusPlus implements Serializable  {
     }
 
 
+    @Override
+    public String getRole() {
+        return this.getClass().getName();
+    }
 }

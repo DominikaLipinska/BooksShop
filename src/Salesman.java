@@ -1,17 +1,18 @@
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Salesman extends Employee{
+public class Salesman extends Employee {
     private Integer overtimeHours;
     private static float overtimeRate = 40;
 
 
-    public Salesman(LocalDate empDate, float salary, Integer overtimeHours) {
-        super(empDate, salary);
+    public Salesman(LocalDate empDate, float salary, Integer overtimeHours,Person person) {
+        super(empDate, salary,person);
         this.overtimeHours = overtimeHours;
         addSalesman(this);
     }
@@ -36,6 +37,11 @@ public class Salesman extends Employee{
     //Gettery
     public Integer getOvertimeHours() {
         return overtimeHours;
+    }
+
+    @Override
+    public String getRole() {
+        return super.getRole()+"(Salesman)";
     }
 
     //Ekstensja Trwałość

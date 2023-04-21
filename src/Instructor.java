@@ -5,14 +5,15 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Instructor extends ObjectPlusPlus implements Serializable {
+public class Instructor extends Roles implements Serializable {
     private List<String> qualifications;
     private List<WorkshopInstructor> workIns = new ArrayList<>();//Asocjacja Workshop -> Instructor (z atrybutem)
 
     private static List<Instructor> extent = new ArrayList<>();//Ekstensja
     private static String roleNameGeneralization = "generalization";
 
-    public Instructor(List<String> qualifications ) {
+    public Instructor(List<String> qualifications, Person person ) {
+        super(person);
         this.qualifications = qualifications;
         addInstructor(this);
     }
@@ -48,14 +49,6 @@ public class Instructor extends ObjectPlusPlus implements Serializable {
     public List<String> getQualifications() {
         return qualifications;
     }
-    public Person getPerson() throws Exception{
-        try {
-            ObjectPlusPlus[] obj = this.getLinks(roleNameGeneralization);
-            return  (Person)obj[0];
-        }catch (Exception e){
-            throw new Exception("The object ist not person");
-        }
-    }
 
     //Ekstencja trwałość
     public static void writeExtent(ObjectOutputStream stream) throws IOException {
@@ -86,5 +79,10 @@ public class Instructor extends ObjectPlusPlus implements Serializable {
             }
         }
         return info;
+    }
+
+    @Override
+    public String getRole() {
+        return this.getClass().getName();
     }
 }

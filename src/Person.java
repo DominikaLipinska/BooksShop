@@ -1,32 +1,66 @@
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-class Person extends ObjectPlusPlus implements Serializable {
+class Person implements Serializable {
     private String firstName;
     private String latsName;
     private  String phoneNumber;
     private String email;
     private Adres adres;
+    private Map<String,Roles> roles = new HashMap<>();
+
+    private static List<Person> extent = new ArrayList<>(); //Ekstensja
 
     private static String roleNameClient = "specializationClient";
     private static String roleNameEmployee = "specializationEmployee";
     private static String roleNameAuthor = "specializationAuthor";
     private static String roleNameInstructor = "specializationInstructor";
-    private static String roleNameGeneralization = "generalization";
 
+    //Ekstensja
+    private void addPerson(Person person){
+        if(!extent.contains(person)){
+            extent.add(person);
+        }
+    }
+    public void removePerson(){
+        //removeRoles
+        extent.remove(this);
+    }
+    public static void showExtent() {
+        System.out.println("Extent of the class: " + Person.class.getName());
+
+        for (Person person : extent) {
+            System.out.println(person);
+        }
+    }
+
+    //Ekstensja Trwałość
+    public static void writeExtent(ObjectOutputStream stream) throws IOException {
+        stream.writeObject(extent);
+    }
+    public static void readExtent(ObjectInputStream stream) throws IOException, ClassNotFoundException {
+        extent = (ArrayList<Person>) stream.readObject();
+    }
 
     private Person(String firstName, String latsName) {
         super();
         this.firstName = firstName;
         this.latsName = latsName;
+        addPerson(this);
     }
     private Person(String firstName, String latsName, String phoneNumber, String email, Adres adres) {
         this(firstName,latsName);
         this.phoneNumber = phoneNumber;
         this.email = email;
         this.adres = adres;
+        addPerson(this);
     }
 
     //Client
@@ -57,69 +91,94 @@ class Person extends ObjectPlusPlus implements Serializable {
 
 
     public void addClient(boolean loyaltyCard) {
-        Client c = new Client(loyaltyCard);
-        this.addLink(roleNameClient,roleNameGeneralization,c);
+        Client c = new Client(loyaltyCard,this);
+        try {
+            addRole(roleNameClient,c);
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
     }
     public void addAuthor(String pubHouse){
-        Author a = new Author(pubHouse);
-        this.addLink(roleNameAuthor,roleNameGeneralization,a);
+        Author a = new Author(pubHouse,this);
+        try {
+            addRole(roleNameAuthor,a);
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
     }
     public void addEmployee(LocalDate empDate,float sallary,Float supSuplement){
-        Employee e = new Manager(empDate,sallary,supSuplement);
-        this.addLink(roleNameEmployee,roleNameGeneralization,e);
+        Employee e = new Manager(empDate,sallary,supSuplement,this);
+        try {
+            addRole(roleNameEmployee,e);
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
     }
     public void addEmployee(LocalDate empDate,float sallary, Integer overtimeHours){
-        Employee e = new Salesman(empDate,sallary,overtimeHours);
-        this.addLink(roleNameEmployee,roleNameGeneralization,e);
+        Employee e = new Salesman(empDate,sallary,overtimeHours,this);
+        try {
+            addRole(roleNameEmployee,e);
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
     }
     public void addInstructor(List<String> qualifications){
-        Instructor i = new Instructor(qualifications);
-        this.addLink(roleNameInstructor,roleNameGeneralization,i);
+        Instructor i = new Instructor(qualifications,this);
+        try {
+            addRole(roleNameInstructor,i);
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+    }
+    private void addRole(String roleName, Roles roleObject) throws Exception {
+        if(roles.get(roleName)==null){
+            roles.put(roleName,roleObject);
+        }else{
+            throw new Exception("This person is already " + roleObject.getRole());
+        }
+    }
+    public void setRole(String roleName,Roles roleObject) throws Exception {
+        Roles previos = roles.replace(roleName,roleObject);
+        if(previos==null){
+            throw new Exception("This person not have this role!");
+        }
     }
 
     public List<String> getRoles(){
         List<String> roles = new ArrayList<>();
-        if(hasLoyaltyCard()!= null){ roles.add("Client"); }
-        if (hasPubHouse()!=null){ roles.add("Author"); }
-        if (hasOvertimeHours()!= null || hasSupSuplement()!= null){
-            try {
-                roles.add("Employee(" +this.getEmployee().getClass().getName()+")");
-            } catch (Exception exception) {
-                exception.printStackTrace();
-            }
+        for (Roles role:this.roles.values()) {
+            roles.add(role.getRole());
         }
-        if (hasQualifications()!=null){ roles.add("Instructor"); }
-
         return roles;
     }
     public Author getAuthor() throws Exception{
         try {
-            ObjectPlusPlus[] obj = this.getLinks(roleNameAuthor);
-            return (Author)obj[0];
+            Roles author = roles.get(roleNameAuthor);
+            return (Author) author;
         }catch (Exception e){
             throw new Exception("The object is not author");
         }
     }
     public Client getClient() throws Exception{
         try {
-            ObjectPlusPlus[] obj = this.getLinks(roleNameClient);
-            return (Client)obj[0];
+            Roles client = roles.get(roleNameClient);
+            return (Client)client ;
         }catch (Exception e){
             throw new Exception("The object is not client");
         }
     }
     public Employee getEmployee() throws Exception{
         try {
-            ObjectPlusPlus[] obj = this.getLinks(roleNameEmployee);
-            return (Employee)obj[0];
+            Roles employee = roles.get(roleNameEmployee);
+            return (Employee) employee ;
         }catch (Exception e){
             throw new Exception("The object is not employee");
         }
     }
     public Instructor getInctructor() throws Exception{
         try {
-            ObjectPlusPlus[] obj = this.getLinks(roleNameInstructor);
-            return (Instructor)obj[0];
+            Roles instructor= roles.get(roleNameClient);
+            return (Instructor) instructor;
         }catch (Exception e){
             throw new Exception("The object is not instructor");
         }

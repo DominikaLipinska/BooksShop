@@ -103,6 +103,8 @@ public class Main {
 
         ThemeParty party1 = new ThemeParty("NameTP1", LocalDateTime.now().minusHours(150).minusMinutes(48),30,"TopicP1");
 
+        Person.showExtent();
+
         /*WorkshopInstructor workshopInstructor1 = new WorkshopInstructor(1000,workshop1,instructor1);
         WorkshopInstructor workshopInstructor2a = new WorkshopInstructor(600,workshop2,instructor1);
         WorkshopInstructor workshopInstructor2b = new WorkshopInstructor(600,workshop2,instructor2);*/
@@ -187,7 +189,7 @@ public class Main {
         Award.showExtent();*/
 
 
-        try{
+        /*try{
             var out = new ObjectOutputStream(new FileOutputStream(extentFile));
             Book.writeExtent(out);
             Author.writeExtent(out);
@@ -203,7 +205,7 @@ public class Main {
             in.close();
         }catch (IOException | ClassNotFoundException e){
             e.printStackTrace();
-        }
+        }*/
 
         //Author.showExtent();
         //Client.showExtent();
@@ -221,7 +223,7 @@ public class Main {
 
 
 
-        Event.showExtent();
+        //Event.showExtent();
 
         //Book.showExtent();
 
