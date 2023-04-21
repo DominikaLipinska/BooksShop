@@ -1,13 +1,18 @@
+/*
 import java.io.PrintStream;
 import java.io.Serializable;
 import java.util.*;
 
 public abstract class ObjectPlusPlus extends ObjectPlus implements Serializable {
 
-    /** Stores information about all connections of this object. */
+    */
+/** Stores information about all connections of this object. *//*
+
     private Map<String, Map<Object, ObjectPlusPlus>> links = new Hashtable<>();
 
-    /** Stores information about all parts connected with any objects. */
+    */
+/** Stores information about all parts connected with any objects. *//*
+
     private static Set<ObjectPlusPlus> allParts = new HashSet<>();
 
     public ObjectPlusPlus() {
@@ -114,4 +119,4 @@ public abstract class ObjectPlusPlus extends ObjectPlus implements Serializable 
     }
 
 
-}
+}*/

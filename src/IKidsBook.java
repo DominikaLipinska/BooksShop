@@ -1,3 +1,3 @@
 public interface IKidsBook {
-    public boolean isToy();
+    boolean isToy();
 }
