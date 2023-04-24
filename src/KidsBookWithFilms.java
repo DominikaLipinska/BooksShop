@@ -1,4 +1,4 @@
-public class KidsBookWithFilms extends BookWithFilms implements IKidsBook {
+public class KidsBookWithFilms extends BookWithFilms {
     KidsBook kidsBook;
 
     public KidsBookWithFilms(String isbn, String title, Author author, int year, float price, String discType, boolean toy) {
@@ -23,7 +23,6 @@ public class KidsBookWithFilms extends BookWithFilms implements IKidsBook {
         }
     }
 
-    @Override
     public boolean isToy() {
         return kidsBook.isToy();
     }
