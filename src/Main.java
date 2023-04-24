@@ -55,6 +55,14 @@ public class Main {
             Person salesman1 = new Person("NameS1","SurnameS1","543-178-164","names1surnames1@gmail.com",adres1, LocalDate.of(2012,6,14),3956.25f,10);
             Person salesman2 = new Person("NameS2","SurnameS2","393-164-147","names2surnames2@gmail.com",adres1, LocalDate.of(2012,6,14),3906.85f,6);
 
+            Person.showExtent();
+            System.out.println("***************************");
+
+            manager.getEmployee().changeRole(10);
+            salesman1.getEmployee().changeRole(250.0f);
+            //salesman2.getEmployee().changeRole(5);
+
+
             Workshop workshop1 = new Workshop("WorshopName1", LocalDateTime.now(),120);
             Workshop workshop2 = new Workshop("WorkshopName2",LocalDateTime.now(),200);
 
@@ -189,11 +197,11 @@ public class Main {
 
         //Author.showExtent();
         //Client.showExtent();
-        //Salesman.showExtent();
-        //Manager.showExtent();
+        Salesman.showExtent();
+        Manager.showExtent();
         //Book.showExtent();
         //Event.showExtent();
-        Person.showExtent();
+        //Person.showExtent();
 
     }
 }
