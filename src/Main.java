@@ -27,6 +27,7 @@ public class Main {
 
             Book book1 = new Book("51245","T1",author1.getAuthor(),2020,12f);
             Book book2 = new Book("12345","T2",author2.getAuthor(),2023,30f,0.2);
+            Book book3 = new Book("12345","T3",author2.getAuthor(),2022,30f);
 
             BookWithFilms bookWF1 = new BookWithFilms("12536","TitleWF1",author2.getAuthor(),2016,100,"DVD");
             KidsBook kidsBook1 = new KidsBook("12467","TitleKB1", author1.getAuthor(),2020,30f,false );
@@ -55,8 +56,8 @@ public class Main {
             Person salesman1 = new Person("NameS1","SurnameS1","543-178-164","names1surnames1@gmail.com",adres1, LocalDate.of(2012,6,14),3956.25f,10);
             Person salesman2 = new Person("NameS2","SurnameS2","393-164-147","names2surnames2@gmail.com",adres1, LocalDate.of(2012,6,14),3906.85f,6);
 
-            Person.showExtent();
-            System.out.println("***************************");
+            //Person.showExtent();
+            //System.out.println("***************************");
 
             manager.getEmployee().changeRole(10);
             salesman1.getEmployee().changeRole(250.0f);
@@ -197,9 +198,9 @@ public class Main {
 
         //Author.showExtent();
         //Client.showExtent();
-        Salesman.showExtent();
-        Manager.showExtent();
-        //Book.showExtent();
+        //Salesman.showExtent();
+        //Manager.showExtent();
+        Book.showExtent();
         //Event.showExtent();
         //Person.showExtent();
 

@@ -10,8 +10,9 @@ public class Book implements Serializable {
     private Author author; //Asocja Author -> Book (1-*)
     private Integer year;
     private Float price;
-    private Double rabate;
-    private static double maxRabate = 0.3;
+    private Double discount;
+    private static double maxDiscount = 0.3;
+    private static Map<String,Book> isbnList = new HashMap<>(); //ISBN -> {Unique}
     private List<Lists> lists = new ArrayList<>(); //Asocjacja Book -> isbn | Lists (kwalifikowana)
     private List<Chapter> chapters = new ArrayList<>();//Asocjacja Book -> Chapter (kompozycja)
     private static Set<Chapter> allChapters = new HashSet<>();//Asocjacja Book -> Chapter (kompozycja)
@@ -21,17 +22,21 @@ public class Book implements Serializable {
     private static List<Book> extent = new ArrayList<>();//Ekstensja
 
     public Book(String isbn,String title,Author author, Integer year, Float price) {
-        this.isbn = isbn;
-        this.title = title;
-        this.author = author;
-        this.year = year;
-        this.price = price;
-        addBook(this);
-        author.addBook(this);
+        try {
+            this.isbn = addISBN(isbn);
+            this.title = title;
+            this.author = author;
+            this.year = year;
+            this.price = price;
+            addBook(this);
+            author.addBook(this);
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
     }
-    public Book(String isbn,String title,Author author, Integer year, Float price, Double rabate) {
+    public Book(String isbn,String title,Author author, Integer year, Float price, Double discount) {
         this(isbn,title,author,year,price);
-        this.rabate = rabate;
+        this.discount = discount;
     }
 
     public void addScreening(Screening screening) throws Exception{
@@ -84,6 +89,27 @@ public class Book implements Serializable {
         return isbn;
     }
     public Author getAurhor() {return author;}
+    public String getScreening(){
+        String info = "Screening: \n";
+        if(screenings.isEmpty()){
+            info += title + " has not screening\n";
+        }else{
+            for (Screening screening : screenings ) {
+                info+=screening+"\n";
+            }
+        }
+        return info;
+    }
+
+    //ISBN -> {Unique}
+    private String addISBN(String isbn) throws Exception {
+        if(!isbnList.containsKey(isbn) && this.isbn==null){
+            isbnList.put(isbn,this);
+            return isbn;
+        }else {
+            throw new Exception("That book already exist or have another isbn");
+        }
+    }
 
     //Asocjacja Book -> isbn | Lists (kwalifikowana)
     public void addList(Lists list){
@@ -119,18 +145,6 @@ public class Book implements Serializable {
         return info;
     }
 
-    public String getScreening(){
-        String info = "Screening: \n";
-        if(screenings.isEmpty()){
-            info += title + " has not screening\n";
-        }else{
-            for (Screening screening : screenings ) {
-                info+=screening+"\n";
-            }
-        }
-        return info;
-    }
-
     public void showChapters(){
         System.out.println(getChapters());
     }
@@ -143,12 +157,21 @@ public class Book implements Serializable {
     }
 
     //Metoda klasowa
-    public static List<Book> findRabateBook(){
+    public static List<Book> findDiscountBook(){
         List<Book> rabateBook = new ArrayList<>();
         for (Book book : extent) {
-            if (book.rabate != null) rabateBook.add(book);
+            if (book.discount != null) rabateBook.add(book);
         }
         return rabateBook;
+    }
+
+    //Metody
+    public void giveDiscount(double discount) throws Exception {
+        if(discount>maxDiscount){
+            throw new Exception(String.format("The discount (%s) has to be less than %s", discount, maxDiscount));
+        }
+
+        this.discount = discount;
     }
 
     //Ekstensja trwałość
@@ -166,7 +189,7 @@ public class Book implements Serializable {
             info += author.getPerson().getFirstName()+" " +
                     author.getPerson().getLatsName() +" " + year +
                     "\nprice: " + price +
-                    "\nrabte: " + rabate +"\n" + getChapters() + getScreening();
+                    "\ndiscount: " + discount+"\n" + getChapters() + getScreening();
         } catch (Exception exception) {
             exception.printStackTrace();
         }
