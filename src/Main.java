@@ -7,32 +7,24 @@ import java.util.Arrays;
 public class Main {
     public static void main(String[] args) {
         final String extentFile = "extent.ser";
-
-        Adres adres1 = new Adres("City2","Street1",12);
-
-        Person author1 = new Person("NameA1","SurnameA1","167-346-145","namea1surnamea1@gmail.com",adres1,
-                "PubHouse1");
-        Person author2 = new Person("NameA2", "SurnameA2","641-427-885","namea2surnamea2@gmail.com",adres1,
-                "PubHouse2");
-
-        author1.addClient(true);
-        author1.addInstructor(new ArrayList<>(Arrays.asList("Quali2", "Quali3")));
-
-        Award award1 = new Award("Award1", 2023);
-        Award award2 = new Award("Award2",2015);
-        Award award3 = new Award("Award3",2020);
-
         try {
+            Adres adres1 = new Adres("City2","Street1",12);
+
+            Person author1 = new Person("NameA1","SurnameA1","167-346-145","namea1surnamea1@gmail.com",adres1, "PubHouse1");
+            Person author2 = new Person("NameA2", "SurnameA2","641-427-885","namea2surnamea2@gmail.com",adres1, "PubHouse2");
+
+            author1.addClient(true);
+            author1.addInstructor(new ArrayList<>(Arrays.asList("Quali2", "Quali3")));
+
+            Award award1 = new Award("Award1", 2023);
+            Award award2 = new Award("Award2",2015);
+            Award award3 = new Award("Award3",2020);
+
             author2.getAuthor().addAward(award1);
             author1.getAuthor().addAward(award1);
             author1.getAuthor().addAward(award2);
             author2.getAuthor().addAward(award3);
-        } catch (Exception exception) {
-            exception.printStackTrace();
-        }
 
-
-        try {
             Book book1 = new Book("51245","T1",author1.getAuthor(),2020,12f);
             Book book2 = new Book("12345","T2",author2.getAuthor(),2023,30f,0.2);
 
@@ -43,24 +35,42 @@ public class Main {
 
             KidsBookWithFilms kidsBookWF1 = new KidsBookWithFilms("30142","TitleKBWF1",author1.getAuthor(),2018,40f,"DVD",true);
 
+            Person client1 = new Person("NameC1","SurnameC1","123-456-148", "namec1surnamec1@gmail.com",new Adres("City1","Street1",10),true);
+            Person client2 = new Person("NameC2","SurnameC2","153-678-748", "namec2surnamec2@gmail.com",new Adres("City1","Street1",20),false);
+
+            Lists list1 = client1.getClient().addList("List1");
+            Lists list2 = new Lists("List2",client1.getClient());
+            Lists list3 = client1.getClient().addList("List3");
+
+            list1.addBookQualif(book1);
+            list1.addBookQualif(book2);
+            list2.addBookQualif(book1);
+            list3.addBookQualif(book2);
+            list3.addBookQualif(book2);
+
+            client2.getClient().addList("List4");
+            client2.getClient().addList("List5");
+
+            Person manager = new Person("NameM1","SurnameM1","245-548-145","namem1surnamem1@gmail.com",adres1, LocalDate.of(2008,12,6),4956.25f,250f);
+            Person salesman1 = new Person("NameS1","SurnameS1","543-178-164","names1surnames1@gmail.com",adres1, LocalDate.of(2012,6,14),3956.25f,10);
+            Person salesman2 = new Person("NameS2","SurnameS2","393-164-147","names2surnames2@gmail.com",adres1, LocalDate.of(2012,6,14),3906.85f,6);
+
+            Workshop workshop1 = new Workshop("WorshopName1", LocalDateTime.now(),120);
+            Workshop workshop2 = new Workshop("WorkshopName2",LocalDateTime.now(),200);
+
+            Person instructor1 = new Person("NameI1", "SurnameI1","645-497-145","namei1surnamei1@gmail.com",adres1,
+                    new ArrayList<>(Arrays.asList("Quali1", "Quali2", "Quali3")));
+            Person instructor2 = new Person("NameI2", "SurnameI2","784-986-152","namei2surnamei2@gmail.com",adres1,
+                    new ArrayList<>(Arrays.asList("Quali4")));
+
+            instructor1.addClient(false);
+
+            AuthorsMeeting meeting1 = new AuthorsMeeting("NameAM1",LocalDateTime.now().minusDays(3).minusMinutes(150),150,true);
+            ThemeParty party1 = new ThemeParty("NameTP1", LocalDateTime.now().minusHours(150).minusMinutes(48),30,"TopicP1");
         } catch (Exception exception) {
             exception.printStackTrace();
         }
 
-
-
-        Person client1 = new Person("NameC1","SurnameC1","123-456-148",
-                "namec1surnamec1@gmail.com",new Adres("City1","Street1",10),true);
-
-        Person client2 = new Person("NameC2","SurnameC2","153-678-748",
-                "namec2surnamec2@gmail.com",new Adres("City1","Street1",20),false);
-
-        /*Lists list1 = client1.addList("List1");
-        Lists list2 = new Lists("List2",client1);
-        Lists list3 = client1.addList("List3");
-
-        client2.addList("List4");
-        client2.addList("List5");*/
 
         /*//Asocjacja "Zwykła"
         Client.showExtent();
@@ -80,30 +90,6 @@ public class Main {
         client2.removeClient();
         Client.showExtent();
         Lists.showExtent();*/
-
-        Person manager = new Person("NameM1","SurnameM1","245-548-145","namem1surnamem1@gmail.com",adres1,
-                LocalDate.of(2008,12,6),4956.25f,250f);
-        Person salesman1 = new Person("NameS1","SurnameS1","543-178-164","names1surnames1@gmail.com",adres1,
-                LocalDate.of(2012,6,14),3956.25f,10);
-        Person salesman2 = new Person("NameS2","SurnameS2","393-164-147","names2surnames2@gmail.com",adres1,
-                LocalDate.of(2012,6,14),3906.85f,6);
-
-
-        Workshop workshop1 = new Workshop("WorshopName1", LocalDateTime.now(),120);
-        Workshop workshop2 = new Workshop("WorkshopName2",LocalDateTime.now(),200);
-
-        Person instructor1 = new Person("NameI1", "SurnameI1","645-497-145","namei1surnamei1@gmail.com",adres1,
-                new ArrayList<>(Arrays.asList("Quali1", "Quali2", "Quali3")));
-        Person instructor2 = new Person("NameI2", "SurnameI2","784-986-152","namei2surnamei2@gmail.com",adres1,
-                new ArrayList<>(Arrays.asList("Quali4")));
-
-        instructor1.addClient(false);
-
-        AuthorsMeeting meeting1 = new AuthorsMeeting("NameAM1",LocalDateTime.now().minusDays(3).minusMinutes(150),150,true);
-
-        ThemeParty party1 = new ThemeParty("NameTP1", LocalDateTime.now().minusHours(150).minusMinutes(48),30,"TopicP1");
-
-        Person.showExtent();
 
         /*WorkshopInstructor workshopInstructor1 = new WorkshopInstructor(1000,workshop1,instructor1);
         WorkshopInstructor workshopInstructor2a = new WorkshopInstructor(600,workshop2,instructor1);
@@ -125,12 +111,6 @@ public class Main {
 
         Instructor.showExtent();
         Workshop.showExtent();*/
-
-        /*list1.addBookQualif(book1);
-        list1.addBookQualif(book2);
-        list2.addBookQualif(book1);
-        list3.addBookQualif(book2);
-        list3.addBookQualif(book2);*/
 
         //Asocjacja kwalifikowana
         /*
@@ -189,7 +169,7 @@ public class Main {
         Award.showExtent();*/
 
 
-        /*try{
+        try{
             var out = new ObjectOutputStream(new FileOutputStream(extentFile));
             Book.writeExtent(out);
             Author.writeExtent(out);
@@ -197,35 +177,23 @@ public class Main {
             Salesman.writeExtent(out);
             out.close();
 
-            var in = new ObjectInputStream(new FileInputStream(extentFile));
+            /*var in = new ObjectInputStream(new FileInputStream(extentFile));
             Book.readExtent(in);
             Author.readExtent(in);
             Workshop.readExtent(in);
             Salesman.readExtent(in);
-            in.close();
-        }catch (IOException | ClassNotFoundException e){
+            in.close();*/
+        }catch (IOException /*| ClassNotFoundException*/ e){
             e.printStackTrace();
-        }*/
+        }
 
         //Author.showExtent();
         //Client.showExtent();
         //Salesman.showExtent();
         //Manager.showExtent();
         //Book.showExtent();
-
-        try {
-
-
-
-        } catch (Exception exception) {
-            exception.printStackTrace();
-        }
-
-
-
         //Event.showExtent();
-
-        //Book.showExtent();
+        Person.showExtent();
 
     }
 }

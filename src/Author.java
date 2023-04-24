@@ -11,7 +11,6 @@ public class Author extends Roles implements Serializable  {
     private String pubHouse;
 
     private static List<Author> extent = new ArrayList<>();//Ekstensja
-    private static String roleNameGeneralization = "generalization";
 
     public Author(String pubHouse,Person person) {
         super(person);
