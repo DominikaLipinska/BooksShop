@@ -27,7 +27,7 @@ public class Main {
 
             Book book1 = new Book("51245","T1",author1.getAuthor(),2020,12f);
             Book book2 = new Book("12345","T2",author2.getAuthor(),2023,30f,0.2);
-            Book book3 = new Book("12345","T3",author2.getAuthor(),2022,30f);
+            //Book book3 = new Book("12345","T3",author2.getAuthor(),2022,30f);
 
             BookWithFilms bookWF1 = new BookWithFilms("12536","TitleWF1",author2.getAuthor(),2016,100,"DVD");
             KidsBook kidsBook1 = new KidsBook("12467","TitleKB1", author1.getAuthor(),2020,30f,false );
@@ -63,6 +63,16 @@ public class Main {
             salesman1.getEmployee().changeRole(250.0f);
             //salesman2.getEmployee().changeRole(5);
 
+            Shift shift1 = new Shift("Pierwsza",Arrays.asList(manager.getEmployee(),salesman1.getEmployee(),salesman2.getEmployee()),(Manager)salesman1.getEmployee());
+
+            Shift.showExtent();
+            System.out.println("*************************");
+            shift1.removeEmp(salesman2.getEmployee());
+            Shift.showExtent();
+            System.out.println("*************************");
+            shift1.addEmp(salesman2.getEmployee());
+            Shift.showExtent();
+            shift1.removeEmp(salesman1.getEmployee());
 
             Workshop workshop1 = new Workshop("WorshopName1", LocalDateTime.now(),120);
             Workshop workshop2 = new Workshop("WorkshopName2",LocalDateTime.now(),200);
@@ -200,7 +210,7 @@ public class Main {
         //Client.showExtent();
         //Salesman.showExtent();
         //Manager.showExtent();
-        Book.showExtent();
+        //Book.showExtent();
         //Event.showExtent();
         //Person.showExtent();
 
