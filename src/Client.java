@@ -1,10 +1,11 @@
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Client extends Roles {
+public class Client extends Roles implements Serializable {
     private List<Order> historyOrders = new ArrayList<>();
     private List<Lists> lists = new ArrayList<>(); //Asocja Client -> Lists (1-*)
     private boolean loyaltyCard;
