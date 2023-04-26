@@ -11,6 +11,7 @@ public class Manager extends Employee{
 
     public Manager(LocalDate empDate, float salary,Float salSupplement,Person person) {
         super(empDate, salary,person);
+        this.authorized = true;
         this.salSupplement = salSupplement;
         addManager(this);
     }
@@ -45,13 +46,17 @@ public class Manager extends Employee{
         extent = (ArrayList<Manager>) stream.readObject();
     }
 
+    public void giveAuthorization(Salesman salesman){
+        salesman.authorized = true;
+    }
+    public void removeAuthorization(Salesman salesman){
+        salesman.authorized = false;
+    }
 
     @Override
     public float getIncome() {
         return getSalary()+salSupplement;
     }
-
-
 
     @Override
     public String toString() {

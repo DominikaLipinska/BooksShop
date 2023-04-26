@@ -14,6 +14,7 @@ abstract class Employee extends Roles implements Serializable {
     private  static List<Order> historyOrders = new ArrayList<>();//Asocjacja Employee -> Order (1-*)
     private List<Order> orders = new ArrayList<>();//Asocjacja Employee -> Order (1-*)
     private Vacation vacation;//Asocjacja Vacation -> Employee (1-*)
+    protected boolean authorized = false;
 
     static String roleNameEmployee = "specializationEmployee";
 
@@ -218,8 +219,6 @@ abstract class Employee extends Roles implements Serializable {
         return  prev;
     }
 
-
-
     @Override
     public String getRole() {
         return Employee.class.getName();
@@ -240,5 +239,10 @@ abstract class Employee extends Roles implements Serializable {
         return info;
     }
 
+    //Metody
     public abstract float getIncome();
+    public void giveDiscount(Book book,double discount) throws Exception {
+        book.giveDiscount(discount,authorized);
+    }
+
 }
