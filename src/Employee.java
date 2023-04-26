@@ -4,6 +4,7 @@ import java.time.LocalDate;
 abstract class Employee extends Roles implements Serializable {
     private LocalDate empDate;
     private float sallary;
+    private Shift shift;
 
     static String roleNameEmployee = "specializationEmployee";
 
@@ -21,7 +22,7 @@ abstract class Employee extends Roles implements Serializable {
     public float getSalary() {
         return sallary;
     }
-    public void addPerson(){}
+    public Shift getShift(){ return shift;}
 
     public void changeRole(Integer overtimeHours) throws Exception {
         Person person = this.getPerson();
@@ -37,7 +38,6 @@ abstract class Employee extends Roles implements Serializable {
             }
         }
     }
-
     public void changeRole(Float supSuplement) throws Exception {
         Person person = this.getPerson();
         if(person.hasSupSuplement()!= null){
@@ -53,7 +53,25 @@ abstract class Employee extends Roles implements Serializable {
         }
     }
 
-
+    public void addShift(Shift shift) throws Exception {
+        if(this.shift!=null){
+            throw new Exception("This employee already have shift");
+        }
+        this.shift = shift;
+    }
+    public Shift changeShift(Shift newShift) throws Exception {
+        Shift prev = this.shift;
+        if(this.shift==null){
+            throw new Exception("This employee not have shift to change");
+        }
+        this.shift = shift;
+        return prev;
+    }
+    public Shift removeShift() {
+        Shift prev = this.shift;
+        this.shift = null;
+        return prev;
+    }
 
     @Override
     public String getRole() {

@@ -15,6 +15,9 @@ public class Shift implements Serializable {
             throw new Exception("Not enough workers");
         }else {
             this.employees.addAll(employees);
+            for (Employee emp:employees) {
+                emp.addShift(this);
+            }
             if (!canManage(manager)) {
             throw new Exception("This manager cannot manage a shift he is not working on");
             } else {
@@ -47,9 +50,10 @@ public class Shift implements Serializable {
         }
     }
 
-    public void addEmp(Employee employee){
+    public void addEmp(Employee employee) throws Exception {
         if(!employees.contains(employee)){
             employees.add(employee);
+            employee.addShift(this);
         }
     }
     public void removeEmp(Employee employee) throws Exception {
@@ -61,6 +65,7 @@ public class Shift implements Serializable {
             throw new Exception("This employee manage this shift! Change manager before removing this employee");
         }else{
             employees.remove(employee);
+            employee.removeShift();
         }
     }
     public void changeManager(Manager newManager) throws Exception {
@@ -68,8 +73,15 @@ public class Shift implements Serializable {
             if(!canManage(newManager)){
                 throw new Exception("This manager cannot manage a shift he is not working on");
             }
+            manager.removeShift();
             this.manager = newManager;
+            newManager.addShift(this);
         }
+    }
+
+    //Gettery
+    public String getName() {
+        return name;
     }
 
     @Override

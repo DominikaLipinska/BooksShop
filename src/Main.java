@@ -72,7 +72,7 @@ public class Main {
             System.out.println("*************************");
             shift1.addEmp(salesman2.getEmployee());
             Shift.showExtent();
-            shift1.removeEmp(salesman1.getEmployee());
+            //shift1.removeEmp(salesman1.getEmployee());
 
             Workshop workshop1 = new Workshop("WorshopName1", LocalDateTime.now(),120);
             Workshop workshop2 = new Workshop("WorkshopName2",LocalDateTime.now(),200);
