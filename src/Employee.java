@@ -13,6 +13,7 @@ abstract class Employee extends Roles implements Serializable {
     private  static List<Order> allProcessedOrders = new ArrayList<>();//Asocjacja Employee -> Order (1-*)
     private  static List<Order> historyOrders = new ArrayList<>();//Asocjacja Employee -> Order (1-*)
     private List<Order> orders = new ArrayList<>();//Asocjacja Employee -> Order (1-*)
+    private Vacation vacation;//Asocjacja Vacation -> Employee (1-*)
 
     static String roleNameEmployee = "specializationEmployee";
 
@@ -50,8 +51,7 @@ abstract class Employee extends Roles implements Serializable {
         }
     }
 
-
-
+    //Gettery
     public LocalDate getEmpDate() {
         return empDate;
     }
@@ -59,7 +59,6 @@ abstract class Employee extends Roles implements Serializable {
         return sallary;
     }
     public Shift getShift(){ return shift;}
-
     public void getOrders() {
         System.out.println("Orders: ");
         if(orders.isEmpty()){
@@ -101,17 +100,22 @@ abstract class Employee extends Roles implements Serializable {
     }
 
     public void addShift(Shift shift) throws Exception {
-        if(this.shift!=null){
-            throw new Exception("This employee already have shift");
+        if(vacation!=null){
+            throw new Exception("Employee on the vacation cannot working on any shift!");
+        }else {
+            if(this.shift!=null){
+                throw new Exception("This employee already have shift");
+            }
+            this.shift = shift;
         }
-        this.shift = shift;
     }
     public Shift changeShift(Shift newShift) throws Exception {
         Shift prev = this.shift;
         if(this.shift==null){
-            throw new Exception("This employee not have shift to change");
+            addShift(newShift);
+        }else {
+            this.shift = shift;
         }
-        this.shift = shift;
         return prev;
     }
     public Shift removeShift() {
@@ -182,6 +186,39 @@ abstract class Employee extends Roles implements Serializable {
             throw new Exception("Not have orders to cancel");
         }
     }
+
+    //Asocjacja Vacation -> Employee (1-*)
+    public void addVacation(Vacation vacation) throws Exception {
+        if(shift!=null){
+            if(this.vacation==null) {
+                this.vacation = vacation;
+            }else {
+                throw new Exception("Employee already have vacation!");
+            }
+        }else{
+            throw new Exception("Employee on the shift cannot go to vacation");
+        }
+    }
+    public Vacation changeVacation(Vacation vacation) throws Exception {
+        Vacation prev = this.vacation;
+        if(this.vacation!=null){
+            this.vacation = vacation;
+        }else{
+            addVacation(vacation);
+        }
+        return  prev;
+    }
+    public Vacation removeVacation() throws Exception {
+        Vacation prev = this.vacation;
+        if(this.vacation!=null){
+            this.vacation = null;
+        }else{
+            throw new Exception("Employee not have vacation to remove");
+        }
+        return  prev;
+    }
+
+
 
     @Override
     public String getRole() {
