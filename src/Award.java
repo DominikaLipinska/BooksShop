@@ -7,14 +7,12 @@ import java.util.List;
 
 public class Award implements Serializable {
     private String name;
-    private int year;
-    private List<Author> authors = new ArrayList<>();//Asocja Author -> Awards (*-*)
+    private List<AuthorAward> authAwards = new ArrayList<>(); //Asocja Author -> Awards (z atrybutem)
 
     private static List<Award> extent = new ArrayList<>();//Ekstensja
 
-    public Award(String name, int year) {
+    public Award(String name) {
         this.name = name;
-        this.year = year;
         addAward(this);
     }
 
@@ -23,10 +21,8 @@ public class Award implements Serializable {
         extent.add(award);
     }
     public void removeAward(){
-        while (!authors.isEmpty()){
-            Author author = authors.get(0);
-            author.removeAward(this);
-            removeAuthor(author);
+        while (!authAwards.isEmpty()){
+            authAwards.get(0).removeAuthAward(authAwards.get(0));
         }
         extent.remove(this);
     }
@@ -38,16 +34,17 @@ public class Award implements Serializable {
         }
     }
 
-    //Asocja Author -> Awards (*-*)
-    public void addAuthor(Author author){
-        if(!authors.contains(author)){
-            authors.add(author);
-        }
+    //Gettery
+    public String getName() {
+        return name;
     }
-    public void removeAuthor(Author author){
-        if (authors.contains(author)){
-            authors.remove(author);
-        }
+
+    //Asocja Author -> Awards (z atrybutem)
+    public void addAuthAward(AuthorAward authorAward){
+        authAwards.add(authorAward);
+    }
+    public List<AuthorAward> getAuthAwards(){
+        return authAwards;
     }
 
     //Ekstensja trwałość
@@ -60,6 +57,18 @@ public class Award implements Serializable {
 
     @Override
     public String toString() {
-        return  name + " " + year;
+        String info = "";
+        if(!authAwards.isEmpty()){
+            info+= "Authors:\n";
+            for (AuthorAward authAward:authAwards) {
+                try {
+                    info+= authAward.getAuthor().getPerson().getFirstName() +
+                            " "+authAward.getAuthor().getPerson().getLatsName()+"\n";
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
+            }
+        }
+        return info;
     }
 }

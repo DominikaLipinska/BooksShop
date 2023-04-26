@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Author extends Roles implements Serializable  {
-    private List<Award> awards = new ArrayList<>();//Asocja Author -> Awards (*-*)
+    private List<AuthorAward> authAwards = new ArrayList<>(); //Asocja Author -> Awards (z atrybutem)
     private List<Book> books = new ArrayList<>();//Asocja Author -> Book (1-*)
     private String pubHouse;
 
@@ -20,7 +20,7 @@ public class Author extends Roles implements Serializable  {
 
     //Atrybut wyliczalny
     public int getAwardsNum(){
-        return awards.size();
+        return authAwards.size();
     }
 
     //Ekstensja
@@ -28,16 +28,10 @@ public class Author extends Roles implements Serializable  {
         extent.add(author);
     }
     public void removeAuthor(){
-        if(!awards.isEmpty()){
-            for (Award award:awards) {
-                removeAward(award);
-            }
-        }
-        while (!books.isEmpty()){
-            removeBook(books.get(0));
+        while (!authAwards.isEmpty()){
+            authAwards.get(0).removeAuthAward(authAwards.get(0));
         }
         extent.remove(this);
-
     }
     public static void showExtent() {
         System.out.println("Extent of the class: " + Author.class.getName());
@@ -47,22 +41,18 @@ public class Author extends Roles implements Serializable  {
         }
     }
 
-    //Asocja Author -> Awards (*-*)
-    public void addAward(Award award){
-        awards.add(award);
-        award.addAuthor(this);
+    //Asocja Author -> Awards (z atrybutem)
+    public void addAuthAward(AuthorAward authorAward){
+        authAwards.add(authorAward);
     }
-    public void removeAward(Award award){
-        if(awards.contains(award)){
-            award.removeAuthor(this);
-            awards.remove(award);
-        }
+    public List<AuthorAward> getAuthAwards(){
+        return authAwards;
     }
     public void showAwards(){
-        if(!awards.isEmpty()){
+        if(!authAwards.isEmpty()){
             String info = "Awards:\n";
-            for (Award award : awards) {
-                info += award + "\n";
+            for (AuthorAward award : authAwards) {
+                info += award.getAward()+ "\n";
             }
             System.out.println(info);
         }else {
@@ -116,10 +106,10 @@ public class Author extends Roles implements Serializable  {
             }
         }
 
-        if(!awards.isEmpty()){
+        if(!authAwards.isEmpty()){
             info+="Awards:\n";
-            for (Award award : awards) {
-                info += award + "\n";
+            for (AuthorAward award : authAwards) {
+                info += award.getAward().getName() + "\n";
             }
         }
         return info;

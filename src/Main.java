@@ -16,14 +16,19 @@ public class Main {
             author1.addClient(true);
             author1.addInstructor(new ArrayList<>(Arrays.asList("Quali2", "Quali3")));
 
-            Award award1 = new Award("Award1", 2023);
-            Award award2 = new Award("Award2",2015);
-            Award award3 = new Award("Award3",2020);
+            Award award1 = new Award("Award1");
+            Award award2 = new Award("Award2");
+            Award award3 = new Award("Award3");
 
-            author2.getAuthor().addAward(award1);
-            author1.getAuthor().addAward(award1);
-            author1.getAuthor().addAward(award2);
-            author2.getAuthor().addAward(award3);
+            //addAuthAward
+            AuthorAward authAward1 = new AuthorAward(5000, author1.getAuthor(), award1);
+            AuthorAward authAward2 = new AuthorAward(4500, author1.getAuthor(), award2);
+            AuthorAward authAward3 = new AuthorAward(5000, author2.getAuthor(), award1);
+            AuthorAward authAward4 = new AuthorAward(4500, author2.getAuthor(), award2);
+            AuthorAward authAward5 = new AuthorAward(4500, author1.getAuthor(), award2);
+
+            Author.showExtent();
+            Award.showExtent();
 
             Book book1 = new Book("51245","T1",author1.getAuthor(),2020,12f);
             Book book2 = new Book("12345","T2",author2.getAuthor(),2023,30f,0.2);
@@ -92,7 +97,7 @@ public class Main {
             Order order3 = new Order(client2.getClient(), Arrays.asList(kidsBookWF1,kidsBook1));
             Order order4 = new Order(author1.getClient(), Arrays.asList(book2,kidsBookWF1));
 
-            salesman1.getEmployee().getOrders();
+            /*salesman1.getEmployee().getOrders();
             salesman2.getEmployee().getOrders();
             System.out.println("************************");
             salesman1.getEmployee().takeOrder();
@@ -133,7 +138,7 @@ public class Main {
             System.out.println("************************");
             salesman1.getEmployee().cancelOrder(order);
             Employee.showAllOrdersLists();
-            System.out.println("************************");
+            System.out.println("************************");*/
 
         } catch (Exception exception) {
             exception.printStackTrace();
