@@ -1,3 +1,5 @@
+import enums.OrderStatus;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -7,7 +9,8 @@ import java.util.List;
 
 public class Client extends Roles implements Serializable {
     private List<Order> historyOrders = new ArrayList<>();
-    private List<Lists> lists = new ArrayList<>(); //Asocja Client -> Lists (1-*)
+    private List<Order> activeOrders = new ArrayList<>();//Asocjacja Client -> Zamówienie (1-*)
+    private List<Lists> lists = new ArrayList<>(); //Asocjacja Client -> Lists (1-*)
     private boolean loyaltyCard;
 
     private static List<Client> extent = new ArrayList<>(); //Ekstensja
@@ -39,8 +42,11 @@ public class Client extends Roles implements Serializable {
     }
 
     //Gettery
+    public boolean isLoyaltyCard(){
+        return loyaltyCard;
+    }
 
-    //"zwykła"
+    //Asocjacja Client -> Lists (1-*)
     public Lists addList(String name){
         Lists newlist = new Lists(name,this);
         return addList(newlist);
@@ -60,8 +66,39 @@ public class Client extends Roles implements Serializable {
 
     }
 
-    public boolean isLoyaltyCard(){
-        return loyaltyCard;
+    //Asocjacja Client -> Zamówienie (1-*)
+    public void addOrder(Order order){
+        if(!activeOrders.contains(order)){
+            activeOrders.add(order);
+        }
+    }
+    public void removeOrder(Order order){
+        if(activeOrders.contains(order)){
+            activeOrders.remove(order);
+        }else if (historyOrders.contains(order)){
+            historyOrders.remove(order);
+        }
+    }
+    public void moveOrder(Order order) throws Exception {
+        if(activeOrders.contains(order)){
+            if(!historyOrders.contains(order)) {
+                historyOrders.add(order);
+            }
+            activeOrders.remove(order);
+        }else{
+            throw new Exception("Order not exist or is inactive");
+        }
+    }
+
+    //Metody
+    public void cancelOrder(Order order) throws Exception {
+        OrderStatus[] statuses = {OrderStatus.SUBMITED,OrderStatus.PROGRESSED};
+        if(order.checkStatus(statuses)) {
+            order.setStatus(OrderStatus.CANCELLED);
+            moveOrder(order);
+        }else{
+            throw new Exception("You can not cancel the order");
+        }
     }
 
     //Ekstensja Trwałość

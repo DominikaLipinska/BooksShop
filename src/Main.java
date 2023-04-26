@@ -65,14 +65,14 @@ public class Main {
 
             Shift shift1 = new Shift("Pierwsza",Arrays.asList(manager.getEmployee(),salesman1.getEmployee(),salesman2.getEmployee()),(Manager)salesman1.getEmployee());
 
-            Shift.showExtent();
+            /*Shift.showExtent();
             System.out.println("*************************");
             shift1.removeEmp(salesman2.getEmployee());
             Shift.showExtent();
             System.out.println("*************************");
             shift1.addEmp(salesman2.getEmployee());
             Shift.showExtent();
-            //shift1.removeEmp(salesman1.getEmployee());
+            //shift1.removeEmp(salesman1.getEmployee());*/
 
             Workshop workshop1 = new Workshop("WorshopName1", LocalDateTime.now(),120);
             Workshop workshop2 = new Workshop("WorkshopName2",LocalDateTime.now(),200);
@@ -86,6 +86,55 @@ public class Main {
 
             AuthorsMeeting meeting1 = new AuthorsMeeting("NameAM1",LocalDateTime.now().minusDays(3).minusMinutes(150),150,true);
             ThemeParty party1 = new ThemeParty("NameTP1", LocalDateTime.now().minusHours(150).minusMinutes(48),30,"TopicP1");
+
+            Order order1 = new Order(client1.getClient(), Arrays.asList(book1,book2));
+            Order order2 = new Order(client1.getClient(), Arrays.asList(bookWF1,book2,bookWF1));
+            Order order3 = new Order(client2.getClient(), Arrays.asList(kidsBookWF1,kidsBook1));
+            Order order4 = new Order(author1.getClient(), Arrays.asList(book2,kidsBookWF1));
+
+            salesman1.getEmployee().getOrders();
+            salesman2.getEmployee().getOrders();
+            System.out.println("************************");
+            salesman1.getEmployee().takeOrder();
+
+            salesman1.getEmployee().getOrders();
+            salesman2.getEmployee().getOrders();
+            System.out.println("************************");
+            salesman2.getEmployee().takeOrder();
+
+            salesman1.getEmployee().getOrders();
+            salesman2.getEmployee().getOrders();
+            System.out.println("************************");
+            salesman1.getEmployee().completeOrder();
+
+            salesman1.getEmployee().getOrders();
+            salesman2.getEmployee().getOrders();
+            System.out.println("************************");
+            salesman2.getEmployee().takeOrder();
+
+            salesman1.getEmployee().getOrders();
+            salesman2.getEmployee().getOrders();
+            System.out.println("************************");
+            salesman2.getEmployee().completeOrder();
+
+            salesman1.getEmployee().getOrders();
+            salesman2.getEmployee().getOrders();
+            System.out.println("************************");
+            salesman2.getEmployee().completeOrder();
+
+            salesman1.getEmployee().getOrders();
+            salesman2.getEmployee().getOrders();
+            System.out.println("************************");
+            Employee.showAllOrdersLists();
+            System.out.println("************************");
+
+            Order order = salesman1.getEmployee().takeOrder();
+            salesman1.getEmployee().getOrders();
+            System.out.println("************************");
+            salesman1.getEmployee().cancelOrder(order);
+            Employee.showAllOrdersLists();
+            System.out.println("************************");
+
         } catch (Exception exception) {
             exception.printStackTrace();
         }

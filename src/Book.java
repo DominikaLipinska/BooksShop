@@ -1,3 +1,5 @@
+import enums.OrderStatus;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -18,6 +20,7 @@ public class Book implements Serializable {
     private static Set<Chapter> allChapters = new HashSet<>();//Asocjacja Book -> Chapter (kompozycja)
     private List<Screening> screenings = new ArrayList<>();
     private static  Set<Screening> allScreenings = new HashSet<>();
+    private List<Order> bookActiveOrders = new ArrayList<>(); //Asocjacja Order -> Book (*-*)
 
     private static List<Book> extent = new ArrayList<>();//Ekstensja
 
@@ -144,7 +147,6 @@ public class Book implements Serializable {
         }
         return info;
     }
-
     public void showChapters(){
         System.out.println(getChapters());
     }
@@ -153,6 +155,23 @@ public class Book implements Serializable {
             chapters.remove(chapterToRemove);
 
             allChapters.remove(chapterToRemove);
+        }
+    }
+
+    //Asocjacja Order -> Book (*-*)
+    public void addOrder(Order order){
+        if(!bookActiveOrders.contains(order)){
+            bookActiveOrders.add(order);
+        }
+    }
+    public void removeOrder(Order order) throws Exception {
+        OrderStatus[] statuses = {OrderStatus.FINISHED, OrderStatus.CANCELLED};
+        if(order.checkStatus(statuses)){
+            if(bookActiveOrders.contains(order)) {
+                bookActiveOrders.remove(order);
+            }
+        }else {
+            throw new Exception("Can't remove active order from book");
         }
     }
 

@@ -227,6 +227,9 @@ class Person implements Serializable {
     public String getLatsName() {
         return latsName;
     }
+    public String getName(){
+        return firstName +" "+latsName;
+    }
 
     @Override
     public String toString() {
