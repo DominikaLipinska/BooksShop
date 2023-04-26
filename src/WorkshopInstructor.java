@@ -12,13 +12,27 @@ public class WorkshopInstructor implements Serializable {
 
     private static List<WorkshopInstructor> extent = new ArrayList<>();//Ekstencja
 
-    public WorkshopInstructor(float salary, Workshop workshop, Instructor instructor) {
-        this.salary = salary;
-        this.workshop = workshop;
-        this.instructor = instructor;
-        this.workshop.addWorkIn(this);
-        this.instructor.addWorkIn(this);
-        addWorkIn(this);
+    public WorkshopInstructor(float salary, Workshop workshop, Instructor instructor) throws Exception {
+        if(isWorkInExist(workshop, instructor)){
+            throw new Exception("This workshop has already this instructor");
+        }else {
+            this.salary = salary;
+            this.workshop = workshop;
+            this.instructor = instructor;
+            this.workshop.addWorkIn(this);
+            this.instructor.addWorkIn(this);
+            addWorkIn(this);
+        }
+    }
+
+    public boolean isWorkInExist(Workshop workshop, Instructor instructor){
+        List<Workshop> inWorksops = new ArrayList<>();
+        for (WorkshopInstructor worIn:extent) {
+            if(worIn.instructor==instructor){
+                inWorksops.add(worIn.workshop);
+            }
+        }
+        return inWorksops.contains(workshop);
     }
 
     //Ekstensja
