@@ -10,13 +10,13 @@ public class KidsBook extends Book{
 
     private static List<KidsBook> extent = new ArrayList<>();
 
-    public KidsBook(String isbn, String title, Author author, Integer year, Float price,boolean toy) {
+    public KidsBook(String isbn, String title, Author author, Integer year, Float price, boolean toy) {
         super(isbn, title, author, year, price);
         this.toy = toy;
     }
 
-    public KidsBook(String isbn, String title, Author author, Integer year, Float price, Double rabate,boolean toy) {
-        super(isbn, title, author, year, price, rabate);
+    public KidsBook(String isbn, String title, Author author, Integer year, Float price, Double discount, boolean toy) throws Exception {
+        super(isbn, title, author, year, price, discount);
         this.toy = toy;
     }
 

@@ -37,9 +37,9 @@ public class Book implements Serializable {
             exception.printStackTrace();
         }
     }
-    public Book(String isbn,String title,Author author, Integer year, Float price, Double discount) {
+    public Book(String isbn,String title,Author author, Integer year, Float price, Double discount) throws Exception {
         this(isbn,title,author,year,price);
-        this.discount = discount;
+        giveDiscount(discount);
     }
 
     public void addScreening(Screening screening) throws Exception{
@@ -185,15 +185,12 @@ public class Book implements Serializable {
     }
 
     //Metody
-    public void giveDiscount(double discount, boolean authorized) throws Exception {
-        if(!authorized){
-            throw  new Exception("You are not authorized to grant a discount");
-        }else {
-            if(discount>maxDiscount){
-                throw new Exception(String.format("The discount (%s) has to be less than %s", discount, maxDiscount));
-            }
-            this.discount = discount;
+    //Ograniczenie statyczne
+    public void giveDiscount(double discount) throws Exception {
+        if(discount>maxDiscount){
+            throw new Exception(String.format("The discount (%s) has to be less than %s", discount, maxDiscount));
         }
+        this.discount = discount;
     }
 
     //Ekstensja trwałość

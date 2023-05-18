@@ -7,6 +7,7 @@ import java.util.List;
 
 public class Manager extends Employee{
     public Float salSupplement;
+    private List<Shift> managedShift = new ArrayList<>();
 
 
     public Manager(LocalDate empDate, float salary,Float salSupplement,Person person) {
@@ -46,11 +47,19 @@ public class Manager extends Employee{
         extent = (ArrayList<Manager>) stream.readObject();
     }
 
+
     public void giveAuthorization(Salesman salesman){
         salesman.authorized = true;
     }
     public void removeAuthorization(Salesman salesman){
         salesman.authorized = false;
+    }
+    public void  addManageShift(Shift shift){
+        managedShift.add(shift);
+    }
+
+    public void giveDiscount(Book book,double discount) throws Exception {
+        book.giveDiscount(discount);
     }
 
     @Override

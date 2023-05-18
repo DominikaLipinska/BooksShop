@@ -14,7 +14,7 @@ public class KidsBookWithFilms extends BookWithFilms {
 
     public KidsBookWithFilms(String isbn, String title, Author author, int year, float price, Double rabate, String discType, boolean toy) {
         super(isbn, title, author, year, price, rabate, discType);
-        kidsBook = new KidsBook(null,null,author,null,null,null,toy);
+        kidsBook = new KidsBook(null,null,author,null,null,toy);
         kidsBook.removeBook();
         try {
             kidsBook.addKidsBookWithFilms(this);

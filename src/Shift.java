@@ -23,6 +23,7 @@ public class Shift implements Serializable {
             } else {
             this.name = name;
             this.manager = manager;
+            this.manager.addManageShift(this);
             addShift(this);
         }}
     }

@@ -176,15 +176,21 @@ abstract class Employee extends Roles implements Serializable {
             throw new Exception("Not have orders to complete");
         }
     }
+
+    //Ograniczenie własne
     public void cancelOrder(Order order) throws Exception {
-        if(orders.contains(order)){
-            removeOrder(order);
-            order.setStatus(OrderStatus.CANCELLED);
-            addOrder(order);
-            orders.remove(order);
-            order.getClient().moveOrder(order);
+        if(authorized) {
+            if(orders.contains(order)){
+                removeOrder(order);
+                order.setStatus(OrderStatus.CANCELLED);
+                addOrder(order);
+                orders.remove(order);
+                order.getClient().moveOrder(order);
+            }else {
+                throw new Exception("Not have orders to cancel");
+            }
         }else {
-            throw new Exception("Not have orders to cancel");
+            throw new Exception("You not have autorisation to cancel order!");
         }
     }
 
@@ -241,8 +247,6 @@ abstract class Employee extends Roles implements Serializable {
 
     //Metody
     public abstract float getIncome();
-    public void giveDiscount(Book book,double discount) throws Exception {
-        book.giveDiscount(discount,authorized);
-    }
+
 
 }
