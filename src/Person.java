@@ -13,7 +13,7 @@ class Person implements Serializable {
     private String latsName;
     private  String phoneNumber;
     private String email;
-    private Adres adres;
+    private Adres adres; //Asocjacja Adres -> Person (1-*)
     private Map<String,Roles> roles = new HashMap<>();
 
     private static List<Person> extent = new ArrayList<>(); //Ekstensja
@@ -31,6 +31,9 @@ class Person implements Serializable {
     }
     public void removePerson(){
         //removeRoles
+        if(adres!=null){
+            adres.removePerson(this);
+        }
         extent.remove(this);
     }
     public static void showExtent() {
@@ -60,6 +63,7 @@ class Person implements Serializable {
         this.phoneNumber = phoneNumber;
         this.email = email;
         this.adres = adres;
+        adres.addPerson(this); //Asocjacja Adres -> Person (1-*)
         addPerson(this);
     }
 
@@ -229,6 +233,9 @@ class Person implements Serializable {
     }
     public String getName(){
         return firstName +" "+latsName;
+    }
+    public Adres getAdres() {
+        return adres;
     }
 
     @Override

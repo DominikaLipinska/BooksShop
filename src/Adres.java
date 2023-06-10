@@ -10,6 +10,7 @@ public class Adres implements Serializable {
     private String street;
     private int houseNumber;
     private Integer apartmentNumber;
+    private List<Person> personList = new ArrayList<>(); //Asocjacja Adres -> Person (1-*)
 
     private static List<Adres> extent = new ArrayList<>();
 
@@ -23,6 +24,18 @@ public class Adres implements Serializable {
     public Adres(String city, String street, Integer houseNumber, Integer apartmentNumber) {
         this(city, street, houseNumber);
         this.apartmentNumber = apartmentNumber;
+    }
+
+    //Asocjacja Adres -> Person (1-*)
+    public void addPerson(Person person){
+        if(!personList.contains(person)) {
+            personList.add(person);
+        }
+    }
+    public void removePerson(Person person){
+        if(personList.contains(person)) {
+            personList.remove(person);
+        }
     }
 
     private void addAdres(Adres adres){
@@ -43,6 +56,21 @@ public class Adres implements Serializable {
 
     public static void readExtent(ObjectInputStream stream) throws IOException, ClassNotFoundException {
         extent = (ArrayList<Adres>) stream.readObject();
+    }
+
+    @Override
+    public String toString() {
+        String info = city + " " + street + " " + houseNumber;
+        if(apartmentNumber!=null){
+            info+="/"+apartmentNumber;
+        }
+        if (!personList.isEmpty()){
+            info+="\nPerons:\n";
+            for (Person person:personList) {
+                info+= person.getName() + "\n";
+            }
+        }
+        return info;
     }
 }
 

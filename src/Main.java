@@ -52,13 +52,16 @@ public class Main {
 
             list1.addBookQualif(book1);
             list1.addBookQualif(book2);
-            System.out.println(client1.getClient());
             list2.addBookQualif(book1);
             list3.addBookQualif(book2);
             list3.addBookQualif(book2);
 
             client2.getClient().addList("List4");
             client2.getClient().addList("List5");
+
+            client1.removePerson();
+            System.out.println(client1.getClient());
+            System.out.println(client1.getAdres());
 
             Person manager = new Person("NameM1","SurnameM1","245-548-145","namem1surnamem1@gmail.com",adres1, LocalDate.of(2008,12,6),4956.25f,250f);
             Person salesman1 = new Person("NameS1","SurnameS1","543-178-164","names1surnames1@gmail.com",adres1, LocalDate.of(2012,6,14),3956.25f,10);
@@ -96,18 +99,18 @@ public class Main {
             ThemeParty party1 = new ThemeParty("NameTP1", LocalDateTime.now().minusHours(150).minusMinutes(48),30,"TopicP1");
 
             Order order1 = new Order(client1.getClient(), list1.getBooksList());
-            System.out.println(order1);
+            //System.out.println(order1);
             //Order order2 = new Order(client1.getClient(), Arrays.asList(bookWF1,book2,bookWF1));
             //Order order3 = new Order(client2.getClient(), Arrays.asList(kidsBookWF1,kidsBook1));
             //Order order4 = new Order(author1.getClient(), Arrays.asList(book2,kidsBookWF1));
 
-            Manager.showAllOrdersLists();
+            //Manager.showAllOrdersLists();
             salesman1.getEmployee().takeOrder();
-            Manager.showAllOrdersLists();
+            //Manager.showAllOrdersLists();
             //client1.getClient().cancelOrder(order1);
             //salesman1.getEmployee().completeOrder();
             salesman1.getEmployee().cancelOrder(order1);
-            Manager.showAllOrdersLists();
+            //Manager.showAllOrdersLists();
 
             /*salesman1.getEmployee().getOrders();
             salesman2.getEmployee().getOrders();
