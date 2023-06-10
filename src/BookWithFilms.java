@@ -15,7 +15,7 @@ public class BookWithFilms extends Book{
         addFilm();
     }
 
-    public BookWithFilms(String isbn, String title, Author author, int year, float price, Double rabate,String discType) {
+    public BookWithFilms(String isbn, String title, Author author, int year, float price, Double rabate,String discType) throws Exception {
         super(isbn, title, author, year, price, rabate);
         this.discType = discType;
         addFilm();

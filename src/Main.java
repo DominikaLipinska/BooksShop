@@ -27,8 +27,8 @@ public class Main {
             AuthorAward authAward4 = new AuthorAward(4500, author2.getAuthor(), award2);
             AuthorAward authAward5 = new AuthorAward(4500, author1.getAuthor(), award2);
 
-            Author.showExtent();
-            Award.showExtent();
+            //Author.showExtent();
+            //Award.showExtent();
 
             Book book1 = new Book("51245","T1",author1.getAuthor(),2020,12f);
             Book book2 = new Book("12345","T2",author2.getAuthor(),2023,30f,0.2);
@@ -44,12 +44,15 @@ public class Main {
             Person client1 = new Person("NameC1","SurnameC1","123-456-148", "namec1surnamec1@gmail.com",new Adres("City1","Street1",10),true);
             Person client2 = new Person("NameC2","SurnameC2","153-678-748", "namec2surnamec2@gmail.com",new Adres("City1","Street1",20),false);
 
+
+
             Lists list1 = client1.getClient().addList("List1");
             Lists list2 = new Lists("List2",client1.getClient());
             Lists list3 = client1.getClient().addList("List3");
 
             list1.addBookQualif(book1);
             list1.addBookQualif(book2);
+            System.out.println(client1.getClient());
             list2.addBookQualif(book1);
             list3.addBookQualif(book2);
             list3.addBookQualif(book2);
@@ -92,10 +95,19 @@ public class Main {
             AuthorsMeeting meeting1 = new AuthorsMeeting("NameAM1",LocalDateTime.now().minusDays(3).minusMinutes(150),150,true);
             ThemeParty party1 = new ThemeParty("NameTP1", LocalDateTime.now().minusHours(150).minusMinutes(48),30,"TopicP1");
 
-            Order order1 = new Order(client1.getClient(), Arrays.asList(book1,book2));
-            Order order2 = new Order(client1.getClient(), Arrays.asList(bookWF1,book2,bookWF1));
-            Order order3 = new Order(client2.getClient(), Arrays.asList(kidsBookWF1,kidsBook1));
-            Order order4 = new Order(author1.getClient(), Arrays.asList(book2,kidsBookWF1));
+            Order order1 = new Order(client1.getClient(), list1.getBooksList());
+            System.out.println(order1);
+            //Order order2 = new Order(client1.getClient(), Arrays.asList(bookWF1,book2,bookWF1));
+            //Order order3 = new Order(client2.getClient(), Arrays.asList(kidsBookWF1,kidsBook1));
+            //Order order4 = new Order(author1.getClient(), Arrays.asList(book2,kidsBookWF1));
+
+            Manager.showAllOrdersLists();
+            salesman1.getEmployee().takeOrder();
+            Manager.showAllOrdersLists();
+            //client1.getClient().cancelOrder(order1);
+            //salesman1.getEmployee().completeOrder();
+            salesman1.getEmployee().cancelOrder(order1);
+            Manager.showAllOrdersLists();
 
             /*salesman1.getEmployee().getOrders();
             salesman2.getEmployee().getOrders();

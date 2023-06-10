@@ -92,10 +92,12 @@ public class Client extends Roles implements Serializable {
 
     //Metody
     public void cancelOrder(Order order) throws Exception {
-        OrderStatus[] statuses = {OrderStatus.SUBMITED,OrderStatus.PROGRESSED};
+        OrderStatus[] statuses = {OrderStatus.SUBMITED};
         if(order.checkStatus(statuses)) {
+            Employee.removeOrder(order);
             order.setStatus(OrderStatus.CANCELLED);
             moveOrder(order);
+            Employee.addOrder(order);
         }else{
             throw new Exception("You can not cancel the order");
         }

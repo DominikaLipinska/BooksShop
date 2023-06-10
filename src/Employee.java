@@ -9,9 +9,9 @@ abstract class Employee extends Roles implements Serializable {
     private LocalDate empDate;
     private float sallary;
     private Shift shift;
-    private  static List<Order> allSubmitOrders = new ArrayList<>();//Asocjacja Employee -> Order (1-*)
-    private  static List<Order> allProcessedOrders = new ArrayList<>();//Asocjacja Employee -> Order (1-*)
-    private  static List<Order> historyOrders = new ArrayList<>();//Asocjacja Employee -> Order (1-*)
+    private static List<Order> allSubmitOrders = new ArrayList<>();//Asocjacja Employee -> Order (1-*)
+    private static List<Order> allProcessedOrders = new ArrayList<>();//Asocjacja Employee -> Order (1-*)
+    private static List<Order> historyOrders = new ArrayList<>();//Asocjacja Employee -> Order (1-*)
     private List<Order> orders = new ArrayList<>();//Asocjacja Employee -> Order (1-*)
     private Vacation vacation;//Asocjacja Vacation -> Employee (1-*)
     protected boolean authorized = false;
@@ -152,6 +152,7 @@ abstract class Employee extends Roles implements Serializable {
             historyOrders.remove(order);
         }
     }
+
     public Order takeOrder() throws Exception {
         if(!allSubmitOrders.isEmpty()){
             Order order = allSubmitOrders.get(0);
@@ -164,9 +165,13 @@ abstract class Employee extends Roles implements Serializable {
             throw new Exception("Not have orders to take");
         }
     }
-    public void completeOrder() throws Exception {
+
+    public Order getOrder(){
+        Order order = orders.get(0);
+        return order;
+    }
+    public void completeOrder(Order order) throws Exception {
         if(!orders.isEmpty()){
-            Order order = orders.get(0);
             removeOrder(order);
             order.setStatus(OrderStatus.FINISHED);
             addOrder(order);
@@ -176,6 +181,7 @@ abstract class Employee extends Roles implements Serializable {
             throw new Exception("Not have orders to complete");
         }
     }
+
 
     //Ograniczenie własne
     public void cancelOrder(Order order) throws Exception {

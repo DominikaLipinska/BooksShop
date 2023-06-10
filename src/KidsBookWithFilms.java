@@ -12,7 +12,7 @@ public class KidsBookWithFilms extends BookWithFilms {
         }
     }
 
-    public KidsBookWithFilms(String isbn, String title, Author author, int year, float price, Double rabate, String discType, boolean toy) {
+    public KidsBookWithFilms(String isbn, String title, Author author, int year, float price, Double rabate, String discType, boolean toy) throws Exception {
         super(isbn, title, author, year, price, rabate, discType);
         kidsBook = new KidsBook(null,null,author,null,null,toy);
         kidsBook.removeBook();

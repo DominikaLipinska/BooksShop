@@ -66,7 +66,6 @@ public class Order implements Serializable {
         extent.remove(this);
     }
 
-
     //Asocjacja Order -> Book (*-*)
     private void addBook(Book book){
         orderedBooks.add(book);

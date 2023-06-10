@@ -22,6 +22,14 @@ public class Lists implements Serializable {
         addList(this);
     }
 
+    public List<Book> getBooksList() {
+        List<Book> bookList = new ArrayList<>();
+        for (Book book :booksQualif.values()) {
+            bookList.add(book);
+        }
+        return bookList;
+    }
+
     //Ekstencja i Asocja Client -> Lists (1-*)
     private void addList(Lists list){
         if(!extent.contains(list)){
@@ -76,10 +84,12 @@ public class Lists implements Serializable {
 
     @Override
     public String toString() {
-        String info = name + " ("+/*client.getFirstName()+" "+client.getLatsName()+*/")\n";
+        String info = name + " ("+client.getPerson().getFirstName()+" "+client.getPerson().getLatsName()+")\n";
         if(!booksQualif.isEmpty()){
             for (Book book:booksQualif.values()) {
-                /*info += book.getTitle() +" "+book.getAurhor().getFirstName()+" "+book.getAurhor().getLatsName() + "\n";*/
+                info += book.getTitle() +" "
+                        +book.getAurhor().getPerson().getFirstName()+" "+
+                        book.getAurhor().getPerson().getLatsName() + "\n";
             }
         }
         return info;
