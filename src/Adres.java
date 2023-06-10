@@ -12,16 +12,16 @@ public class Adres implements Serializable {
     private Integer apartmentNumber;
     private List<Person> personList = new ArrayList<>(); //Asocjacja Adres -> Person (1-*)
 
-    private static List<Adres> extent = new ArrayList<>();
+    private static List<Adres> extent = new ArrayList<>(); //Ekstensja
 
+    //Konstruktory
     public Adres(String city, String street, int houseNumber) {
         this.city = city;
         this.street = street;
         this.houseNumber = houseNumber;
         addAdres(this);
     }
-
-    public Adres(String city, String street, Integer houseNumber, Integer apartmentNumber) {
+    public Adres(String city, String street, int houseNumber, Integer apartmentNumber) {
         this(city, street, houseNumber);
         this.apartmentNumber = apartmentNumber;
     }
@@ -38,10 +38,10 @@ public class Adres implements Serializable {
         }
     }
 
+    //Ekstensja
     private void addAdres(Adres adres){
         extent.add(adres);
     }
-
     public static void showExtent() {
         System.out.println("Extent of the class: " + Adres.class.getName());
 
@@ -49,13 +49,39 @@ public class Adres implements Serializable {
             System.out.println(adres);
         }
     }
-
     public static void writeExtent(ObjectOutputStream stream) throws IOException {
         stream.writeObject(extent);
     }
-
     public static void readExtent(ObjectInputStream stream) throws IOException, ClassNotFoundException {
         extent = (ArrayList<Adres>) stream.readObject();
+    }
+
+    //Getery i Settery
+
+    public String getCity() {
+        return city;
+    }
+    public String getStreet() {
+        return street;
+    }
+    public int getHouseNumber() {
+        return houseNumber;
+    }
+    public Integer getApartmentNumber() {
+        return apartmentNumber;
+    }
+    public List<Person> getPersonList() {
+        return personList;
+    }
+
+    public void setAdres(String city, String street, int houseNumber){
+        this.city = city;
+        this.street = street;
+        this.houseNumber = houseNumber;
+    }
+    public void setAdres(String city, String street, int houseNumber, Integer apartmentNumber) {
+        setAdres(city, street, houseNumber);
+        this.apartmentNumber = apartmentNumber;
     }
 
     @Override
