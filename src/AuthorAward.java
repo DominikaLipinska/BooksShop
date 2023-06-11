@@ -7,11 +7,12 @@ import java.util.List;
 
 public class AuthorAward implements Serializable {
     private float moneyAward;
-    private Author author;//Asocja Author -> Awards (z atrybutem)
-    private Award award;//Asocja Author -> Awards (z atrybutem)
+    private Author author;//Asocja Author -> Awards (z atrybutem) {Bag}
+    private Award award;//Asocja Author -> Awards (z atrybutem) {Bag}
 
     private static List<AuthorAward> extent = new ArrayList<>();//Ekstencja
 
+    //Konstruktor
     public AuthorAward(float moneyAward, Author author, Award award) {
 
         this.moneyAward = moneyAward;
@@ -20,21 +21,6 @@ public class AuthorAward implements Serializable {
         this.author.addAuthAward(this);
         this.award.addAuthAward(this);
         addAuthAward(this);
-    }
-
-
-    //Ekstensja
-    private void addAuthAward(AuthorAward authorAward){
-        extent.add(authorAward);
-    }
-    public void removeAuthAward(AuthorAward authAward){
-        if(author.getAuthAwards().contains(authAward)){
-            author.getAuthAwards().remove(authAward);
-        }
-        if(award.getAuthAwards().contains(authAward)){
-            award.getAuthAwards().remove(authAward);
-        }
-        extent.remove(this);
     }
 
     //Gettery
@@ -48,6 +34,19 @@ public class AuthorAward implements Serializable {
         return award;
     }
 
+    //Ekstensja
+    private void addAuthAward(AuthorAward authorAward){
+        extent.add(authorAward);
+    }
+    public void removeAuthAward(){
+        if(author.getAuthAwards().contains(this)){
+            author.getAuthAwards().remove(this);
+        }
+        if(award.getAuthAwards().contains(this)){
+            award.getAuthAwards().remove(this);
+        }
+        extent.remove(this);
+    }
     public static void writeExtent(ObjectOutputStream stream) throws IOException {
         stream.writeObject(extent);
     }
