@@ -14,44 +14,17 @@ class Person implements Serializable {
     private  String phoneNumber;
     private String email;
     private Adres adres; //Asocjacja Adres -> Person (1-*)
-    private Map<String,Roles> roles = new HashMap<>();
+    private Map<String,Roles> roles = new HashMap<>(); //Overlapping
 
     private static List<Person> extent = new ArrayList<>(); //Ekstensja
 
+    //Overlapping
     private static String roleNameClient = "specializationClient";
     private static String roleNameEmployee = "specializationEmployee";
     private static String roleNameAuthor = "specializationAuthor";
     private static String roleNameInstructor = "specializationInstructor";
 
-    //Ekstensja
-    private void addPerson(Person person){
-        if(!extent.contains(person)){
-            extent.add(person);
-        }
-    }
-    public void removePerson(){
-        //removeRoles
-        if(adres!=null){
-            adres.removePerson(this);
-        }
-        extent.remove(this);
-    }
-    public static void showExtent() {
-        System.out.println("Extent of the class: " + Person.class.getName());
-
-        for (Person person : extent) {
-            System.out.println(person);
-        }
-    }
-
-    //Ekstensja Trwałość
-    public static void writeExtent(ObjectOutputStream stream) throws IOException {
-        stream.writeObject(extent);
-    }
-    public static void readExtent(ObjectInputStream stream) throws IOException, ClassNotFoundException {
-        extent = (ArrayList<Person>) stream.readObject();
-    }
-
+    //Konstruktory
     private Person(String firstName, String latsName) {
         super();
         this.firstName = firstName;
@@ -67,33 +40,72 @@ class Person implements Serializable {
         addPerson(this);
     }
 
-    //Client
+    //Overlapping
+    ////Client
     public Person(String firstName, String latsName, String phoneNumber, String email, Adres adres,boolean loyaltyCard ) {
         this(firstName,latsName,phoneNumber,email,adres);
         addClient(loyaltyCard);
     }
-    //Author
+    ////Author
     public Person(String firstName, String latsName,String phoneNumber,String email, Adres adres, String pubHouse) {
         this(firstName,latsName,phoneNumber,email,adres);
         addAuthor(pubHouse);
     }
-    //Manager
+    ////Manager
     public Person(String firstName, String latsName, String phoneNumber, String email, Adres adres, LocalDate empDate,float sallary,Float sapSuplement) {
         this(firstName,latsName,phoneNumber,email,adres);
         addEmployee(empDate,sallary,sapSuplement);
     }
-    //Salesman
+    ////Salesman
     public Person(String firstName, String latsName, String phoneNumber, String email, Adres adres, LocalDate empDate,float sallary,int overtimeHour) {
         this(firstName,latsName,phoneNumber,email,adres);
         addEmployee(empDate,sallary,overtimeHour);
     }
-    //Instructor
+    ////Instructor
     public Person(String firstName, String latsName, String phoneNumber, String email, Adres adres, List<String> qualifications) {
         this(firstName,latsName,phoneNumber,email,adres);
         addInstructor(qualifications);
     }
 
+    ////Has...
+    public Boolean hasLoyaltyCard(){
+        try {
+            return getClient().isLoyaltyCard();
+        }catch (Exception e){
+            return null;
+        }
+    }
+    public String hasPubHouse(){
+        try {
+            return getAuthor().getPubHouse();
+        }catch (Exception e){
+            return null;
+        }
+    }
+    public Float hasSupSuplement(){
+        try {
+            return ((Manager)getEmployee()).getSalSupplement();
+        }catch (Exception e){
+            return null;
+        }
+    }
+    public Integer hasOvertimeHours(){
+        try {
+            return ((Salesman)getEmployee()).getOvertimeHours();
+        }catch (Exception e){
+            return null;
+        }
+    }
+    public List<String> hasQualifications(){
+        try {
 
+            return getInctructor().getQualifications();
+        }catch (Exception e){
+            return null;
+        }
+    }
+
+    ////Add...
     public void addClient(boolean loyaltyCard) {
         Client c = new Client(loyaltyCard,this);
         try {
@@ -141,13 +153,33 @@ class Person implements Serializable {
             throw new Exception("This person is already " + roleObject.getRole());
         }
     }
+
+    //Asocjacja Adres -> Person (1-*)
+    public void removeAdress(){
+        adres=null;
+    }
+
+    //Gettery i Settery
+    public String getFirstName() {
+        return firstName;
+    }
+    public String getLatsName() {
+        return latsName;
+    }
+    public String getName(){
+        return firstName +" "+latsName;
+    }
+    public Adres getAdres() {
+        return adres;
+    }
+
+    ////Overlapping
     public void setRole(String roleName,Roles roleObject) throws Exception {
         Roles previos = roles.replace(roleName,roleObject);
         if(previos==null){
             throw new Exception("This person not have this role!");
         }
     }
-
     public List<String> getRoles(){
         List<String> roles = new ArrayList<>();
         for (Roles role:this.roles.values()) {
@@ -188,54 +220,31 @@ class Person implements Serializable {
         }
     }
 
-    public Boolean hasLoyaltyCard(){
-        try {
-            return getClient().isLoyaltyCard();
-        }catch (Exception e){
-            return null;
+    //Ekstensja
+    private void addPerson(Person person){
+        if(!extent.contains(person)){
+            extent.add(person);
         }
     }
-    public String hasPubHouse(){
-        try {
-            return getAuthor().getPubHouse();
-        }catch (Exception e){
-            return null;
+    public void removePerson(){
+        //removeRoles
+        if(adres!=null){
+            adres.removePerson(this);
         }
+        extent.remove(this);
     }
-    public Float hasSupSuplement(){
-        try {
-            return ((Manager)getEmployee()).getSalSupplement();
-        }catch (Exception e){
-            return null;
-        }
-    }
-    public Integer hasOvertimeHours(){
-        try {
-            return ((Salesman)getEmployee()).getOvertimeHours();
-        }catch (Exception e){
-            return null;
-        }
-    }
-    public List<String> hasQualifications(){
-        try {
+    public static void showExtent() {
+        System.out.println("Extent of the class: " + Person.class.getName());
 
-            return getInctructor().getQualifications();
-        }catch (Exception e){
-            return null;
+        for (Person person : extent) {
+            System.out.println(person);
         }
     }
-
-    public String getFirstName() {
-        return firstName;
+    public static void writeExtent(ObjectOutputStream stream) throws IOException {
+        stream.writeObject(extent);
     }
-    public String getLatsName() {
-        return latsName;
-    }
-    public String getName(){
-        return firstName +" "+latsName;
-    }
-    public Adres getAdres() {
-        return adres;
+    public static void readExtent(ObjectInputStream stream) throws IOException, ClassNotFoundException {
+        extent = (ArrayList<Person>) stream.readObject();
     }
 
     @Override
@@ -250,7 +259,7 @@ class Person implements Serializable {
 
         if(phoneNumber!= null){ result += "phone number: " + phoneNumber +"\n";}
         if(email!= null){ result += "email: " + email +"\n"; }
-        if(adres!= null){ result += "adres: " + adres +"\n"; }
+        if(adres!= null){ result += "adres: " + adres.getAdress() +"\n"; }
         if(hasLoyaltyCard()!=null){ result += "has loyalty card: " + hasLoyaltyCard() +"\n"; }
         if(hasPubHouse()!=null){ result += "publishing house: " + hasPubHouse() +"\n"; }
         if (hasSupSuplement()!=null){ result += "supSuplement: " + hasSupSuplement() + "\n"; }
