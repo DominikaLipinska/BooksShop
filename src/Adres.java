@@ -38,26 +38,7 @@ public class Adres implements Serializable {
         }
     }
 
-    //Ekstensja
-    private void addAdres(Adres adres){
-        extent.add(adres);
-    }
-    public static void showExtent() {
-        System.out.println("Extent of the class: " + Adres.class.getName());
-
-        for (Adres adres : extent) {
-            System.out.println(adres);
-        }
-    }
-    public static void writeExtent(ObjectOutputStream stream) throws IOException {
-        stream.writeObject(extent);
-    }
-    public static void readExtent(ObjectInputStream stream) throws IOException, ClassNotFoundException {
-        extent = (ArrayList<Adres>) stream.readObject();
-    }
-
     //Getery i Settery
-
     public String getCity() {
         return city;
     }
@@ -73,6 +54,13 @@ public class Adres implements Serializable {
     public List<Person> getPersonList() {
         return personList;
     }
+    public String getAdress(){
+        String info = city + " " + street + " " + houseNumber;
+        if(apartmentNumber!=null){
+            info+="/"+apartmentNumber;
+        }
+        return info;
+    }
 
     public void setAdres(String city, String street, int houseNumber){
         this.city = city;
@@ -82,6 +70,31 @@ public class Adres implements Serializable {
     public void setAdres(String city, String street, int houseNumber, Integer apartmentNumber) {
         setAdres(city, street, houseNumber);
         this.apartmentNumber = apartmentNumber;
+    }
+
+    //Ekstensja
+    private void addAdres(Adres adres){
+        extent.add(adres);
+    }
+    public void removeAdress(){
+        while (!personList.isEmpty()){
+            personList.get(0).removeAdress();
+            removePerson(personList.get(0));
+        }
+        extent.remove(this);
+    }
+    public static void showExtent() {
+        System.out.println("Extent of the class: " + Adres.class.getName());
+
+        for (Adres adres : extent) {
+            System.out.println(adres);
+        }
+    }
+    public static void writeExtent(ObjectOutputStream stream) throws IOException {
+        stream.writeObject(extent);
+    }
+    public static void readExtent(ObjectInputStream stream) throws IOException, ClassNotFoundException {
+        extent = (ArrayList<Adres>) stream.readObject();
     }
 
     @Override
