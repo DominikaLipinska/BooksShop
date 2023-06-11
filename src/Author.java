@@ -6,12 +6,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Author extends Roles implements Serializable  {
-    private List<AuthorAward> authAwards = new ArrayList<>(); //Asocja Author -> Awards (z atrybutem)
+    private List<AuthorAward> authAwards = new ArrayList<>(); //Asocja Author -> Awards (z atrybutem) {Bag}
     private List<Book> books = new ArrayList<>();//Asocja Author -> Book (1-*)
+    private List<AuthorsMeeting> authorsMeetings = new ArrayList<>(); //Asocjacja Author -> AuthorMeeting (1-*)
     private String pubHouse;
 
     private static List<Author> extent = new ArrayList<>();//Ekstensja
 
+    //Konstructor
     public Author(String pubHouse,Person person) {
         super(person);
         this.pubHouse = pubHouse;
@@ -21,24 +23,6 @@ public class Author extends Roles implements Serializable  {
     //Atrybut wyliczalny
     public int getAwardsNum(){
         return authAwards.size();
-    }
-
-    //Ekstensja
-    private void addAuthor(Author author){
-        extent.add(author);
-    }
-    public void removeAuthor(){
-        while (!authAwards.isEmpty()){
-            authAwards.get(0).removeAuthAward(authAwards.get(0));
-        }
-        extent.remove(this);
-    }
-    public static void showExtent() {
-        System.out.println("Extent of the class: " + Author.class.getName());
-
-        for (Author author : extent) {
-            System.out.println(author);
-        }
     }
 
     //Asocja Author -> Awards (z atrybutem)
@@ -56,7 +40,7 @@ public class Author extends Roles implements Serializable  {
             }
             System.out.println(info);
         }else {
-            /*System.out.println(getFirstName()+" "+getLatsName()+" has no awards yet");*/
+            System.out.println(person.getFirstName()+" "+person.getLatsName()+" has no awards yet");
         }
     }
 
@@ -77,13 +61,40 @@ public class Author extends Roles implements Serializable  {
         }
     }
 
-    //getery
+    //Asocjacja Author -> AuthorMeeting (1-*)
+    public void addMeeting(AuthorsMeeting authorsMeeting){
+        if(!authorsMeetings.contains(authorsMeeting)){
+            authorsMeetings.add(authorsMeeting);
+        }
+    }
+    public void removeMeeting(AuthorsMeeting authorsMeeting){
+        if(authorsMeetings.contains(authorsMeeting)){
+            authorsMeetings.add(authorsMeeting);
+        }
+    }
 
+    //Getery
     public String getPubHouse() {
         return pubHouse;
     }
 
-    //Ekstensja trwałość
+    //Ekstensja
+    private void addAuthor(Author author){
+        extent.add(author);
+    }
+    public void removeAuthor(){
+        while (!authAwards.isEmpty()){
+            authAwards.get(0).removeAuthAward(authAwards.get(0));
+        }
+        extent.remove(this);
+    }
+    public static void showExtent() {
+        System.out.println("Extent of the class: " + Author.class.getName());
+
+        for (Author author : extent) {
+            System.out.println(author);
+        }
+    }
     public static void writeExtent(ObjectOutputStream stream) throws IOException {
         stream.writeObject(extent);
     }
@@ -112,9 +123,15 @@ public class Author extends Roles implements Serializable  {
                 info += award.getAward().getName() + "\n";
             }
         }
+
+        if(!authorsMeetings.isEmpty()){
+            info+="Authors Meetings:\n";
+            for (AuthorsMeeting authorsMeeting : authorsMeetings) {
+                info += authorsMeeting.getName()+ "\n";
+            }
+        }
         return info;
     }
-
 
     @Override
     public String getRole() {
