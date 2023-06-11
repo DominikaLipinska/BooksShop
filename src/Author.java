@@ -84,7 +84,7 @@ public class Author extends Roles implements Serializable  {
     }
     public void removeAuthor(){
         while (!authAwards.isEmpty()){
-            authAwards.get(0).removeAuthAward(authAwards.get(0));
+            authAwards.get(0).removeAuthAward();
         }
         extent.remove(this);
     }
