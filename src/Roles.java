@@ -10,7 +10,6 @@ public abstract class Roles {
     public String getRole(){
         return this.getClass().getName();
     }
-
     public Person getPerson() {
         return person;
     }
