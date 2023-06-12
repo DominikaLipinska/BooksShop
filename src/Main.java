@@ -1,3 +1,5 @@
+import enums.Qualifications;
+
 import java.io.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -14,7 +16,7 @@ public class Main {
             Person author2 = new Person("NameA2", "SurnameA2","641-427-885","namea2surnamea2@gmail.com",adres1, "PubHouse2");
 
             author1.addClient(true);
-            author1.addInstructor(new ArrayList<>(Arrays.asList("Quali2", "Quali3")));
+            author1.addInstructor(new ArrayList<>(Arrays.asList(Qualifications.WRITING,Qualifications.RECITATION)));
 
             Award award1 = new Award("Award1");
             Award award2 = new Award("Award2");
@@ -27,8 +29,7 @@ public class Main {
             AuthorAward authAward4 = new AuthorAward(4500, author2.getAuthor(), award2);
             AuthorAward authAward5 = new AuthorAward(4500, author1.getAuthor(), award2);
 
-            //Author.showExtent();
-            //Award.showExtent();
+            authAward1.removeAuthAward();
 
             Book book1 = new Book("51245","T1",author1.getAuthor(),2020,12f);
             Book book2 = new Book("12345","T2",author2.getAuthor(),2023,30f,0.2);
@@ -59,9 +60,9 @@ public class Main {
             client2.getClient().addList("List4");
             client2.getClient().addList("List5");
 
-            client1.removePerson();
-            System.out.println(client1.getClient());
-            System.out.println(client1.getAdres());
+            //client1.removePerson();
+            //System.out.println(client1.getClient());
+            //System.out.println(client1.getAdres());
 
             Person manager = new Person("NameM1","SurnameM1","245-548-145","namem1surnamem1@gmail.com",adres1, LocalDate.of(2008,12,6),4956.25f,250f);
             Person salesman1 = new Person("NameS1","SurnameS1","543-178-164","names1surnames1@gmail.com",adres1, LocalDate.of(2012,6,14),3956.25f,10);
@@ -89,16 +90,16 @@ public class Main {
             Workshop workshop2 = new Workshop("WorkshopName2",LocalDateTime.now(),200);
 
             Person instructor1 = new Person("NameI1", "SurnameI1","645-497-145","namei1surnamei1@gmail.com",adres1,
-                    new ArrayList<>(Arrays.asList("Quali1", "Quali2", "Quali3")));
+                    new ArrayList<>(Arrays.asList(Qualifications.BOOKBINDING,Qualifications.WRITING,Qualifications.RECITATION)));
             Person instructor2 = new Person("NameI2", "SurnameI2","784-986-152","namei2surnamei2@gmail.com",adres1,
-                    new ArrayList<>(Arrays.asList("Quali4")));
+                    new ArrayList<>(Arrays.asList(Qualifications.WRITING)));
 
             instructor1.addClient(false);
 
-            AuthorsMeeting meeting1 = new AuthorsMeeting("NameAM1",LocalDateTime.now().minusDays(3).minusMinutes(150),150,true);
+            AuthorsMeeting meeting1 = new AuthorsMeeting(author1.getAuthor(), "NameAM1",LocalDateTime.now().minusDays(3).minusMinutes(150),150,true);
             ThemeParty party1 = new ThemeParty("NameTP1", LocalDateTime.now().minusHours(150).minusMinutes(48),30,"TopicP1");
 
-            Order order1 = new Order(client1.getClient(), list1.getBooksList());
+            Order order1 = new Order(client1.getClient(), list1);
             //System.out.println(order1);
             //Order order2 = new Order(client1.getClient(), Arrays.asList(bookWF1,book2,bookWF1));
             //Order order3 = new Order(client2.getClient(), Arrays.asList(kidsBookWF1,kidsBook1));
@@ -275,13 +276,14 @@ public class Main {
             e.printStackTrace();
         }
 
-        //Author.showExtent();
+        Author.showExtent();
         //Client.showExtent();
         //Salesman.showExtent();
         //Manager.showExtent();
         //Book.showExtent();
         //Event.showExtent();
         //Person.showExtent();
+        Award.showExtent();
 
     }
 }
