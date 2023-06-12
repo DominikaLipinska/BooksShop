@@ -5,9 +5,9 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.*;
-
+//toedit
 public class Book implements Serializable {
-    private String isbn; //Asocjacja Book -> isbn | Lists (kwalifikowana)
+    private String isbn;// {unique} Asocjacja Book -> isbn | Lists (kwalifikowana)
     private String title;
     private Author author; //Asocja Author -> Book (1-*)
     private Integer year;
@@ -18,12 +18,13 @@ public class Book implements Serializable {
     private List<Lists> lists = new ArrayList<>(); //Asocjacja Book -> isbn | Lists (kwalifikowana)
     private List<Chapter> chapters = new ArrayList<>();//Asocjacja Book -> Chapter (kompozycja)
     private static Set<Chapter> allChapters = new HashSet<>();//Asocjacja Book -> Chapter (kompozycja)
-    private List<Screening> screenings = new ArrayList<>();
-    private static  Set<Screening> allScreenings = new HashSet<>();
+    private List<Screening> screenings = new ArrayList<>();//Wielodziedziczenie ekranizacja
+    private static  Set<Screening> allScreenings = new HashSet<>();//Wielodziedziczenie ekranizacja
     private List<Order> bookActiveOrders = new ArrayList<>(); //Asocjacja Order -> Book (*-*)
 
     private static List<Book> extent = new ArrayList<>();//Ekstensja
 
+    //Konstruktory
     public Book(String isbn,String title,Author author, Integer year, Float price) {
         try {
             this.isbn = addISBN(isbn);
@@ -42,6 +43,7 @@ public class Book implements Serializable {
         giveDiscount(discount);
     }
 
+    //Wieloapektowe ekranizacja
     public void addScreening(Screening screening) throws Exception{
         if(!screenings.contains(screening)){
             if(allScreenings.contains(screening)){
@@ -50,58 +52,6 @@ public class Book implements Serializable {
             screenings.add(screening);
             allScreenings.add(screening);
         }
-    }
-
-    //Ekstensja
-    private void addBook(Book book){
-        extent.add(book);
-    }
-    public void removeBook(){
-        if(!chapters.isEmpty()){
-            allChapters.removeAll(chapters);
-            chapters.removeAll(chapters);
-        }
-        while (!lists.isEmpty()){
-            lists.get(0).removeBookQualif(this);
-            lists.remove(0);
-        }
-        author.removeBook(this);
-        extent.remove(this);
-    }
-    public static void showExtent() {
-        System.out.println("Extent of the class: " + Book.class.getName());
-
-        for (Book book : extent) {
-            System.out.println(book);
-        }
-    }
-
-    //Gettery
-    public Float getPrice(){return price;}
-    public Float getPrice(double rabate) {
-        if (rabate<0 || rabate>1){
-            return null;
-        }else {
-            return price*(1-(float) rabate);
-        }
-    }
-    public String getTitle(){
-        return title;
-    }
-    public String getIsbn() {
-        return isbn;
-    }
-    public Author getAurhor() {return author;}
-    public String getScreening(){
-        String info = "Screening: \n";
-        if(screenings.isEmpty()){
-            info += title + " has not screening\n";
-        }else{
-            for (Screening screening : screenings ) {
-                info+=screening+"\n";
-            }
-        }
-        return info;
     }
 
     //ISBN -> {Unique}
@@ -185,7 +135,7 @@ public class Book implements Serializable {
     }
 
     //Metody
-    //Ograniczenie statyczne
+    ////Ograniczenie statyczne
     public void giveDiscount(double discount) throws Exception {
         if(discount>maxDiscount){
             throw new Exception(String.format("The discount (%s) has to be less than %s", discount, maxDiscount));
@@ -193,12 +143,62 @@ public class Book implements Serializable {
         this.discount = discount;
     }
 
-    //Ekstensja trwałość
+    //Ekstensja
+    private void addBook(Book book){
+        extent.add(book);
+    }
+    public void removeBook(){
+        if(!chapters.isEmpty()){
+            allChapters.removeAll(chapters);
+            chapters.removeAll(chapters);
+        }
+        while (!lists.isEmpty()){
+            lists.get(0).removeBookQualif(this);
+            lists.remove(0);
+        }
+        author.removeBook(this);
+        extent.remove(this);
+    }
+    public static void showExtent() {
+        System.out.println("Extent of the class: " + Book.class.getName());
+
+        for (Book book : extent) {
+            System.out.println(book);
+        }
+    }
     public static void writeExtent(ObjectOutputStream stream) throws IOException {
         stream.writeObject(extent);
     }
     public static void readExtent(ObjectInputStream stream) throws IOException, ClassNotFoundException {
         extent = (ArrayList<Book>) stream.readObject();
+    }
+
+    //Gettery
+    public Float getPrice(){return price;}
+    public Float getPrice(double rabate) {
+        if (rabate<0 || rabate>1){
+            return null;
+        }else {
+            return price*(1-(float) rabate);
+        }
+    }
+    public String getTitle(){
+        return title;
+    }
+    public String getIsbn() {
+        return isbn;
+    }
+    public Author getAurhor() {return author;}
+    public String getScreening(){
+        String info = "Screening: \n";
+        if(screenings.isEmpty()){
+            info += title + " has not screening\n";
+        }else{
+            for (Screening screening : screenings ) {
+                info+=screening+"\n";
+            }
+        }
+        return info;
     }
 
     @Override
