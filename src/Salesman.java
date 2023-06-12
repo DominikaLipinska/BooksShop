@@ -50,6 +50,7 @@ public class Salesman extends Employee {
         return super.getRole()+"(Salesman)";
     }
 
+    //Przesłonięcie
     @Override
     public float getIncome() {
         return getSalary() + overtimeHours*overtimeRate;
