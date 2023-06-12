@@ -9,7 +9,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
+//toedit
 abstract public class Event implements Serializable {
     private String name;
     private LocalDateTime date;
@@ -24,21 +24,10 @@ abstract public class Event implements Serializable {
         addEvent(this);
     }
 
+    //Ekstensja
     private void addEvent(Event event){
         extent.add(event);
     }
-
-    public String getName() {
-        return name;
-    }
-    public LocalDateTime getDate() {
-        return date;
-    }
-    public float getPrice() {
-        return price;
-    }
-
-
     public static void showExtent() {
         System.out.println("Extent of the class: " + Event.class.getName());
 
@@ -53,6 +42,16 @@ abstract public class Event implements Serializable {
         extent = (ArrayList<Event>) stream.readObject();
     }
 
+    //Gettery i Settery
+    public String getName() {
+        return name;
+    }
+    public LocalDateTime getDate() {
+        return date;
+    }
+    public float getPrice() {
+        return price;
+    }
     public abstract void getUniqueInformation();
 
     @Override
