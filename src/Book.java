@@ -9,15 +9,15 @@ import java.util.*;
 public class Book implements Serializable {
     private String isbn;// {unique} Asocjacja Book -> isbn | Lists (kwalifikowana)
     private String title;
-    private Author author; //Asocja Author -> Book (1-*)
+    protected Author author; //Asocja Author -> Book (1-*)
     private Integer year;
     private Float price;
     private Double discount;
     private static double maxDiscount = 0.3;
     private static Map<String,Book> isbnList = new HashMap<>(); //ISBN -> {Unique}
-    private List<Lists> lists = new ArrayList<>(); //Asocjacja Book -> isbn | Lists (kwalifikowana)
-    private List<Chapter> chapters = new ArrayList<>();//Asocjacja Book -> Chapter (kompozycja)
-    private static Set<Chapter> allChapters = new HashSet<>();//Asocjacja Book -> Chapter (kompozycja)
+    protected List<Lists> lists = new ArrayList<>(); //Asocjacja Book -> isbn | Lists (kwalifikowana)
+    protected List<Chapter> chapters = new ArrayList<>();//Asocjacja Book -> Chapter (kompozycja)
+    protected static Set<Chapter> allChapters = new HashSet<>();//Asocjacja Book -> Chapter (kompozycja)
     private List<Screening> screenings = new ArrayList<>();//Wielodziedziczenie ekranizacja
     private static  Set<Screening> allScreenings = new HashSet<>();//Wielodziedziczenie ekranizacja
     private List<Order> bookActiveOrders = new ArrayList<>(); //Asocjacja Order -> Book (*-*)
