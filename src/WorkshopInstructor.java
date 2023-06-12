@@ -4,7 +4,7 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
+//toedit
 public class WorkshopInstructor implements Serializable {
     private float salary;
     private Workshop workshop;//Asocjacja Workshop -> Instructor (z atrybutem)
@@ -12,6 +12,7 @@ public class WorkshopInstructor implements Serializable {
 
     private static List<WorkshopInstructor> extent = new ArrayList<>();//Ekstencja
 
+    //Konstruktor
     public WorkshopInstructor(float salary, Workshop workshop, Instructor instructor) throws Exception {
         if(isWorkInExist(workshop, instructor)){
             throw new Exception("This workshop has already this instructor");
@@ -23,16 +24,6 @@ public class WorkshopInstructor implements Serializable {
             this.instructor.addWorkIn(this);
             addWorkIn(this);
         }
-    }
-
-    public boolean isWorkInExist(Workshop workshop, Instructor instructor){
-        List<Workshop> inWorksops = new ArrayList<>();
-        for (WorkshopInstructor worIn:extent) {
-            if(worIn.instructor==instructor){
-                inWorksops.add(worIn.workshop);
-            }
-        }
-        return inWorksops.contains(workshop);
     }
 
     //Ekstensja
@@ -48,6 +39,12 @@ public class WorkshopInstructor implements Serializable {
         }
         extent.remove(this);
     }
+    public static void writeExtent(ObjectOutputStream stream) throws IOException {
+        stream.writeObject(extent);
+    }
+    public static void readExtent(ObjectInputStream stream) throws IOException, ClassNotFoundException {
+        extent = (ArrayList<WorkshopInstructor>) stream.readObject();
+    }
 
     //Gettery
     public float getSalary() {
@@ -60,10 +57,16 @@ public class WorkshopInstructor implements Serializable {
         return instructor;
     }
 
-    public static void writeExtent(ObjectOutputStream stream) throws IOException {
-        stream.writeObject(extent);
+    //Metody
+    public boolean isWorkInExist(Workshop workshop, Instructor instructor){
+        List<Workshop> inWorksops = new ArrayList<>();
+        for (WorkshopInstructor worIn:extent) {
+            if(worIn.instructor==instructor){
+                inWorksops.add(worIn.workshop);
+            }
+        }
+        return inWorksops.contains(workshop);
     }
-    public static void readExtent(ObjectInputStream stream) throws IOException, ClassNotFoundException {
-        extent = (ArrayList<WorkshopInstructor>) stream.readObject();
-    }
+
+
 }
