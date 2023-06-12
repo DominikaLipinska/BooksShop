@@ -7,19 +7,26 @@ import java.util.List;
 
 public class AuthorsMeeting extends Event {
     private boolean treats;
+    private Author author;//Asocjacja Author -> AuthorMeeting (1-*)
 
-    private static List<AuthorsMeeting> extent = new ArrayList<>();
+    private static List<AuthorsMeeting> extent = new ArrayList<>(); //Ekstensja
 
-    public AuthorsMeeting(String name, LocalDateTime date, float price, boolean treats) {
+    public AuthorsMeeting(Author author,String name, LocalDateTime date, float price, boolean treats) {
         super(name, date, price);
+        this.author = author;
         this.treats = treats;
+        author.addMeeting(this);
         addAuthorsMeeting(this);
     }
 
+    //Ekstensja
     private void addAuthorsMeeting(AuthorsMeeting meeting){
         extent.add(meeting);
     }
-
+    public void removeAuthorsMeeting(){
+        author.removeMeeting(this);
+        extent.remove(this);
+    }
     public static void showExtent() {
         System.out.println("Extent of the class: " + ThemeParty.class.getName());
 
@@ -41,10 +48,9 @@ public class AuthorsMeeting extends Event {
 
     }
 
-
     @Override
     public String toString() {
-        String info = super.toString() + "Has treats: " + treats + "\n";
+        String info = super.toString() + "Has treats: " + treats + "\nAuthor: " + author.getPerson().getName()+"\n";
         return info;
     }
 }
