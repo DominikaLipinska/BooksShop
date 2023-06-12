@@ -254,6 +254,7 @@ abstract class Employee extends Roles implements Serializable {
     }
 
     //Metody
+    ////Przesłonięcie
     public abstract float getIncome();
 
 
