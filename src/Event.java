@@ -14,6 +14,7 @@ abstract public class Event implements Serializable {
     private String name;
     private LocalDateTime date;
     private float price;
+    private Manager manager;//Asocjacja Manager -> Event (1-*)
 
     private static List<Event> extent = new ArrayList<>();
 
@@ -22,6 +23,13 @@ abstract public class Event implements Serializable {
         this.date = date;
         this.price = price;
         addEvent(this);
+    }
+
+    //Asocjacja Manager -> Event (1-*)
+    public void addManager(Manager manager){
+        if(this.manager==null){
+            this.manager = manager;
+        }
     }
 
     //Ekstensja
