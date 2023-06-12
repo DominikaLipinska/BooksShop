@@ -1,3 +1,5 @@
+import enums.Qualifications;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -62,7 +64,7 @@ class Person implements Serializable {
         addEmployee(empDate,sallary,overtimeHour);
     }
     ////Instructor
-    public Person(String firstName, String latsName, String phoneNumber, String email, Adres adres, List<String> qualifications) {
+    public Person(String firstName, String latsName, String phoneNumber, String email, Adres adres, List<Qualifications> qualifications) {
         this(firstName,latsName,phoneNumber,email,adres);
         addInstructor(qualifications);
     }
@@ -96,7 +98,7 @@ class Person implements Serializable {
             return null;
         }
     }
-    public List<String> hasQualifications(){
+    public List<Qualifications> hasQualifications(){
         try {
 
             return getInctructor().getQualifications();
@@ -138,7 +140,7 @@ class Person implements Serializable {
             exception.printStackTrace();
         }
     }
-    public void addInstructor(List<String> qualifications){
+    public void addInstructor(List<Qualifications> qualifications){
         Instructor i = new Instructor(qualifications,this);
         try {
             addRole(roleNameInstructor,i);
