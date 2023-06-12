@@ -5,19 +5,19 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
+//toedit
 public class Salesman extends Employee {
     private Integer overtimeHours;
     private static float overtimeRate = 40;
 
+    private static List<Salesman> extent = new ArrayList<>(); //Ekstensja
 
+    //Konstruktor
     public Salesman(LocalDate empDate, float salary, Integer overtimeHours,Person person) {
         super(empDate, salary,person);
         this.overtimeHours = overtimeHours;
         addSalesman(this);
     }
-
-    private static List<Salesman> extent = new ArrayList<>(); //Ekstensja
 
     //Ekstensja
     private void addSalesman(Salesman salesman){
@@ -33,6 +33,12 @@ public class Salesman extends Employee {
             System.out.println(salesman);
         }
     }
+    public static void writeExtent(ObjectOutputStream stream) throws IOException {
+        stream.writeObject(extent);
+    }
+    public static void readExtent(ObjectInputStream stream) throws IOException, ClassNotFoundException {
+        extent = (ArrayList<Salesman>) stream.readObject();
+    }
 
     //Gettery
     public Integer getOvertimeHours() {
@@ -42,14 +48,6 @@ public class Salesman extends Employee {
     @Override
     public String getRole() {
         return super.getRole()+"(Salesman)";
-    }
-
-    //Ekstensja Trwałość
-    public static void writeExtent(ObjectOutputStream stream) throws IOException {
-        stream.writeObject(extent);
-    }
-    public static void readExtent(ObjectInputStream stream) throws IOException, ClassNotFoundException {
-        extent = (ArrayList<Salesman>) stream.readObject();
     }
 
     @Override
