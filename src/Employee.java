@@ -141,6 +141,7 @@ abstract class Employee extends Roles implements Serializable {
             removeOrder(order);
             order.setStatus(OrderStatus.PROGRESSED);
             addOrder(order);
+            order.addEmployee(this);
             return order;
         }else {
             throw new Exception("Not have orders to take");
