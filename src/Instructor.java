@@ -1,18 +1,20 @@
+import enums.Qualifications;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
+//toedit
 public class Instructor extends Roles implements Serializable {
-    private List<String> qualifications;
+    private List<Qualifications> qualifications;
     private List<WorkshopInstructor> workIns = new ArrayList<>();//Asocjacja Workshop -> Instructor (z atrybutem)
 
     private static List<Instructor> extent = new ArrayList<>();//Ekstensja
     private static String roleNameGeneralization = "generalization";
 
-    public Instructor(List<String> qualifications, Person person ) {
+    public Instructor(List<Qualifications> qualifications, Person person ) {
         super(person);
         this.qualifications = qualifications;
         addInstructor(this);
@@ -46,7 +48,7 @@ public class Instructor extends Roles implements Serializable {
     }
 
     //Gettery
-    public List<String> getQualifications() {
+    public List<Qualifications> getQualifications() {
         return qualifications;
     }
 
@@ -68,7 +70,7 @@ public class Instructor extends Roles implements Serializable {
         }
         if(!qualifications.isEmpty()){
             info += "Qualifications:\n";
-            for (String quali: qualifications) {
+            for (Qualifications quali: qualifications) {
                 info += quali + "\n";
             }
         }
