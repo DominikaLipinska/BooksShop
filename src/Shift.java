@@ -1,12 +1,12 @@
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
+//toedit
 public class Shift implements Serializable {
     private String name;
-    private List<Employee> employees = new ArrayList<>();
+    private List<Employee> employees = new ArrayList<>(); //Asocjacja Shift -> Employee (1-*)
     private static int minEmpNum = 2;
-    private Manager manager;
+    private Manager manager; //Asocjacja Manager -> Shift(1-1)
 
     private static List<Shift> extent = new ArrayList<>(); //Ekstensja
 
@@ -28,29 +28,10 @@ public class Shift implements Serializable {
         }}
     }
 
+    //Asocjacja Shift -> Employee (1-*)
     private boolean enoughEmp(List<Employee> employees){
         return employees.size() >= minEmpNum;
     }
-
-    private boolean canManage(Manager manager){
-        return employees.contains(manager);
-    }
-
-    //Ekstensja
-    private void addShift(Shift shift){
-        extent.add(shift);
-    }
-    public void removeShift(){
-        extent.remove(this);
-    }
-    public static void showExtent() {
-        System.out.println("Extent of the class: " + Shift.class.getName());
-
-        for (Shift shift : extent) {
-            System.out.println(shift);
-        }
-    }
-
     public void addEmp(Employee employee) throws Exception {
         if(!employees.contains(employee)){
             employees.add(employee);
@@ -69,14 +50,39 @@ public class Shift implements Serializable {
             employee.removeShift();
         }
     }
+
+    //Asocjacja Manager -> Shift(1-1)
     public void changeManager(Manager newManager) throws Exception {
         if(!manager.equals(newManager)){
             if(!canManage(newManager)){
                 throw new Exception("This manager cannot manage a shift he is not working on");
             }
-            manager.removeShift();
+            manager.removeManageShift();
             this.manager = newManager;
-            newManager.addShift(this);
+            newManager.addManageShift(this);
+        }
+    }
+    private boolean canManage(Manager manager){
+        return employees.contains(manager);
+    }
+
+    //Ekstensja
+    private void addShift(Shift shift){
+        extent.add(shift);
+    }
+    public void removeShift(){
+        manager.removeShift();
+        while (!employees.isEmpty()){
+            employees.get(0).removeShift();
+            employees.remove(employees.get(0));
+        }
+        extent.remove(this);
+    }
+    public static void showExtent() {
+        System.out.println("Extent of the class: " + Shift.class.getName());
+
+        for (Shift shift : extent) {
+            System.out.println(shift);
         }
     }
 
