@@ -4,22 +4,23 @@ import java.io.ObjectOutputStream;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
+//toedit
 public class ThemeParty extends Event{
     private String topic;
 
     private static List<ThemeParty> extent = new ArrayList<>();
 
+    //Konstruktor
     public ThemeParty(String name, LocalDateTime date, float price, String topic) {
         super(name, date, price);
         this.topic=topic;
         addThemeParty(this);
     }
 
+    //Ekstensja
     private void addThemeParty(ThemeParty party){
         extent.add(party);
     }
-
     public static void showExtent() {
         System.out.println("Extent of the class: " + ThemeParty.class.getName());
 
