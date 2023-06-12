@@ -60,6 +60,8 @@ abstract public class Event implements Serializable {
     public float getPrice() {
         return price;
     }
+
+    //polimorficzne wołanie metod
     public abstract void getUniqueInformation();
 
     @Override
