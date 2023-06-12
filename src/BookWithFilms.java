@@ -3,36 +3,29 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
-
+//toedit
 public class BookWithFilms extends Book{
     private String discType;
 
     private static List<BookWithFilms> extent = new ArrayList<>();
 
+    //Kontruktory
     public BookWithFilms(String isbn, String title, Author author, int year, float price,String discType) {
         super(isbn, title, author, year, price);
         this.discType = discType;
-        addFilm();
+        addBook(this);
     }
-
     public BookWithFilms(String isbn, String title, Author author, int year, float price, Double rabate,String discType) throws Exception {
         super(isbn, title, author, year, price, rabate);
         this.discType = discType;
-        addFilm();
+        addBook(this);
     }
 
     //Ekstensja
     private void addBook(BookWithFilms book){
         extent.add(book);
     }
-    private void addFilm(){
-        try {
-            Film film1 = Film.createFilm(this,"Unknown",null);
-        } catch (Exception exception) {
-            exception.printStackTrace();
-        }
-    }
-    /*public void removeBook(){
+    public void removeBook(){
         if(chapters.isEmpty()){
             allChapters.removeAll(chapters);
             chapters.removeAll(chapters);
@@ -43,7 +36,7 @@ public class BookWithFilms extends Book{
         }
         author.removeBook(this);
         extent.remove(this);
-    }*/
+    }
     public static void showExtent() {
         System.out.println("Extent of the class: " + KidsBook.class.getName());
 
@@ -51,9 +44,6 @@ public class BookWithFilms extends Book{
             System.out.println(book);
         }
     }
-
-
-    //Ekstensja trwałość
     public static void writeExtent(ObjectOutputStream stream) throws IOException {
         stream.writeObject(extent);
     }
