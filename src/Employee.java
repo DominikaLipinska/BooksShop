@@ -185,6 +185,7 @@ abstract class Employee extends Roles implements Serializable {
         if(shift!=null){
             if(this.vacation==null) {
                 this.vacation = vacation;
+                this.vacation.addEmployee(this);
             }else {
                 throw new Exception("Employee already have vacation!");
             }
@@ -195,7 +196,8 @@ abstract class Employee extends Roles implements Serializable {
     public Vacation changeVacation(Vacation vacation) throws Exception {
         Vacation prev = this.vacation;
         if(this.vacation!=null){
-            this.vacation = vacation;
+            removeVacation();
+            addVacation(vacation);
         }else{
             addVacation(vacation);
         }
@@ -204,6 +206,7 @@ abstract class Employee extends Roles implements Serializable {
     public Vacation removeVacation() throws Exception {
         Vacation prev = this.vacation;
         if(this.vacation!=null){
+            this.vacation.removeEmployee(this);
             this.vacation = null;
         }else{
             throw new Exception("Employee not have vacation to remove");
