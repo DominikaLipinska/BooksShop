@@ -14,31 +14,12 @@ public class Client extends Roles implements Serializable {
     private boolean loyaltyCard;
 
     private static List<Client> extent = new ArrayList<>(); //Ekstensja
-    private static String roleNameGeneralization = "generalization";
 
+    //Konstruktor
     public Client(boolean loyaltyCard,Person person) {
         super(person);
         this.loyaltyCard = loyaltyCard;
         addClient(this);
-    }
-
-
-    //Ekstensja
-    private void addClient(Client client){
-        extent.add(client);
-    }
-    public void removeClient(){
-        while(!lists.isEmpty()){
-            lists.get(0).removeList();
-        }
-        extent.remove(this);
-    }
-    public static void showExtent() {
-        System.out.println("Extent of the class: " + Client.class.getName());
-
-        for (Client client : extent) {
-            System.out.println(client);
-        }
     }
 
     //Gettery
@@ -103,7 +84,23 @@ public class Client extends Roles implements Serializable {
         }
     }
 
-    //Ekstensja Trwałość
+    //Ekstensja
+    private void addClient(Client client){
+        extent.add(client);
+    }
+    public void removeClient(){
+        while(!lists.isEmpty()){
+            lists.get(0).removeList();
+        }
+        extent.remove(this);
+    }
+    public static void showExtent() {
+        System.out.println("Extent of the class: " + Client.class.getName());
+
+        for (Client client : extent) {
+            System.out.println(client);
+        }
+    }
     public static void writeExtent(ObjectOutputStream stream) throws IOException {
         stream.writeObject(extent);
     }
