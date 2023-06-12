@@ -4,11 +4,11 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
+//toedit
 abstract class Employee extends Roles implements Serializable {
     private LocalDate empDate;
     private float sallary;
-    private Shift shift;
+    private Shift shift;//Asocjacja Shift -> Employee (1-*)
     private static List<Order> allSubmitOrders = new ArrayList<>();//Asocjacja Employee -> Order (1-*)
     private static List<Order> allProcessedOrders = new ArrayList<>();//Asocjacja Employee -> Order (1-*)
     private static List<Order> historyOrders = new ArrayList<>();//Asocjacja Employee -> Order (1-*)
@@ -18,59 +18,14 @@ abstract class Employee extends Roles implements Serializable {
 
     static String roleNameEmployee = "specializationEmployee";
 
-
+    //Konstruktor
     public Employee(LocalDate empDate, float sallary,Person person) {
         super(person);
         this.empDate = empDate;
         this.sallary = sallary;
     }
 
-    public static void showAllOrdersLists() {
-        System.out.println("Submit Orders: ");
-        if(allSubmitOrders.isEmpty()){
-            System.out.println("Not have orders");
-        }else {
-            for (Order order : allSubmitOrders) {
-                System.out.println(order);
-            }
-        }
-        System.out.println("Progress Orders: ");
-        if(allProcessedOrders.isEmpty()){
-            System.out.println("Not have orders");
-        }else {
-            for (Order order : allProcessedOrders) {
-                System.out.println(order);
-            }
-        }
-        System.out.println("History Orders: ");
-        if(historyOrders.isEmpty()){
-            System.out.println("Not have orders");
-        }else {
-            for (Order order : historyOrders) {
-                System.out.println(order);
-            }
-        }
-    }
-
-    //Gettery
-    public LocalDate getEmpDate() {
-        return empDate;
-    }
-    public float getSalary() {
-        return sallary;
-    }
-    public Shift getShift(){ return shift;}
-    public void getOrders() {
-        System.out.println("Orders: ");
-        if(orders.isEmpty()){
-            System.out.println("Not have orders");
-        }else {
-            for (Order order:orders) {
-                System.out.println(order);
-            }
-        }
-    }
-
+    //Overlapping
     public void changeRole(Integer overtimeHours) throws Exception {
         Person person = this.getPerson();
         if(person.hasOvertimeHours()!= null){
@@ -100,6 +55,7 @@ abstract class Employee extends Roles implements Serializable {
         }
     }
 
+    //Asocjacja Shift -> Employee (1-*)
     public void addShift(Shift shift) throws Exception {
         if(vacation!=null){
             throw new Exception("Employee on the vacation cannot working on any shift!");
@@ -126,6 +82,32 @@ abstract class Employee extends Roles implements Serializable {
     }
 
     //Asocjacja Employee -> Order (1-*)
+    public static void showAllOrdersLists() {
+        System.out.println("Submit Orders: ");
+        if(allSubmitOrders.isEmpty()){
+            System.out.println("Not have orders");
+        }else {
+            for (Order order : allSubmitOrders) {
+                System.out.println(order);
+            }
+        }
+        System.out.println("Progress Orders: ");
+        if(allProcessedOrders.isEmpty()){
+            System.out.println("Not have orders");
+        }else {
+            for (Order order : allProcessedOrders) {
+                System.out.println(order);
+            }
+        }
+        System.out.println("History Orders: ");
+        if(historyOrders.isEmpty()){
+            System.out.println("Not have orders");
+        }else {
+            for (Order order : historyOrders) {
+                System.out.println(order);
+            }
+        }
+    }
     public static void addOrder(Order order){
         if(order.checkStatus(OrderStatus.SUBMITED)){
             if(!allSubmitOrders.contains(order)){
@@ -152,7 +134,6 @@ abstract class Employee extends Roles implements Serializable {
             historyOrders.remove(order);
         }
     }
-
     public Order takeOrder() throws Exception {
         if(!allSubmitOrders.isEmpty()){
             Order order = allSubmitOrders.get(0);
@@ -165,7 +146,6 @@ abstract class Employee extends Roles implements Serializable {
             throw new Exception("Not have orders to take");
         }
     }
-
     public Order getOrder(){
         Order order = orders.get(0);
         return order;
@@ -181,7 +161,6 @@ abstract class Employee extends Roles implements Serializable {
             throw new Exception("Not have orders to complete");
         }
     }
-
 
     //Ograniczenie własne
     public void cancelOrder(Order order) throws Exception {
@@ -229,6 +208,25 @@ abstract class Employee extends Roles implements Serializable {
             throw new Exception("Employee not have vacation to remove");
         }
         return  prev;
+    }
+
+    //Gettery
+    public LocalDate getEmpDate() {
+        return empDate;
+    }
+    public float getSalary() {
+        return sallary;
+    }
+    public Shift getShift(){ return shift;}
+    public void getOrders() {
+        System.out.println("Orders: ");
+        if(orders.isEmpty()){
+            System.out.println("Not have orders");
+        }else {
+            for (Order order:orders) {
+                System.out.println(order);
+            }
+        }
     }
 
     @Override
