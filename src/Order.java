@@ -6,38 +6,44 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
+//toedit
 public class Order implements Serializable {
     private Client client;//Asocjacja Client -> Order (1-*)
     private OrderStatus status;
-    private List<Book> orderedBooks = new ArrayList<>(); //Asocjacja Order -> Book (*-*)
+    private Lists orderedBooks; //Asocjacja Order -> Book (*-*)
+    private Employee employee; //Asocjacja Employee -> Order (1-*)
 
     private static List<Order> extent = new ArrayList<>();//Ekstensja {Ordered}
 
-    public Order(Client client, List<Book> orderedBooks) {
+    //Konstruktor
+    public Order(Client client, Lists lists) {
         this.client = client;
-        for (Book book:orderedBooks) {
-            addBook(book);
-            book.addOrder(this);
-        }
+        this.orderedBooks = lists;
         this.status = OrderStatus.SUBMITED;
         client.addOrder(this);
+        lists.addOrder(this);
         Employee.addOrder(this);
     }
 
-    //Gettery
+    //Asocjacja Employee -> Order (1-*)
+    public void addEmployee(Employee employee){
+        if(this.employee!=null){
+            this.employee = employee;
+        }
+    }
+
+    //Gettery i Settery
     public OrderStatus getStatus() {
         return status;
     }
     public Client getClient() {
         return client;
     }
-
-    //Settery
     public void setStatus(OrderStatus status) {
         this.status = status;
     }
 
+    //Metody
     public boolean checkStatus(OrderStatus[] statuses){
         for (int i = 0; i < statuses.length; i++) {
             if(checkStatus(statuses[i])){
@@ -58,29 +64,12 @@ public class Order implements Serializable {
         extent.add(this);
     }
     private void removeOrder() throws Exception {
-        while (!orderedBooks.isEmpty()){
-            orderedBooks.remove(0);
-        }
         Employee.removeOrder(this);
         client.removeOrder(this);
+        orderedBooks.removeOrder(this);
+        employee.removeOrder(this);
         extent.remove(this);
     }
-
-    //Asocjacja Order -> Book (*-*)
-    private void addBook(Book book){
-        orderedBooks.add(book);
-    }
-    private void removeBook(Book book){
-        try {
-            book.removeOrder(this);
-            orderedBooks.remove(book);
-        } catch (Exception exception) {
-            exception.printStackTrace();
-        }
-    }
-
-
-    //Ekstensja trwałość
     public static void writeExtent(ObjectOutputStream stream) throws IOException {
         stream.writeObject(extent);
     }
@@ -92,7 +81,7 @@ public class Order implements Serializable {
     public String toString() {
         String info = "Order for client: " + client.getPerson().getName()+
                 "\nStatus: " + status+"\n";
-        for (Book book:orderedBooks) {
+        for (Book book:orderedBooks.getBooksList()) {
             info+= book.getTitle() + "-"+book.getAurhor().getPerson().getName()+"\n";
         }
         return  info;
