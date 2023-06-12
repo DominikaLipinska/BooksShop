@@ -5,28 +5,28 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Adres implements Serializable {
+public class Address implements Serializable {
     private String city;
     private String street;
     private int houseNumber;
     private Integer apartmentNumber;
-    private List<Person> personList = new ArrayList<>(); //Asocjacja Adres -> Person (1-*)
+    private List<Person> personList = new ArrayList<>(); //Asocjacja Address -> Person (1-*)
 
-    private static List<Adres> extent = new ArrayList<>(); //Ekstensja
+    private static List<Address> extent = new ArrayList<>(); //Ekstensja
 
     //Konstruktory
-    public Adres(String city, String street, int houseNumber) {
+    public Address(String city, String street, int houseNumber) {
         this.city = city;
         this.street = street;
         this.houseNumber = houseNumber;
-        addAdres(this);
+        addAddress(this);
     }
-    public Adres(String city, String street, int houseNumber, Integer apartmentNumber) {
+    public Address(String city, String street, int houseNumber, Integer apartmentNumber) {
         this(city, street, houseNumber);
         this.apartmentNumber = apartmentNumber;
     }
 
-    //Asocjacja Adres -> Person (1-*)
+    //Asocjacja Address -> Person (1-*)
     public void addPerson(Person person){
         if(!personList.contains(person)) {
             personList.add(person);
@@ -54,7 +54,7 @@ public class Adres implements Serializable {
     public List<Person> getPersonList() {
         return personList;
     }
-    public String getAdress(){
+    public String getAddress(){
         String info = city + " " + street + " " + houseNumber;
         if(apartmentNumber!=null){
             info+="/"+apartmentNumber;
@@ -62,39 +62,39 @@ public class Adres implements Serializable {
         return info;
     }
 
-    public void setAdres(String city, String street, int houseNumber){
+    public void setAddress(String city, String street, int houseNumber){
         this.city = city;
         this.street = street;
         this.houseNumber = houseNumber;
     }
-    public void setAdres(String city, String street, int houseNumber, Integer apartmentNumber) {
-        setAdres(city, street, houseNumber);
+    public void setAddress(String city, String street, int houseNumber, Integer apartmentNumber) {
+        setAddress(city, street, houseNumber);
         this.apartmentNumber = apartmentNumber;
     }
 
     //Ekstensja
-    private void addAdres(Adres adres){
-        extent.add(adres);
+    private void addAddress(Address address){
+        extent.add(address);
     }
-    public void removeAdress(){
+    public void removeAddress(){
         while (!personList.isEmpty()){
-            personList.get(0).removeAdress();
+            personList.get(0).removeAddress();
             removePerson(personList.get(0));
         }
         extent.remove(this);
     }
     public static void showExtent() {
-        System.out.println("Extent of the class: " + Adres.class.getName());
+        System.out.println("Extent of the class: " + Address.class.getName());
 
-        for (Adres adres : extent) {
-            System.out.println(adres);
+        for (Address address : extent) {
+            System.out.println(address);
         }
     }
     public static void writeExtent(ObjectOutputStream stream) throws IOException {
         stream.writeObject(extent);
     }
     public static void readExtent(ObjectInputStream stream) throws IOException, ClassNotFoundException {
-        extent = (ArrayList<Adres>) stream.readObject();
+        extent = (ArrayList<Address>) stream.readObject();
     }
 
     @Override
