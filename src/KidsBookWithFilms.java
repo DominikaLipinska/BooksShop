@@ -1,6 +1,6 @@
 public class KidsBookWithFilms extends BookWithFilms {
-    KidsBook kidsBook;
-
+    KidsBook kidsBook;//Wielodziedziczenie
+    //toedit
     public KidsBookWithFilms(String isbn, String title, Author author, int year, float price, String discType, boolean toy) {
         super(isbn, title, author, year, price, discType);
         kidsBook = new KidsBook(null,null,author,null,null,toy);
