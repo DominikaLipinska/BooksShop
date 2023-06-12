@@ -1,16 +1,26 @@
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
+//toedit
 public class Workshop extends Event {
     private int minMembers = 8;
+    private int membersNum = 0;
     private List<WorkshopInstructor> workIns = new ArrayList<>();//Asocjacja Workshop -> Instructor (z atrybutem)
 
     private static List<Workshop> extent = new ArrayList<>();
 
+    //Konstruktor
     public Workshop(String name, LocalDateTime date, float price ) {
         super(name, date, price);
         addWorkshop(this);
+    }
+
+    //Asocjacja Workshop -> Instructor (z atrybutem)
+    public void addWorkIn(WorkshopInstructor workshopInstructor) {
+        workIns.add(workshopInstructor);
+    }
+    public List<WorkshopInstructor> getWorkIns() {
+        return workIns;
     }
 
     //Ekstensja
@@ -38,13 +48,6 @@ public class Workshop extends Event {
     }
 
 
-    //Asocjacja Workshop -> Instructor (z atrybutem)
-    public void addWorkIn(WorkshopInstructor workshopInstructor) {
-        workIns.add(workshopInstructor);
-    }
-    public List<WorkshopInstructor> getWorkIns() {
-        return workIns;
-    }
 
     @Override
     public String toString() {
