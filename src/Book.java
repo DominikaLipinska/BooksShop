@@ -13,7 +13,7 @@ public class Book implements Serializable {
     private Integer year;
     private Float price;
     private Double discount;
-    private static double maxDiscount = 0.3;
+    private static double maxDiscount = 0.3; //Atr. klasowy
     private static Map<String,Book> isbnList = new HashMap<>(); //ISBN -> {Unique}
     protected List<Lists> lists = new ArrayList<>(); //Asocjacja Book -> isbn | Lists (kwalifikowana)
     protected List<Chapter> chapters = new ArrayList<>();//Asocjacja Book -> Chapter (kompozycja)
@@ -174,14 +174,6 @@ public class Book implements Serializable {
     }
 
     //Gettery
-    public Float getPrice(){return price;}
-    public Float getPrice(double rabate) {
-        if (rabate<0 || rabate>1){
-            return null;
-        }else {
-            return price*(1-(float) rabate);
-        }
-    }
     public String getTitle(){
         return title;
     }
@@ -199,6 +191,15 @@ public class Book implements Serializable {
             }
         }
         return info;
+    }
+    ////Przeciążenie
+    public Float getPrice(){return price;}
+    public Float getPrice(double rabate) {
+        if (rabate<0 || rabate>1){
+            return null;
+        }else {
+            return price*(1-(float) rabate);
+        }
     }
 
     @Override
