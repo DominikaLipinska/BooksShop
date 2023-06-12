@@ -38,7 +38,9 @@ class Person implements Serializable {
         this.phoneNumber = phoneNumber;
         this.email = email;
         this.adres = adres;
-        adres.addPerson(this); //Asocjacja Adres -> Person (1-*)
+        if(adres!=null){
+            adres.addPerson(this); //Asocjacja Adres -> Person (1-*)
+        }
         addPerson(this);
     }
 
