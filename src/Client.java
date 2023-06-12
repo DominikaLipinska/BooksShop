@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Client extends Roles implements Serializable {
-    private List<Order> historyOrders = new ArrayList<>();
+    private List<Order> historyOrders = new ArrayList<>();//Atr. powtarzalny
     private List<Order> activeOrders = new ArrayList<>();//Asocjacja Client -> Zamówienie (1-*)
     private List<Lists> lists = new ArrayList<>(); //Asocjacja Client -> Lists (1-*)
     private boolean loyaltyCard;
