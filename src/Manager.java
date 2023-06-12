@@ -98,7 +98,7 @@ public class Manager extends Employee{
         return salSupplement;
     }
 
-
+    //Przesłonięcie
     @Override
     public float getIncome() {
         return getSalary()+salSupplement;
