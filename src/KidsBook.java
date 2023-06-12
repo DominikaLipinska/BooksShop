@@ -6,7 +6,7 @@ import java.util.List;
 //toedit
 public class KidsBook extends Book{
     private boolean toy;
-    private KidsBookWithFilms kidsBookWithFilms;
+    private KidsBookWithFilms kidsBookWithFilms;//Wielodziedziczenie
 
     private static List<KidsBook> extent = new ArrayList<>();
 
