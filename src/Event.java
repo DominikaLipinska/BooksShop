@@ -31,6 +31,11 @@ abstract public class Event implements Serializable {
             this.manager = manager;
         }
     }
+    public void removeManager(){
+        if(this.manager!=null){
+            this.manager = null;
+        }
+    }
 
     //Ekstensja
     private void addEvent(Event event){

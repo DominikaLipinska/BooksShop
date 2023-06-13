@@ -108,6 +108,17 @@ public class Client extends Roles implements Serializable {
         extent = (ArrayList<Client>) stream.readObject();
     }
 
+    //Gettery i Setter
+    public List<Order> getHistoryOrders() {
+        return historyOrders;
+    }
+    public List<Order> getActiveOrders() {
+        return activeOrders;
+    }
+    public List<Lists> getLists() {
+        return lists;
+    }
+
     @Override
     public String toString() {
         String info ="";

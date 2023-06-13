@@ -7,7 +7,7 @@ import java.util.List;
 public class BookWithFilms extends Book{
     private String discType;
 
-    private static List<BookWithFilms> extent = new ArrayList<>();
+    private static List<BookWithFilms> bookWithFilmsExtent = new ArrayList<>();
 
     //Kontruktory
     public BookWithFilms(String isbn, String title, Author author, int year, float price,String discType) {
@@ -23,32 +23,24 @@ public class BookWithFilms extends Book{
 
     //Ekstensja
     private void addBook(BookWithFilms book){
-        extent.add(book);
+        bookWithFilmsExtent.add(book);
     }
     public void removeBook(){
-        if(chapters.isEmpty()){
-            allChapters.removeAll(chapters);
-            chapters.removeAll(chapters);
-        }
-        while (!lists.isEmpty()){
-            lists.get(0).removeBookQualif(this);
-            lists.remove(0);
-        }
-        author.removeBook(this);
-        extent.remove(this);
+        super.removeBook();
+        bookWithFilmsExtent.remove(this);
     }
     public static void showExtent() {
-        System.out.println("Extent of the class: " + KidsBook.class.getName());
+        System.out.println("Extent of the class: " + BookWithFilms.class.getName());
 
-        for (BookWithFilms book : extent) {
+        for (BookWithFilms book : bookWithFilmsExtent) {
             System.out.println(book);
         }
     }
     public static void writeExtent(ObjectOutputStream stream) throws IOException {
-        stream.writeObject(extent);
+        stream.writeObject(bookWithFilmsExtent);
     }
     public static void readExtent(ObjectInputStream stream) throws IOException, ClassNotFoundException {
-        extent = (ArrayList<BookWithFilms>) stream.readObject();
+        bookWithFilmsExtent = (ArrayList<BookWithFilms>) stream.readObject();
     }
 
     @Override

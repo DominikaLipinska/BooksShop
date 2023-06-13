@@ -15,7 +15,7 @@ class Person implements Serializable {
     private String latsName;
     private  String phoneNumber;
     private String email;
-    private Adres adres; //Asocjacja Adres -> Person (1-*)
+    private Address address; //Asocjacja Address -> Person (1-*)
     private Map<String,Roles> roles = new HashMap<>(); //Overlapping
 
     private static List<Person> extent = new ArrayList<>(); //Ekstensja
@@ -33,41 +33,41 @@ class Person implements Serializable {
         this.latsName = latsName;
         addPerson(this);
     }
-    private Person(String firstName, String latsName, String phoneNumber, String email, Adres adres) {
+    private Person(String firstName, String latsName, String phoneNumber, String email, Address address) {
         this(firstName,latsName);
         this.phoneNumber = phoneNumber;
         this.email = email;
-        this.adres = adres;
-        if(adres!=null){
-            adres.addPerson(this); //Asocjacja Adres -> Person (1-*)
+        this.address = address;
+        if(address !=null){
+            address.addPerson(this); //Asocjacja Address -> Person (1-*)
         }
         addPerson(this);
     }
 
     //Overlapping
     ////Client
-    public Person(String firstName, String latsName, String phoneNumber, String email, Adres adres,boolean loyaltyCard ) {
-        this(firstName,latsName,phoneNumber,email,adres);
+    public Person(String firstName, String latsName, String phoneNumber, String email, Address address, boolean loyaltyCard ) {
+        this(firstName,latsName,phoneNumber,email, address);
         addClient(loyaltyCard);
     }
     ////Author
-    public Person(String firstName, String latsName,String phoneNumber,String email, Adres adres, String pubHouse) {
-        this(firstName,latsName,phoneNumber,email,adres);
+    public Person(String firstName, String latsName, String phoneNumber, String email, Address address, String pubHouse) {
+        this(firstName,latsName,phoneNumber,email, address);
         addAuthor(pubHouse);
     }
     ////Manager
-    public Person(String firstName, String latsName, String phoneNumber, String email, Adres adres, LocalDate empDate,float sallary,Float sapSuplement) {
-        this(firstName,latsName,phoneNumber,email,adres);
+    public Person(String firstName, String latsName, String phoneNumber, String email, Address address, LocalDate empDate, float sallary, Float sapSuplement) {
+        this(firstName,latsName,phoneNumber,email, address);
         addEmployee(empDate,sallary,sapSuplement);
     }
     ////Salesman
-    public Person(String firstName, String latsName, String phoneNumber, String email, Adres adres, LocalDate empDate,float sallary,int overtimeHour) {
-        this(firstName,latsName,phoneNumber,email,adres);
+    public Person(String firstName, String latsName, String phoneNumber, String email, Address address, LocalDate empDate, float sallary, int overtimeHour) {
+        this(firstName,latsName,phoneNumber,email, address);
         addEmployee(empDate,sallary,overtimeHour);
     }
     ////Instructor
-    public Person(String firstName, String latsName, String phoneNumber, String email, Adres adres, List<Qualifications> qualifications) {
-        this(firstName,latsName,phoneNumber,email,adres);
+    public Person(String firstName, String latsName, String phoneNumber, String email, Address address, List<Qualifications> qualifications) {
+        this(firstName,latsName,phoneNumber,email, address);
         addInstructor(qualifications);
     }
 
@@ -102,7 +102,6 @@ class Person implements Serializable {
     }
     public List<Qualifications> hasQualifications(){
         try {
-
             return getInctructor().getQualifications();
         }catch (Exception e){
             return null;
@@ -158,9 +157,20 @@ class Person implements Serializable {
         }
     }
 
-    //Asocjacja Adres -> Person (1-*)
-    public void removeAdress(){
-        adres=null;
+    //Asocjacja Address -> Person (1-*)
+    public void addAddress(Address address){
+        if(this.address ==null){
+            this.address = address;
+            this.address.addPerson(this);
+        }
+    }
+    public void removeAddress(){
+        address.removePerson(this);
+        address =null;
+    }
+    public void changeAddress(Address address){
+        removeAddress();
+        addAddress(address);
     }
 
     //Gettery i Settery
@@ -173,8 +183,8 @@ class Person implements Serializable {
     public String getName(){
         return firstName +" "+latsName;
     }
-    public Adres getAdres() {
-        return adres;
+    public Address getAddress() {
+        return address;
     }
 
     ////Overlapping
@@ -217,7 +227,7 @@ class Person implements Serializable {
     }
     public Instructor getInctructor() throws Exception{
         try {
-            Roles instructor= roles.get(roleNameClient);
+            Roles instructor= roles.get(roleNameInstructor);
             return (Instructor) instructor;
         }catch (Exception e){
             throw new Exception("The object is not instructor");
@@ -231,9 +241,43 @@ class Person implements Serializable {
         }
     }
     public void removePerson(){
-        //removeRoles
-        if(adres!=null){
-            adres.removePerson(this);
+        try {
+            Client client = getClient();
+            if(client!=null){
+                client.removeClient();
+            }
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+        try {
+            Author author = getAuthor();
+            if(author!=null){
+                author.removeAuthor();
+            }
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+
+        try {
+            Instructor instructor = getInctructor();
+            if(instructor!=null){
+                instructor.removeInstructor();
+            }
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+
+        try {
+            Employee employee = getEmployee();
+            if(employee!=null){
+                employee.removeEmployee();
+            }
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+
+        if(address !=null){
+            address.removePerson(this);
         }
         extent.remove(this);
     }
@@ -263,12 +307,40 @@ class Person implements Serializable {
 
         if(phoneNumber!= null){ result += "phone number: " + phoneNumber +"\n";}
         if(email!= null){ result += "email: " + email +"\n"; }
-        if(adres!= null){ result += "adres: " + adres.getAdress() +"\n"; }
+        if(address != null){ result += "address: " + address.getAddress() +"\n"; }
         if(hasLoyaltyCard()!=null){ result += "has loyalty card: " + hasLoyaltyCard() +"\n"; }
         if(hasPubHouse()!=null){ result += "publishing house: " + hasPubHouse() +"\n"; }
         if (hasSupSuplement()!=null){ result += "supSuplement: " + hasSupSuplement() + "\n"; }
         if (hasOvertimeHours()!=null){ result += "overtime hours: " + hasOvertimeHours() + "\n"; }
         if (hasQualifications()!=null) { result += "qualificatins: " + hasQualifications() + "\n"; }
+        if (getRoles().contains("Client")){
+            try {
+                Client client = getClient();
+                if(!client.getLists().isEmpty()){
+                    result+="lists:\n";
+                    for (Lists list : client.getLists()){
+                        result+=list;
+                    }
+                }
+                if(!client.getActiveOrders().isEmpty()){
+                    result+="active orders:\n";
+                    for (Order order : client.getActiveOrders()){
+                        result+=order;
+                    }
+                }
+                if(!client.getHistoryOrders().isEmpty()){
+                    result+="history orders:\n";
+                    for (Order order : client.getHistoryOrders()){
+                        result+=order;
+                    }
+                }
+
+
+            }catch (Exception exception){
+                exception.printStackTrace();
+            }
+
+        }
 
         return result;
     }

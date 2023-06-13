@@ -10,10 +10,12 @@ public class Main {
     public static void main(String[] args) {
         final String extentFile = "extent.ser";
         try {
-            Adres adres1 = new Adres("City2","Street1",12);
+            Address address1 = new Address("City1","Street1",12);
+            Address address2 = new Address("City1","Street2",23);
+            Address address3 = new Address("City2","Street3",4,8);
 
-            Person author1 = new Person("NameA1","SurnameA1","167-346-145","namea1surnamea1@gmail.com",adres1, "PubHouse1");
-            Person author2 = new Person("NameA2", "SurnameA2","641-427-885","namea2surnamea2@gmail.com",adres1, "PubHouse2");
+            Person author1 = new Person("NameA1","SurnameA1","167-346-145","namea1surnamea1@gmail.com", address1, "PubHouse1");
+            Person author2 = new Person("NameA2", "SurnameA2",null,null,null, "PubHouse2");
 
             author1.addClient(true);
             author1.addInstructor(new ArrayList<>(Arrays.asList(Qualifications.WRITING,Qualifications.RECITATION)));
@@ -21,6 +23,7 @@ public class Main {
             Award award1 = new Award("Award1");
             Award award2 = new Award("Award2");
             Award award3 = new Award("Award3");
+
 
             //addAuthAward
             AuthorAward authAward1 = new AuthorAward(5000, author1.getAuthor(), award1);
@@ -31,25 +34,24 @@ public class Main {
 
             authAward1.removeAuthAward();
 
-            Book book1 = new Book("51245","T1",author1.getAuthor(),2020,12f);
-            Book book2 = new Book("12345","T2",author2.getAuthor(),2023,30f,0.2);
-            //Book book3 = new Book("12345","T3",author2.getAuthor(),2022,30f);
+            Book book1 = new Book("51245","Title1",author1.getAuthor(),2020,12f);
+            Book book2 = new Book("12345","Title2",author2.getAuthor(),2023,30f,0.2);
+            Book book3 = new Book("12367","Title3",author2.getAuthor(),2022,30f);
 
             BookWithFilms bookWF1 = new BookWithFilms("12536","TitleWF1",author2.getAuthor(),2016,100,"DVD");
             KidsBook kidsBook1 = new KidsBook("12467","TitleKB1", author1.getAuthor(),2020,30f,false );
+            KidsBookWithFilms kidsBookWF1 = new KidsBookWithFilms("30142","TitleKBWF1",author1.getAuthor(),2018,40f,"DVD",true);
+
             Film film1 = Film.createFilm(bookWF1,"TitleF1",120);
             Series series1 = Series.createSeries(book1,"TitleS1",4);
 
-            KidsBookWithFilms kidsBookWF1 = new KidsBookWithFilms("30142","TitleKBWF1",author1.getAuthor(),2018,40f,"DVD",true);
-
-            Person client1 = new Person("NameC1","SurnameC1","123-456-148", "namec1surnamec1@gmail.com",new Adres("City1","Street1",10),true);
-            Person client2 = new Person("NameC2","SurnameC2","153-678-748", "namec2surnamec2@gmail.com",new Adres("City1","Street1",20),false);
-
-
+            Person client1 = new Person("NameC1","SurnameC1","123-456-148", "namec1surnamec1@gmail.com",new Address("City1","Street1",10),true);
+            Person client2 = new Person("NameC2","SurnameC2","153-678-748", "namec2surnamec2@gmail.com",new Address("City1","Street1",20),false);
 
             Lists list1 = client1.getClient().addList("List1");
             Lists list2 = new Lists("List2",client1.getClient());
             Lists list3 = client1.getClient().addList("List3");
+
 
             list1.addBookQualif(book1);
             list1.addBookQualif(book2);
@@ -57,19 +59,22 @@ public class Main {
             list3.addBookQualif(book2);
             list3.addBookQualif(book2);
 
-            client2.getClient().addList("List4");
-            client2.getClient().addList("List5");
+            Lists list4 = client2.getClient().addList("List4");
+            Lists list5 = client2.getClient().addList("List5");
 
-            //client1.removePerson();
+
+            list4.addBookQualif(book3);
+            Lists.showExtent();
+
             //System.out.println(client1.getClient());
-            //System.out.println(client1.getAdres());
+            //System.out.println(client1.getAddress());
 
-            Person manager = new Person("NameM1","SurnameM1","245-548-145","namem1surnamem1@gmail.com",adres1, LocalDate.of(2008,12,6),4956.25f,250f);
-            Person salesman1 = new Person("NameS1","SurnameS1","543-178-164","names1surnames1@gmail.com",adres1, LocalDate.of(2012,6,14),3956.25f,10);
-            Person salesman2 = new Person("NameS2","SurnameS2","393-164-147","names2surnames2@gmail.com",adres1, LocalDate.of(2012,6,14),3906.85f,6);
 
-            //Person.showExtent();
-            //System.out.println("***************************");
+            Person manager = new Person("NameM1","SurnameM1","245-548-145","namem1surnamem1@gmail.com", address1, LocalDate.of(2008,12,6),4956.25f,250f);
+            Person salesman1 = new Person("NameS1","SurnameS1","543-178-164","names1surnames1@gmail.com", address1, LocalDate.of(2012,6,14),3956.25f,10);
+            Person salesman2 = new Person("NameS2","SurnameS2","393-164-147","names2surnames2@gmail.com", address1, LocalDate.of(2012,6,14),3906.85f,6);
+
+
 
             manager.getEmployee().changeRole(10);
             salesman1.getEmployee().changeRole(250.0f);
@@ -89,9 +94,9 @@ public class Main {
             Workshop workshop1 = new Workshop("WorshopName1", LocalDateTime.now(),120);
             Workshop workshop2 = new Workshop("WorkshopName2",LocalDateTime.now(),200);
 
-            Person instructor1 = new Person("NameI1", "SurnameI1","645-497-145","namei1surnamei1@gmail.com",adres1,
+            Person instructor1 = new Person("NameI1", "SurnameI1","645-497-145","namei1surnamei1@gmail.com", address1,
                     new ArrayList<>(Arrays.asList(Qualifications.BOOKBINDING,Qualifications.WRITING,Qualifications.RECITATION)));
-            Person instructor2 = new Person("NameI2", "SurnameI2","784-986-152","namei2surnamei2@gmail.com",adres1,
+            Person instructor2 = new Person("NameI2", "SurnameI2","784-986-152","namei2surnamei2@gmail.com", address1,
                     new ArrayList<>(Arrays.asList(Qualifications.WRITING)));
 
             instructor1.addClient(false);
@@ -99,18 +104,27 @@ public class Main {
             AuthorsMeeting meeting1 = new AuthorsMeeting(author1.getAuthor(), "NameAM1",LocalDateTime.now().minusDays(3).minusMinutes(150),150,true);
             ThemeParty party1 = new ThemeParty("NameTP1", LocalDateTime.now().minusHours(150).minusMinutes(48),30,"TopicP1");
 
-            Order order1 = new Order(client1.getClient(), list1);
+
+            Order order1 = list1.createOrder();
+            Order order2 = list2.createOrder();
+            //Order order4 = list4.createOrder();
+
             //System.out.println(order1);
             //Order order2 = new Order(client1.getClient(), Arrays.asList(bookWF1,book2,bookWF1));
             //Order order3 = new Order(client2.getClient(), Arrays.asList(kidsBookWF1,kidsBook1));
             //Order order4 = new Order(author1.getClient(), Arrays.asList(book2,kidsBookWF1));
 
+            client1.getClient().cancelOrder(order1);
+
             //Manager.showAllOrdersLists();
             salesman1.getEmployee().takeOrder();
+            //salesman1.getEmployee().takeOrder();
+
             //Manager.showAllOrdersLists();
             //client1.getClient().cancelOrder(order1);
-            //salesman1.getEmployee().completeOrder();
-            salesman1.getEmployee().cancelOrder(order1);
+            salesman1.getEmployee().completeOrder();
+            //salesman1.getEmployee().cancelOrder(order1);
+
             //Manager.showAllOrdersLists();
 
             /*salesman1.getEmployee().getOrders();
@@ -276,14 +290,6 @@ public class Main {
             e.printStackTrace();
         }
 
-        Author.showExtent();
-        //Client.showExtent();
-        //Salesman.showExtent();
-        //Manager.showExtent();
-        //Book.showExtent();
-        //Event.showExtent();
-        //Person.showExtent();
-        Award.showExtent();
 
     }
 }

@@ -23,7 +23,8 @@ public class Salesman extends Employee {
     private void addSalesman(Salesman salesman){
         extent.add(salesman);
     }
-    public void removeSalesman(){
+    @Override
+    public void removeEmployee(){
         extent.remove(this);
     }
     public static void showExtent() {

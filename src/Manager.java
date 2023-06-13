@@ -62,7 +62,14 @@ public class Manager extends Employee{
     private void addManager(Manager manager){
         extent.add(manager);
     }
-    public void removeManager(){
+
+    @Override
+    public void removeEmployee(){
+        removeManageShift();
+        while (!events.isEmpty()){
+            events.get(0).removeManager();
+            events.remove(events.get(0));
+        }
         extent.remove(this);
     }
     public static void showExtent() {

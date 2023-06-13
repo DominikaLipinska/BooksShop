@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-//toedit
+
 abstract class Employee extends Roles implements Serializable {
     private LocalDate empDate;
     private float sallary;
@@ -34,7 +34,7 @@ abstract class Employee extends Roles implements Serializable {
             Employee e = new Salesman(this.empDate,this.sallary,overtimeHours,person);
             try {
                 person.setRole(roleNameEmployee,e);
-                ((Manager)this).removeManager();
+                this.removeEmployee();
             } catch (Exception exception) {
                 exception.printStackTrace();
             }
@@ -48,7 +48,7 @@ abstract class Employee extends Roles implements Serializable {
             Employee e = new Manager(this.empDate,this.sallary,supSuplement,person);
             try {
                 person.setRole(roleNameEmployee,e);
-                ((Salesman)this).removeSalesman();
+                this.removeEmployee();
             } catch (Exception exception) {
                 exception.printStackTrace();
             }
@@ -151,13 +151,14 @@ abstract class Employee extends Roles implements Serializable {
         Order order = orders.get(0);
         return order;
     }
-    public void completeOrder(Order order) throws Exception {
+    public void completeOrder() throws Exception {
         if(!orders.isEmpty()){
-            removeOrder(order);
-            order.setStatus(OrderStatus.FINISHED);
-            addOrder(order);
-            orders.remove(order);
-            order.getClient().moveOrder(order);
+            removeOrder(orders.get(0));
+            orders.get(0).setStatus(OrderStatus.FINISHED);
+            addOrder(orders.get(0));
+            orders.get(0).getClient().moveOrder(orders.get(0));
+            orders.remove(orders.get(0));
+
         }else {
             throw new Exception("Not have orders to complete");
         }
@@ -256,6 +257,7 @@ abstract class Employee extends Roles implements Serializable {
     //Metody
     ////Przesłonięcie
     public abstract float getIncome();
+    public abstract void removeEmployee();
 
 
 }
