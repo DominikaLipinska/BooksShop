@@ -28,7 +28,7 @@ public class AuthorsMeeting extends Event {
         extent.remove(this);
     }
     public static void showExtent() {
-        System.out.println("Extent of the class: " + ThemeParty.class.getName());
+        System.out.println("Extent of the class: " + AuthorsMeeting.class.getName());
 
         for (AuthorsMeeting meeting : extent) {
             System.out.println(meeting);

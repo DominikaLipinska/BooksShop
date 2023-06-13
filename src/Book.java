@@ -15,14 +15,14 @@ public class Book implements Serializable {
     private Double discount;
     private static double maxDiscount = 0.3; //Atr. klasowy
     private static Map<String,Book> isbnList = new HashMap<>(); //ISBN -> {Unique}
-    protected List<Lists> lists = new ArrayList<>(); //Asocjacja Book -> isbn | Lists (kwalifikowana)
-    protected List<Chapter> chapters = new ArrayList<>();//Asocjacja Book -> Chapter (kompozycja)
+    private List<Lists> lists = new ArrayList<>(); //Asocjacja Book -> isbn | Lists (kwalifikowana)
+    private List<Chapter> chapters = new ArrayList<>();//Asocjacja Book -> Chapter (kompozycja)
     protected static Set<Chapter> allChapters = new HashSet<>();//Asocjacja Book -> Chapter (kompozycja)
-    private List<Screening> screenings = new ArrayList<>();//Wielodziedziczenie ekranizacja
+    private Screening screening; //Wielodziedziczenie ekranizacja
     private static  Set<Screening> allScreenings = new HashSet<>();//Wielodziedziczenie ekranizacja
     private List<Order> bookActiveOrders = new ArrayList<>(); //Asocjacja Order -> Book (*-*)
 
-    private static List<Book> extent = new ArrayList<>();//Ekstensja
+    private static List<Book> bookExtent = new ArrayList<>();//Ekstensja
 
     //Konstruktory
     public Book(String isbn,String title,Author author, Integer year, Float price) {
@@ -45,11 +45,11 @@ public class Book implements Serializable {
 
     //Wieloapektowe ekranizacja
     public void addScreening(Screening screening) throws Exception{
-        if(!screenings.contains(screening)){
+        if(this.screening!=screening){
             if(allScreenings.contains(screening)){
                 throw  new Exception("The Screening is already connected with Book!");
             }
-            screenings.add(screening);
+            this.screening=screening;
             allScreenings.add(screening);
         }
     }
@@ -69,7 +69,10 @@ public class Book implements Serializable {
         lists.add(list);
     }
     public void removeList(Lists list){
-        lists.remove(list);
+        if(lists.contains(list)){
+            lists.remove(list);
+        }
+
     }
 
     //Asocjacja Book -> Chapter (kompozycja)
@@ -128,7 +131,7 @@ public class Book implements Serializable {
     //Metoda klasowa
     public static List<Book> findDiscountBook(){
         List<Book> rabateBook = new ArrayList<>();
-        for (Book book : extent) {
+        for (Book book : bookExtent) {
             if (book.discount != null) rabateBook.add(book);
         }
         return rabateBook;
@@ -145,7 +148,7 @@ public class Book implements Serializable {
 
     //Ekstensja
     private void addBook(Book book){
-        extent.add(book);
+        bookExtent.add(book);
     }
     public void removeBook(){
         if(!chapters.isEmpty()){
@@ -156,21 +159,28 @@ public class Book implements Serializable {
             lists.get(0).removeBookQualif(this);
             lists.remove(0);
         }
+        if(screening!=null){
+            try {
+                ((Film) screening).removeFilm();
+            }catch (Exception e){
+                ((Series)screening).removeSeries();
+            }
+        }
         author.removeBook(this);
-        extent.remove(this);
+        bookExtent.remove(this);
     }
     public static void showExtent() {
         System.out.println("Extent of the class: " + Book.class.getName());
 
-        for (Book book : extent) {
+        for (Book book : bookExtent) {
             System.out.println(book);
         }
     }
     public static void writeExtent(ObjectOutputStream stream) throws IOException {
-        stream.writeObject(extent);
+        stream.writeObject(bookExtent);
     }
     public static void readExtent(ObjectInputStream stream) throws IOException, ClassNotFoundException {
-        extent = (ArrayList<Book>) stream.readObject();
+        bookExtent = (ArrayList<Book>) stream.readObject();
     }
 
     //Gettery
@@ -183,15 +193,23 @@ public class Book implements Serializable {
     public Author getAurhor() {return author;}
     public String getScreening(){
         String info = "Screening: \n";
-        if(screenings.isEmpty()){
+        if(screening==null){
             info += title + " has not screening\n";
         }else{
-            for (Screening screening : screenings ) {
-                info+=screening+"\n";
-            }
+            info+=screening+"\n";
         }
         return info;
     }
+    public List<Order> getBookActiveOrders() {
+        return bookActiveOrders;
+    }
+    public List<Lists> getLists() {
+        return lists;
+    }
+    public static Set<Chapter> getAllChapters() {
+        return allChapters;
+    }
+
     ////Przeciążenie
     public Float getPrice(){return price;}
     public Float getPrice(double rabate) {

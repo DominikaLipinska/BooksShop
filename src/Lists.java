@@ -13,7 +13,7 @@ public class Lists implements Serializable {
     private Client client; //Asocja Client -> Lists (1-*)
     private List<Order> orders = new ArrayList<>(); //Asocjaca Lists -> Order (1-1)
 
-    private static List<Lists> extent = new ArrayList<>(); //Ekstensja
+    private static List<Lists> listsExtent = new ArrayList<>(); //Ekstensja
 
     //Konstruktor
     public Lists(String name,Client client) {
@@ -42,7 +42,7 @@ public class Lists implements Serializable {
     }
 
     //Asocjaca Lists -> Order (1-1)
-    public Order createOrder(Client client){
+    public Order createOrder() throws Exception {
         return new Order(client,this);
     }
     public void addOrder(Order order){
@@ -58,16 +58,16 @@ public class Lists implements Serializable {
 
     //Ekstencja
     private void addList(Lists list){
-        if(!extent.contains(list)){
-            extent.add(list);
+        if(!listsExtent.contains(list)){
+            listsExtent.add(list);
         }
     }
     public void removeList(){
-        if(extent.contains(this)){
-            extent.remove(this);
+        if(listsExtent.contains(this)){
+            listsExtent.remove(this);
             client.removeList(this);
             for(Book b : booksQualif.values()) {
-                booksQualif.remove(b.getIsbn());
+                //booksQualif.remove(b.getIsbn());
                 b.removeList(this);
             }
         }
@@ -75,15 +75,15 @@ public class Lists implements Serializable {
     public static void showExtent() {
         System.out.println("Extent of the class: " + Lists.class.getName());
 
-        for (Lists list : extent) {
+        for (Lists list : listsExtent) {
             System.out.print(list);
         }
     }
     public static void writeExtent(ObjectOutputStream stream) throws IOException {
-        stream.writeObject(extent);
+        stream.writeObject(listsExtent);
     }
     public static void readExtent(ObjectInputStream stream) throws IOException, ClassNotFoundException {
-        extent = (ArrayList<Lists>) stream.readObject();
+        listsExtent = (ArrayList<Lists>) stream.readObject();
     }
 
     //Gettery i Settery

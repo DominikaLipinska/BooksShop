@@ -1,3 +1,6 @@
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +16,7 @@ abstract public class Screening implements Serializable {
     public Screening(Book book,String title) {
         this.title = title;
         this.book = book;
+        addScreening(this);
     }
 
     //Ekstensja
@@ -25,6 +29,19 @@ abstract public class Screening implements Serializable {
         if(screeningsExtent.contains(this)){
             screeningsExtent.remove(this);
         }
+    }
+    public static void showExtent() {
+        System.out.println("Extent of the class: " + Screening.class.getName());
+
+        for (Screening screening: screeningsExtent) {
+            System.out.println(screening);
+        }
+    }
+    public static void writeExtent(ObjectOutputStream stream) throws IOException {
+        stream.writeObject(screeningsExtent);
+    }
+    public static void readExtent(ObjectInputStream stream) throws IOException, ClassNotFoundException {
+        screeningsExtent = (ArrayList<Screening>) stream.readObject();
     }
 
     //Gettery i Settery

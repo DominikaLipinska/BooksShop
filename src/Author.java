@@ -69,7 +69,7 @@ public class Author extends Roles implements Serializable  {
     }
     public void removeMeeting(AuthorsMeeting authorsMeeting){
         if(authorsMeetings.contains(authorsMeeting)){
-            authorsMeetings.add(authorsMeeting);
+            authorsMeetings.remove(authorsMeeting);
         }
     }
 
@@ -123,7 +123,7 @@ public class Author extends Roles implements Serializable  {
         if(!authAwards.isEmpty()){
             info+="Awards:\n";
             for (AuthorAward award : authAwards) {
-                info += award.getAward().getName() + "\n";
+                info += award.getAward().getName()+" - Money award: "+ award.getMoneyAward() + "\n";
             }
         }
 

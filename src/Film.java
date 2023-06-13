@@ -1,4 +1,6 @@
-import java.io.Serializable;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,12 +9,13 @@ public class Film extends Screening  {
     private static Object Film;
     private Integer duration;
 
-    private static List<Film> extent = new ArrayList<>();
+    private static List<Film> filmExtent = new ArrayList<>();
 
     //Konstruktor
     private Film(Book book,String title,Integer duration) {
         super(book,title);
         this.duration = duration;
+        addFilm(this);
     }
     public static Film createFilm(Book book, String title,Integer duration) throws Exception{
         if(book == null){
@@ -27,15 +30,28 @@ public class Film extends Screening  {
 
     //Ekstensja
     private void addFilm(Film film){
-        if(!extent.contains(film)){
-            extent.add(film);
+        if(!filmExtent.contains(film)){
+            filmExtent.add(film);
         }
     }
     public void removeFilm(){
         removeScreening();
-        if(!extent.contains(this)){
-            extent.remove(this);
+        if(filmExtent.contains(this)){
+            filmExtent.remove(this);
         }
+    }
+    public static void showExtent() {
+        System.out.println("Extent of the class: " + Film.class.getName());
+
+        for (Film film : filmExtent) {
+            System.out.println(film);
+        }
+    }
+    public static void writeExtent(ObjectOutputStream stream) throws IOException {
+        stream.writeObject(filmExtent);
+    }
+    public static void readExtent(ObjectInputStream stream) throws IOException, ClassNotFoundException {
+        filmExtent = (ArrayList<Film>) stream.readObject();
     }
 
     @Override

@@ -13,13 +13,17 @@ public class Order implements Serializable {
     private Lists orderedBooks; //Asocjacja Order -> Book (*-*)
     private Employee employee; //Asocjacja Employee -> Order (1-*)
 
-    private static List<Order> extent = new ArrayList<>();//Ekstensja {Ordered}
+    private static List<Order> orderExtent = new ArrayList<>();//Ekstensja {Ordered}
 
     //Konstruktor
-    public Order(Client client, Lists lists) {
+    public Order(Client client, Lists lists) throws Exception {
         this.client = client;
+        if(lists.getBooksList().isEmpty()){
+            throw new Exception("Not find books to order");
+        }
         this.orderedBooks = lists;
         this.status = OrderStatus.SUBMITED;
+        addOrder(this);
         client.addOrder(this);
         lists.addOrder(this);
         Employee.addOrder(this);
@@ -27,7 +31,7 @@ public class Order implements Serializable {
 
     //Asocjacja Employee -> Order (1-*)
     public void addEmployee(Employee employee){
-        if(this.employee!=null){
+        if(this.employee==null){
             this.employee = employee;
         }
     }
@@ -61,26 +65,36 @@ public class Order implements Serializable {
 
     //Ekstensja
     private void addOrder(Order order){
-        extent.add(this);
+        orderExtent.add(this);
     }
     private void removeOrder() throws Exception {
         Employee.removeOrder(this);
         client.removeOrder(this);
         orderedBooks.removeOrder(this);
         employee.removeOrder(this);
-        extent.remove(this);
+        orderExtent.remove(this);
+    }
+    public static void showExtent() {
+        System.out.println("Extent of the class: " + Order.class.getName());
+
+        for (Order order:orderExtent) {
+            System.out.print(order);
+        }
     }
     public static void writeExtent(ObjectOutputStream stream) throws IOException {
-        stream.writeObject(extent);
+        stream.writeObject(orderExtent);
     }
     public static void readExtent(ObjectInputStream stream) throws IOException, ClassNotFoundException {
-        extent = (ArrayList<Order>) stream.readObject();
+        orderExtent = (ArrayList<Order>) stream.readObject();
     }
 
     @Override
     public String toString() {
         String info = "Order for client: " + client.getPerson().getName()+
                 "\nStatus: " + status+"\n";
+        if(employee!=null){
+            info+="Employee: "+employee.getPerson().getName()+"\n";
+        }
         for (Book book:orderedBooks.getBooksList()) {
             info+= book.getTitle() + "-"+book.getAurhor().getPerson().getName()+"\n";
         }
